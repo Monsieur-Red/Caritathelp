@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- TOP BAR -->
+
+    <!--<include-->
+        <!--android:id="@+id/home_top_bar"-->
+        <!--layout="@layout/activity_main_top_bar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/_60sdp"-->
+        <!--android:layout_alignParentTop="true" />-->
+
+    <!-- MAIN FRAGMENT -->
+    <FrameLayout
+        android:id="@+id/main_fragment"
+        android:layout_above="@+id/home_bottom_bar"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:background="@color/divider"/>
+
+    <!-- BOTTOM BAR -->
+    <include
+        android:id="@+id/home_bottom_bar"
+        layout="@layout/activity_main_bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

@@ -1,0 +1,104 @@
+package com.eip.red.caritathelp.Views.OrganisationViews.OrganisationSearch;
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.eip.red.caritathelp.MainActivity.MainActivity;
+import com.eip.red.caritathelp.Models.Network;
+import com.eip.red.caritathelp.Models.Organisation;
+import com.eip.red.caritathelp.Presenters.OrganisationSearch.OrganisationSearchPresenter;
+import com.eip.red.caritathelp.R;
+import com.eip.red.caritathelp.Views.OrganisationViews.Organisation.OrganisationView;
+
+import java.util.List;
+
+/**
+ * Created by pierr on 23/02/2016.
+ */
+
+public class OrganisationSearchView extends Fragment implements IOrganisationSearchView {
+
+    private OrganisationSearchPresenter presenter;
+
+    private ListView        listView;
+    private ProgressBar     progressBar;
+    private AlertDialog     dialog;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Get Model
+        Network network = ((MainActivity) getActivity()).getModelManager().getNetwork();
+
+        // Init Presenter
+        presenter = new OrganisationSearchPresenter(this, network);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_organisation_search, container, false);
+
+        // Init UI Element
+        progressBar = (ProgressBar) view.findViewById(R.id.organisation_search_progress_bar);
+
+        // Get All Organisations
+        presenter.getAllOrganisations();
+
+        // Init ListView & Listener & Adapter
+        listView = (ListView) view.findViewById(R.id.organisations_search_list_view);
+        listView.setAdapter(new OrganisationsSearchListViewAdapter(this));
+        initListener();
+
+        // Init Dialog
+        dialog = new AlertDialog.Builder(getContext())
+                .setCancelable(true)
+                .create();
+
+        return (view);
+    }
+
+    private void initListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Page Change
+                TextView textView = (TextView) view.findViewById(R.id.organisations_search_name);
+
+                ((MainActivity) getActivity()).replaceView(OrganisationView.newInstance(textView.getText().toString()), true);
+            }
+        });
+    }
+
+    @Override
+    public void showProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setDialogError(String title, String msg) {
+        dialog.setTitle(title);
+        dialog.setMessage(msg);
+        dialog.show();
+    }
+
+    @Override
+    public void updateListView(List<Organisation> organisations) {
+        ((OrganisationsSearchListViewAdapter) listView.getAdapter()).setOrganisations(organisations);
+        ((OrganisationsSearchListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
+    }
+}

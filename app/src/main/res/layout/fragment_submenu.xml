@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bootstrap_gray_lighter">
+
+    <!-- TOP BAR -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:background="@color/primary">
+
+        <!-- Submenu BAR -->
+        <LinearLayout
+            android:id="@+id/submenu_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+
+            android:layout_gravity="center"
+            android:weightSum="6"
+            android:background="@drawable/border_search_bar"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/_5sdp"
+
+                android:layout_gravity="center"
+                android:src="@android:drawable/ic_menu_search"/>
+
+            <EditText
+                android:id="@+id/top_bar_submenu_search"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:padding="@dimen/_5sdp"
+
+                android:background="@android:color/transparent"
+                android:layout_gravity="center"
+                android:hint="@android:string/search_go"
+                android:textColorHint="@color/bootstrap_gray"
+                android:textColor="@android:color/white">
+            </EditText>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/submenu_my_organisations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+                android:orientation="horizontal"
+                android:weightSum="8"
+                android:background="@color/icons">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_weight="1"
+
+                    android:src="@drawable/logo_caritathelp_2017_picture_only"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_15sdp"
+                    android:layout_weight="6"
+
+                    android:layout_gravity="center"
+                    android:text="@string/submenu_my_organisations"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/_18sdp"
+                    />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_weight="1"
+
+                    android:layout_gravity="center"
+                    android:src="@drawable/arrow_sub_menu"/>
+
+            </LinearLayout>
+
+            <!-- DIVIDER -->
+            <View style="@style/Divider" />
+
+            <LinearLayout
+                android:id="@+id/submenu_my_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+                android:orientation="horizontal"
+                android:weightSum="8"
+                android:background="@color/icons">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_weight="1"
+
+                    android:src="@drawable/logo_caritathelp_2017_picture_only"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_15sdp"
+                    android:layout_weight="6"
+
+                    android:layout_gravity="center"
+                    android:text="@string/submenu_my_events"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/_18sdp"
+                    />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_weight="1"
+
+                    android:layout_gravity="center"
+                    android:src="@drawable/arrow_sub_menu" />
+
+            </LinearLayout>
+
+            <!-- DIVIDER -->
+            <View style="@style/Divider" />
+
+            <LinearLayout
+                android:id="@+id/submenu_friends"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+                android:orientation="horizontal"
+                android:weightSum="8"
+                android:background="@color/icons">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_weight="1"
+
+                    android:src="@drawable/logo_caritathelp_2017_picture_only"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_15sdp"
+                    android:layout_weight="6"
+
+                    android:layout_gravity="center"
+                    android:text="@string/submenu_friends"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/_18sdp"
+                    />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_weight="1"
+
+                    android:layout_gravity="center"
+                    android:src="@drawable/arrow_sub_menu"/>
+
+            </LinearLayout>
+
+            <!-- DIVIDER -->
+            <View style="@style/Divider" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@color/bootstrap_gray_lighter" />
+            <View style="@style/Divider" />
+
+            <LinearLayout
+                android:id="@+id/submenu_account_settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+                android:orientation="horizontal"
+                android:weightSum="8"
+                android:background="@color/icons">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_weight="1"
+
+                    android:src="@drawable/logo_caritathelp_2017_picture_only"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_15sdp"
+                    android:layout_weight="6"
+
+                    android:layout_gravity="center"
+                    android:text="@string/submenu_account_settings"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/_18sdp"
+                    />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_weight="1"
+
+                    android:layout_gravity="center"
+                    android:src="@drawable/arrow_sub_menu"/>
+
+            </LinearLayout>
+
+            <!-- DIVIDER -->
+            <View style="@style/Divider" />
+
+            <LinearLayout
+                android:id="@+id/submenu_security"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+                android:orientation="horizontal"
+                android:weightSum="8"
+                android:background="@color/icons">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_weight="1"
+
+                    android:src="@drawable/logo_caritathelp_2017_picture_only"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/_15sdp"
+                    android:layout_weight="6"
+
+                    android:layout_gravity="center"
+                    android:text="@string/submenu_security"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/_18sdp"
+                    />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_weight="1"
+
+                    android:layout_gravity="center"
+                    android:src="@drawable/arrow_sub_menu"/>
+
+            </LinearLayout>
+
+            <!-- DIVIDER -->
+            <View style="@style/Divider" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@color/bootstrap_gray_lighter" />
+            <View style="@style/Divider" />
+
+            <TextView
+                android:id="@+id/submenu_logout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:padding="@dimen/_5sdp"
+                android:background="@color/icons"
+
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/submenu_logout"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="@dimen/_18sdp" />
+
+            <!-- DIVIDER -->
+            <View style="@style/Divider" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@color/bootstrap_gray_lighter" />
+
+            <TextView
+                android:id="@+id/submenu_delete_account"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:padding="@dimen/_5sdp"
+                android:background="@color/icons"
+
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/submenu_delete_account"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="@dimen/_18sdp" />
+
+            <!-- DIVIDER -->
+            <View style="@style/Divider" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@color/bootstrap_gray_lighter" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

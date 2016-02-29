@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_60sdp"
+
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:background="@color/primary">
+
+    <!-- Home Top Bar -->
+    <LinearLayout
+        android:id="@+id/top_bar_home_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/_5sdp"
+
+        android:layout_gravity="center"
+        android:weightSum="6"
+        android:background="@drawable/border_search_bar"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/_5sdp"
+
+            android:layout_gravity="center"
+            android:src="@android:drawable/ic_menu_search"/>
+
+        <EditText
+            android:id="@+id/top_bar_btn_home_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:padding="@dimen/_5sdp"
+
+            android:layout_gravity="center"
+            android:hint="@android:string/search_go">
+        </EditText>
+
+    </LinearLayout>
+
+    <!-- My Organisations BAR -->
+    <LinearLayout
+        android:id="@+id/top_bar_my_organisations_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:orientation="horizontal"
+        android:layout_weight="6"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/top_bar_my_organisations_search"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_weight="5"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/_5sdp"
+
+            android:layout_gravity="center"
+            android:background="@drawable/border_search_bar"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_5sdp"
+
+                android:layout_gravity="center"
+                android:src="@android:drawable/ic_menu_search"/>
+
+            <EditText
+                android:id="@+id/top_bar_btn_search2"
+                android:layout_width="200sp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:padding="@dimen/_5sdp"
+
+                android:layout_gravity="center"
+                android:hint="@android:string/search_go">
+            </EditText>
+
+        </LinearLayout>
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/_10sdp"
+
+            android:layout_gravity="center"
+            android:background="@drawable/btn_plus" />
+
+    </LinearLayout>
+
+
+    <!-- Mailbox Bar -->
+    <RelativeLayout
+        android:id="@+id/top_bar_mailbox_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/_5sdp"
+
+        android:layout_gravity="center"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/top_bar_mailbox_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_15sdp"
+
+            android:layout_centerInParent="true"
+            android:text="Test"
+            android:textColor="@color/icons"
+            android:textSize="@dimen/_25sdp" />
+
+    </RelativeLayout>
+
+    <!-- Notifications Bar -->
+    <RelativeLayout
+        android:id="@+id/top_bar_notificiations_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/_5sdp"
+
+        android:layout_gravity="center"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/top_bar_notifications_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_15sdp"
+
+            android:layout_centerInParent="true"
+            android:text="Test"
+            android:textColor="@color/icons"
+            android:textSize="@dimen/_25sdp" />
+
+
+    </RelativeLayout>
+
+    <!-- Sub Menu Bar -->
+    <LinearLayout
+        android:id="@+id/top_bar_submenu_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/_5sdp"
+
+        android:layout_gravity="center"
+        android:weightSum="6"
+        android:background="@drawable/border_search_bar"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/_5sdp"
+
+            android:layout_gravity="center"
+            android:src="@android:drawable/ic_menu_search"/>
+
+        <EditText
+            android:id="@+id/top_bar_submenu_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:padding="@dimen/_5sdp"
+
+            android:layout_gravity="center"
+            android:hint="@android:string/search_go">
+        </EditText>
+
+    </LinearLayout>
+
+    <!-- Account Settings -->
+    <RelativeLayout
+        android:id="@+id/top_bar_account_settings_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/_5sdp"
+
+        android:layout_gravity="center"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/top_bar_account_settings_return"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_30sdp"
+
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrow_top_bar"/>
+
+        <TextView
+            android:id="@+id/top_bar_account_settings_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_15sdp"
+
+            android:layout_centerInParent="true"
+            android:text="Test"
+            android:textColor="@color/icons"
+            android:textSize="@dimen/_20sdp" />
+
+
+    </RelativeLayout>
+
+</LinearLayout>

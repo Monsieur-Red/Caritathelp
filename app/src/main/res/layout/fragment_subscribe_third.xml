@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_light">
+
+    <TextView
+        android:id="@+id/subscribe_terms_form_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="@dimen/_2sdp"
+        android:padding="@dimen/_4sdp"
+
+        android:text="@string/subscribe_termsform_title"
+        android:textSize="@dimen/_20sdp"
+        />
+
+    <LinearLayout
+        android:id="@+id/subscribe_terms_form"
+        android:layout_below="@+id/subscribe_terms_form_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Switch
+            android:id="@+id/subscribe_switch_geolocation"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/_15sdp"
+            android:padding="@dimen/_15sdp"
+
+            android:text="@string/subscribe_geolocalisation"
+            android:textOn="On"
+            android:textOff="Off"
+            android:background="@color/bootstrap_gray_lightest"
+            />
+
+        <Switch
+            android:id="@+id/subscribe_switch_notification"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/_15sdp"
+            android:padding="@dimen/_15sdp"
+
+            android:text="@string/subscribe_notification"
+            android:textOn="On"
+            android:textOff="Off"
+            android:background="@color/bootstrap_gray_lightest"
+            />
+
+        <Button
+            android:id="@+id/subscribe_btn_terms_conditions"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/_15sdp"
+            android:padding="@dimen/_15sdp"
+
+            android:text="@string/subscribe_terms_conditions"
+            android:background="@color/bootstrap_gray_lightest"
+            />
+
+        <Button
+            android:id="@+id/subscribe_btn_subscribe"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/_15sdp"
+            android:padding="@dimen/_15sdp"
+
+            android:text="@string/subscribe"
+            android:textSize="@dimen/_25sdp"
+            android:background="@color/bootstrap_gray_lightest"
+            />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/subscribe_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+
+        android:visibility="gone" />
+
+</RelativeLayout>

@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">Caritathelp</string>
+
+    <!-- Connection View -->
+    <string name="connectionview_title">Connexion</string>
+    <string name="text_view_email">Email</string>
+    <string name="text_view_password">Mot de passe</string>
+    <string name="btn_connection">Connexion</string>
+    <string name="btn_subscribe">Inscription</string>
+    <string name="text_view_password_missing">Mot de passe oublié?</string>
+
+    <!-- Subscribe View -->
+    <!-- Presentation Page -->
+    <string name="subscribe_title">Rejoindre CaritatHelp</string>
+    <string name="subscribe_presentation_title">Présentez vous</string>
+    <string name="subscribe_firstname">Prénom</string>
+    <string name="subscribe_lastname">Nom</string>
+    <string name="subscribe_gender_male">Masculin</string>
+    <string name="subscribe_gender_female">Féminin</string>
+    <string name="subscribe_btn_birthday">Date de naissance</string>
+    <!-- Name Form Page -->
+    <string name="subscribe_logform_title">Création des identifiants</string>
+    <string name="subscribe_mail">E-mail</string>
+    <string name="subscribe_password">Mot de passe</string>
+    <string name="subscribe_password_checking">Vérification du mot de passe</string>
+    <!-- Terms Form Page -->
+    <string name="subscribe_termsform_title">Conditions d\'utilisation</string>
+    <string name="subscribe_geolocalisation">Géolocalisation</string>
+    <string name="subscribe_notification">Notifications</string>
+    <string name="subscribe_terms_conditions">Termes et Conditions</string>
+    <string name="subscribe">S\'inscrire</string>
+
+    <!-- OrganisationSearch View -->
+    <string name="organisation_search_title">Rechercher une association</string>
+
+    <!-- MailBox View -->
+    <string name="mailbox_toolbar_title">Messagerie</string>
+
+    <!-- Notifications View -->
+    <string name="notifications_toolbar_title">Notifications</string>
+
+    <!-- SubMenu View -->
+    <string name="submenu_my_events">Mes événements</string>
+    <string name="submenu_my_organisations">Mes associations</string>
+    <string name="submenu_friends">Amis</string>
+    <string name="submenu_account_settings">Gestion de compte</string>
+    <string name="submenu_security">Confidentialités</string>
+    <string name="submenu_help">Aide</string>
+    <string name="submenu_logout">Déconnexion</string>
+    <string name="submenu_delete_account">Supprimer mon compte</string>
+
+    <!-- MyOrganisations View -->
+    <string name="my_organisations_title">Mes associations</string>
+
+    <!-- OrganisationCreation View -->
+    <string name="organisation_creation_bar_title">Créer une association</string>
+
+    <!-- Organisation View -->
+    <string name="organisation_members">Membres</string>
+    <string name="organisation_events">Evénements</string>
+    <string name="organisation_informations">Informations</string>
+
+    <!-- OrganisationManagement View -->
+    <string name="organisation_management_bar_title">Gérer mon association</string>
+    <string name="organisation_management_post">Ajouter une publication</string>
+    <string name="organisation_management_create_event">Créer un événement</string>
+    <string name="organisation_management_settings">Modifier les paramètres</string>
+    <string name="organisation_management_emergency_system">Système d\'urgence</string>
+    <string name="organisation_management_delete">Supprimer l\'association</string>
+
+    <!-- Account Settings View -->
+    <string name="account_settings_toolbar_title">Gestion de compte</string>
+    <string name="account_settings_current_password">Mot de passe actuel</string>
+    <string name="account_settings_new_password">Nouveau mot de passe</string>
+    <string name="account_settings_new_password_checking">Retaper le nouveau mot de passe</string>
+    <string name="account_settings_save_changes">Sauvegarder les changements</string>
+
+
+</resources>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/news_list_top_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:background="@color/icons">
+
+        <ImageView
+            android:id="@+id/news_image"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:src="@drawable/logo_caritathelp_2017_picture_only" />
+
+        <LinearLayout
+            android:layout_toRightOf="@id/news_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/news_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_10sdp"
+
+                android:text="Auteur - Type actu"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/_15sdp" />
+
+            <TextView
+                android:id="@+id/news_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_10sdp"
+
+                android:text="Date"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/_12sdp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!--DESCRIPTION Starts -->
+    <TextView
+        android:id="@+id/news_description"
+        android:layout_below="@+id/news_list_top_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+
+        android:layout_alignParentLeft="true"
+        android:layout_centerHorizontal="true"
+        android:text="Description "
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/_15sdp"
+
+        android:background="@color/icons"
+        />
+    <!--DESCRIPTION Ends -->
+
+    <!-- DIVIDER -->
+    <View
+        android:id="@+id/news_second_divider"
+        android:layout_below="@+id/news_description"
+        style="@style/Divider" />
+    <View
+        android:layout_below="@+id/news_second_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_10sdp"
+        android:background="@color/divider" />
+
+</RelativeLayout>

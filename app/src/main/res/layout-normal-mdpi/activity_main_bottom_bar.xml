@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_50sdp"
+    android:background="@color/icons">
+
+    <!-- DIVIDER -->
+    <View style="@style/Divider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/_2sdp">
+
+        <ImageButton
+            android:id="@+id/bottom_bar_btn_home"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+
+            android:src="@android:drawable/ic_dialog_dialer" />
+
+        <ImageButton
+            android:id="@+id/bottom_bar_btn_organisations"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+
+            android:src="@android:drawable/ic_menu_myplaces" />
+
+        <ImageButton
+            android:id="@+id/bottom_bar_btn_mailbox"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+
+            android:src="@android:drawable/sym_action_chat" />
+
+        <ImageButton
+            android:id="@+id/bottom_bar_btn_notifications"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+
+            android:src="@android:drawable/ic_popup_reminder" />
+
+        <ImageButton
+            android:id="@+id/bottom_bar_btn_submenu"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+
+            android:src="@android:drawable/ic_menu_add" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
