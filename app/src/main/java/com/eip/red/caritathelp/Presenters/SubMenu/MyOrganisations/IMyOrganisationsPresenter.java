@@ -6,5 +6,9 @@ package com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations;
 
 public interface IMyOrganisationsPresenter {
 
+    void onClick(int viewId);
+
     void getMyOrganisations();
+
+    void goToOrganisationView(String name);
 }

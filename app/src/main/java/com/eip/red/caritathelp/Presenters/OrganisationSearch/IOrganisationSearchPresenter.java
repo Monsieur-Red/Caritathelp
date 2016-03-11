@@ -1,5 +1,7 @@
 package com.eip.red.caritathelp.Presenters.OrganisationSearch;
 
+import com.eip.red.caritathelp.Models.Organisation;
+
 /**
  * Created by pierr on 25/02/2016.
  */
@@ -7,4 +9,6 @@ package com.eip.red.caritathelp.Presenters.OrganisationSearch;
 public interface IOrganisationSearchPresenter {
 
     void getAllOrganisations();
+
+    void goToOrganisationView(String name);
 }

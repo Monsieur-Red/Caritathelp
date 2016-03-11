@@ -6,5 +6,6 @@ package com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations.OrganisationC
 
 public interface IOrganisationCreationPresenter {
 
-    void create(String name, String theme, String city, String description);
+    void onClick(int viewId);
+    
 }

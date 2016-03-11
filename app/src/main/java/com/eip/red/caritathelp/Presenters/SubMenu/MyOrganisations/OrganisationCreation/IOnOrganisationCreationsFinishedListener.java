@@ -1,5 +1,7 @@
 package com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations.OrganisationCreation;
 
+import com.eip.red.caritathelp.Models.Organisation;
+
 /**
  * Created by pierr on 24/02/2016.
  */
@@ -16,5 +18,5 @@ public interface IOnOrganisationCreationsFinishedListener {
 
     void onDialogError(String title, String msg);
 
-    void onSuccess(String name);
+    void onSuccess(Organisation organisation);
 }

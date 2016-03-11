@@ -14,7 +14,7 @@
         android:layout_margin="@dimen/_2sdp"
         android:padding="@dimen/_4sdp"
 
-        android:text="Bonjour, voici... txt bidon blablabla"
+        android:text="Description..."
         android:textSize="@dimen/_20sdp"
         />
 

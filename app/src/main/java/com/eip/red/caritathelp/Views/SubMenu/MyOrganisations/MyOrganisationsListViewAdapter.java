@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.eip.red.caritathelp.Models.Organisation;
 import com.eip.red.caritathelp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,16 +18,16 @@ import java.util.List;
 public class MyOrganisationsListViewAdapter extends BaseAdapter {
 
     private MyOrganisationsView     fragment;
-    private List<Organisation>      organisations;
+    private List<String>            myOrganisationsNames;
 
-    public MyOrganisationsListViewAdapter(MyOrganisationsView fragment, List<Organisation> organisations) {
+    public MyOrganisationsListViewAdapter(MyOrganisationsView fragment) {
         this.fragment = fragment;
-        this.organisations = organisations;
+        this.myOrganisationsNames = new ArrayList<>();
     }
 
     @Override
     public int getCount() {
-        return (organisations.size());
+        return (myOrganisationsNames.size());
     }
 
     @Override
@@ -47,9 +48,13 @@ public class MyOrganisationsListViewAdapter extends BaseAdapter {
             view = fragment.getActivity().getLayoutInflater().inflate(R.layout.fragment_my_organisations_list_row, null);
 
         // Set Organisation Name
-        TextView    textView = (TextView) view.findViewById(R.id.my_organisations_title);
-        textView.setText(organisations.get(position).getName());
+        TextView    textView = (TextView) view.findViewById(R.id.my_organisations_name);
+        textView.setText(myOrganisationsNames.get(position));
 
         return view;
+    }
+
+    public void setMyOrganisationsNames(List<String> myOrganisationsNames) {
+        this.myOrganisationsNames = myOrganisationsNames;
     }
 }

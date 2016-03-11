@@ -9,7 +9,7 @@ import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Views.Home.HomeView;
 import com.eip.red.caritathelp.Views.MailBox.MailBoxView;
 import com.eip.red.caritathelp.Views.Notifications.NotificationsView;
-import com.eip.red.caritathelp.Views.OrganisationViews.OrganisationSearch.OrganisationSearchView;
+import com.eip.red.caritathelp.Views.OrganisationSearch.OrganisationSearchView;
 import com.eip.red.caritathelp.Views.SubMenu.SubMenuView;
 
 import java.util.ArrayList;

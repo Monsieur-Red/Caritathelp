@@ -1,6 +1,10 @@
 package com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations.OrganisationCreation;
 
+import com.eip.red.caritathelp.MainActivity.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
+import com.eip.red.caritathelp.Models.Organisation;
+import com.eip.red.caritathelp.R;
+import com.eip.red.caritathelp.Views.Organisation.OrganisationView;
 import com.eip.red.caritathelp.Views.SubMenu.MyOrganisations.OrganisationCreation.OrganisationCreationView;
 
 /**
@@ -18,9 +22,22 @@ public class OrganisationCreationPresenter implements IOrganisationCreationPrese
     }
 
     @Override
-    public void create(String name, String theme, String city, String description) {
-        view.showProgress();
-        interactor.create(name, theme, city, description, this);
+    public void onClick(int viewId) {
+        switch (viewId) {
+            case R.id.top_bar_organisation_creation_return:
+                ((MainActivity) view.getActivity()).goToPreviousPage();
+                break;
+            case R.id.organisation_creation_btn_create:
+                String  name = view.getName().getText().toString();
+                String  theme = view.getTheme().getText().toString();
+                String  city = view.getCity().getText().toString();
+                String  description = view.getDescription().getText().toString();
+
+                view.showProgress();
+                interactor.createOrganisation(name, theme, city, description, this);
+                break;
+        }
+
     }
 
     @Override
@@ -54,8 +71,9 @@ public class OrganisationCreationPresenter implements IOrganisationCreationPrese
     }
 
     @Override
-    public void onSuccess(String name) {
+    public void onSuccess(Organisation organisation) {
         view.hideProgress();
-        view.navigateToOrganisationView(name);
+        view.navigateToOrganisationView(organisation.getName());
+        ((MainActivity) view.getActivity()).replaceView(OrganisationView.newInstance(organisation), false);
     }
 }

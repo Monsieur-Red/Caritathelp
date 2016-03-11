@@ -11,10 +11,9 @@ import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.MainActivity.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Presenters.SubMenu.AccountSettings.AccountSettingsPresenter;
 import com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations.OrganisationCreation.OrganisationCreationPresenter;
 import com.eip.red.caritathelp.R;
-import com.eip.red.caritathelp.Views.OrganisationViews.Organisation.OrganisationView;
+import com.eip.red.caritathelp.Views.Organisation.OrganisationView;
 
 /**
  * Created by pierr on 23/02/2016.
@@ -70,14 +69,7 @@ public class OrganisationCreationView extends Fragment implements IOrganisationC
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.top_bar_organisation_creation_return:
-                ((MainActivity) getActivity()).goToPreviousPage();
-                break;
-            case R.id.organisation_creation_btn_create:
-                presenter.create(name.getText().toString(), theme.getText().toString(), city.getText().toString(), description.getText().toString());
-                break;
-        }
+        presenter.onClick(v.getId());
     }
 
     @Override
@@ -123,7 +115,21 @@ public class OrganisationCreationView extends Fragment implements IOrganisationC
         dialog.setTitle("Création réussie");
         dialog.setMessage("Bienvenue sur la page d'accueil de l'association " + name);
         dialog.show();
+    }
 
-        ((MainActivity) getActivity()).replaceView(OrganisationView.newInstance(name), false);
+    public EditText getName() {
+        return name;
+    }
+
+    public EditText getTheme() {
+        return theme;
+    }
+
+    public EditText getCity() {
+        return city;
+    }
+
+    public EditText getDescription() {
+        return description;
     }
 }

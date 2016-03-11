@@ -16,8 +16,6 @@ import java.util.List;
 
 public class User implements Serializable {
 
-    private List<Organisation>  organisations;
-
     private int     id;
     private String  lastName;
     private String  firstName;
@@ -30,39 +28,45 @@ public class User implements Serializable {
     private boolean notifications;
 
     public User() {
-        organisations = new ArrayList<>();
     }
 
     public User(JsonObject result) {
-        organisations = new ArrayList<>();
-
         JsonObject  res = result.getAsJsonObject(Network.API_PARAMETER_RESPONSE);
-        JsonElement mail = res.get("mail");
-        JsonElement lastname = res.get("lastname");
-        JsonElement firstname = res.get("firstname");
-        JsonElement birthday = res.get("birthday");
-        JsonElement gender = res.get("gender");
+
+        id = initInt(res, "id");
+        mail = initStr(res, "mail");
+        lastName = initStr(res, "lastname");
+        firstName = initStr(res, "firstname");
+        gender = initStr(res, "gender");
+        birthday = initStr(res, "birthday");
+
+
+//        JsonElement mail = res.get("mail");
+//        JsonElement lastname = res.get("lastname");
+//        JsonElement firstname = res.get("firstname");
+//        JsonElement birthday = res.get("birthday");
+//        JsonElement gender = res.get("gender");
         JsonElement geolocation = res.get("allowgps");
 
 //        System.out.println(res.toString());
 
-        id = res.get("id").getAsInt();
-
-        if (mail != null)
-            this.mail = mail.getAsString();
-
-        if (lastname != null)
-            this.lastName = lastname.getAsString();
-
-        if (firstname != null)
-            this.firstName = firstname.getAsString();
+//        id = res.get("id").getAsInt();
+//
+//        if (mail != null)
+//            this.mail = mail.getAsString();
+//
+//        if (lastname != null)
+//            this.lastName = lastname.getAsString();
+//
+//        if (firstname != null)
+//            this.firstName = firstname.getAsString();
 
 //        if (birthday != null) {
 //            this.birthday = birthday.getAsString();
 //        }
 
-        if (gender != null)
-            this.gender = gender.getAsString();
+//        if (gender != null)
+//            this.gender = gender.getAsString();
 
         if (geolocation != null) {
             if (geolocation.getAsString().equals("true"))
@@ -74,28 +78,22 @@ public class User implements Serializable {
 
     }
 
-    public void setOrganisations(JsonObject result) {
-        // Empty the list
-        organisations.clear();
+    private int initInt(JsonObject jsonObject, String memberName) {
+        JsonElement jsonElement = jsonObject.get(memberName);
 
-        // Fill the list
-        for (JsonElement organisationJson : result.getAsJsonArray(Network.API_PARAMETER_RESPONSE)) {
-            Organisation    organisation = new Organisation();
-            String          name = organisationJson.getAsJsonObject().get("name").toString();
-
-            organisation.setName(name.replaceAll("\"", ""));
-            organisations.add(organisation);
-        }
-
+        if (!jsonElement.isJsonNull())
+            return (jsonElement.getAsInt());
+        return (-1);
     }
 
-    public List<Organisation> getOrganisations() {
-        return organisations;
+    private String initStr(JsonObject jsonObject, String memberName) {
+        JsonElement jsonElement = jsonObject.get(memberName);
+
+        if (!jsonElement.isJsonNull())
+            return (jsonElement.getAsString());
+        return (null);
     }
 
-    public void setOrganisations(List<Organisation> organisations) {
-        this.organisations = organisations;
-    }
 
     public void setId(int id) {
         this.id = id;

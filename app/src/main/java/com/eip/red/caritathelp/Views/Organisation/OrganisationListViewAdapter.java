@@ -1,4 +1,4 @@
-package com.eip.red.caritathelp.Views.OrganisationViews.Organisation;
+package com.eip.red.caritathelp.Views.Organisation;
 
 import android.view.View;
 import android.view.ViewGroup;

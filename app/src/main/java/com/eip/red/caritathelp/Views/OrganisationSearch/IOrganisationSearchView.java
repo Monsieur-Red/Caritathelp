@@ -1,4 +1,4 @@
-package com.eip.red.caritathelp.Views.OrganisationViews.OrganisationSearch;
+package com.eip.red.caritathelp.Views.OrganisationSearch;
 
 import com.eip.red.caritathelp.Models.Organisation;
 
@@ -16,6 +16,6 @@ public interface IOrganisationSearchView {
 
     void setDialogError(String title, String msg);
 
-    void updateListView(List<Organisation> organisations);
+    void updateListView(List<String> organisations);
 
 }

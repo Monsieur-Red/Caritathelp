@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.eip.red.caritathelp.Models.Network;
+import com.eip.red.caritathelp.Models.Organisation;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -24,7 +25,7 @@ public class OrganisationCreationInteractor {
         this.network = network;
     }
 
-    public void create(String name, String theme, String city, String description, IOnOrganisationCreationsFinishedListener listener) {
+    public void createOrganisation(String name, String theme, String city, String description, IOnOrganisationCreationsFinishedListener listener) {
         if (!checkError(name, theme, city, description, listener))
             apiRequest(name, theme, city, description, listener);
     }
@@ -82,26 +83,13 @@ public class OrganisationCreationInteractor {
                                     listener.onDialogError("Association existante", "Veuillez modifier le nom de l'association");
                             }
                             else
-                                listener.onSuccess(name);
-//                            if (result.get(Network.API_PARAMETER_STATUS).getAsInt() == Network.API_STATUS_ERROR)
-//                                listener.onEmailError(result.get("message").getAsString());
-//                            else {
-//                                // Update User Model
-//                                if (!TextUtils.isEmpty(mail) && !mail.equals(user.getMail()))
-//                                    user.setMail(mail);
-//
-//                                if (!TextUtils.isEmpty(firstname) && !firstname.equals(user.getFirstName()))
-//                                    user.setFirstName(firstname);
-//
-//                                if (!TextUtils.isEmpty(lastname) && !lastname.equals(user.getLastName()))
-//                                    user.setLastName(lastname);
-//
-//                                listener.onSuccess();
-//                            }
-//                        }
-                        } else
+                                listener.onSuccess(new Organisation(result.getAsJsonObject(Network.API_PARAMETER_RESPONSE)));
+
+                        }
+                        else
                             listener.onDialogError("Problème de connection", "Vérifiez votre connexion Internet");
                     }
                 });
     }
+
 }

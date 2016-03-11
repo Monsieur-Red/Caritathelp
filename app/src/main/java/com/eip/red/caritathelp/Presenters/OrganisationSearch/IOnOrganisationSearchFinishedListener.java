@@ -12,5 +12,5 @@ public interface IOnOrganisationSearchFinishedListener {
 
     void onDialogError(String title, String msg);
 
-    void onSuccess(List<Organisation> organisations);
+    void onSuccess(List<String> organisations);
 }

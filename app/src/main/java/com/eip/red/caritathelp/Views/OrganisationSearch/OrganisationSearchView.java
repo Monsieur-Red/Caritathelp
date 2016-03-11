@@ -1,4 +1,4 @@
-package com.eip.red.caritathelp.Views.OrganisationViews.OrganisationSearch;
+package com.eip.red.caritathelp.Views.OrganisationSearch;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,7 +16,7 @@ import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation;
 import com.eip.red.caritathelp.Presenters.OrganisationSearch.OrganisationSearchPresenter;
 import com.eip.red.caritathelp.R;
-import com.eip.red.caritathelp.Views.OrganisationViews.Organisation.OrganisationView;
+import com.eip.red.caritathelp.Views.Organisation.OrganisationView;
 
 import java.util.List;
 
@@ -72,9 +72,9 @@ public class OrganisationSearchView extends Fragment implements IOrganisationSea
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Page Change
-                TextView textView = (TextView) view.findViewById(R.id.organisations_search_name);
+                String          orgaName = ((TextView) view.findViewById(R.id.organisations_search_name)).getText().toString();
 
-                ((MainActivity) getActivity()).replaceView(OrganisationView.newInstance(textView.getText().toString()), true);
+                presenter.goToOrganisationView(orgaName);
             }
         });
     }
@@ -97,8 +97,8 @@ public class OrganisationSearchView extends Fragment implements IOrganisationSea
     }
 
     @Override
-    public void updateListView(List<Organisation> organisations) {
-        ((OrganisationsSearchListViewAdapter) listView.getAdapter()).setOrganisations(organisations);
+    public void updateListView(List<String> organisationsNames) {
+        ((OrganisationsSearchListViewAdapter) listView.getAdapter()).setOrganisationsNames(organisationsNames);
         ((OrganisationsSearchListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 }

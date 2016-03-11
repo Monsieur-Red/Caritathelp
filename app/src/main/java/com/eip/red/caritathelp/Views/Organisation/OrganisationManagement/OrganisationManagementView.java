@@ -1,4 +1,4 @@
-package com.eip.red.caritathelp.Views.OrganisationViews.Organisation.OrganisationManagement;
+package com.eip.red.caritathelp.Views.Organisation.OrganisationManagement;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

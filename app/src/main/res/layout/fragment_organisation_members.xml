@@ -67,7 +67,7 @@
 
                     android:background="@android:color/transparent"
                     android:layout_gravity="center"
-                    android:hint="@android:string/search_go"
+                    android:hint="@string/organisation_members_search"
                     android:textColorHint="@color/bootstrap_gray"
                     android:textColor="@android:color/white">
                 </EditText>

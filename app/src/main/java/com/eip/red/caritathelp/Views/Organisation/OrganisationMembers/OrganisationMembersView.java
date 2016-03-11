@@ -1,4 +1,4 @@
-package com.eip.red.caritathelp.Views.OrganisationViews.Organisation.OrganisationMembers;
+package com.eip.red.caritathelp.Views.Organisation.OrganisationMembers;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +9,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.eip.red.caritathelp.MainActivity.MainActivity;
+import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation;
+import com.eip.red.caritathelp.Presenters.Organisation.OrganisationPresenter;
 import com.eip.red.caritathelp.R;
 
 /**
@@ -19,6 +21,29 @@ import com.eip.red.caritathelp.R;
 public class OrganisationMembersView extends Fragment implements View.OnClickListener {
 
     private ListView    listView;
+
+    public static OrganisationMembersView newInstance(int idOrganisation) {
+        OrganisationMembersView    myFragment = new OrganisationMembersView();
+
+        Bundle args = new Bundle();
+        args.putInt("organisation id", idOrganisation);
+        myFragment.setArguments(args);
+
+        return (myFragment);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Get Network Model & Id Organisation
+        Network network = ((MainActivity) getActivity()).getModelManager().getNetwork();
+        int     idOrganisation = getArguments().getInt("organisation id");
+
+        // Init Presenter
+//        presenter = new OrganisationPresenter(this, network, organisation);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

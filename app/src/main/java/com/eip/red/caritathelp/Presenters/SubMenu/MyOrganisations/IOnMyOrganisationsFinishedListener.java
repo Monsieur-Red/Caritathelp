@@ -1,12 +1,14 @@
 package com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations;
 
+import java.util.List;
+
 /**
  * Created by pierr on 24/02/2016.
  */
 
 public interface IOnMyOrganisationsFinishedListener {
 
-    void onConnectionInternetError(String error);
+    void onDialogError(String title, String msg);
 
-    void onSuccess();
+    void onSuccess(List<String> myOrganisationsNames);
 }

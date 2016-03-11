@@ -1,11 +1,10 @@
-package com.eip.red.caritathelp.Views.OrganisationViews.OrganisationSearch;
+package com.eip.red.caritathelp.Views.OrganisationSearch;
 
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.eip.red.caritathelp.Models.Organisation;
 import com.eip.red.caritathelp.R;
 
 import java.util.ArrayList;
@@ -19,16 +18,16 @@ import java.util.List;
 public class OrganisationsSearchListViewAdapter extends BaseAdapter {
 
     private OrganisationSearchView  fragment;
-    private List<Organisation>      organisations;
+    private List<String>            organisationsNames;
 
     public OrganisationsSearchListViewAdapter(OrganisationSearchView fragment) {
         this.fragment = fragment;
-        organisations = new ArrayList<>();
+        organisationsNames = new ArrayList<>();
     }
 
     @Override
     public int getCount() {
-        return (organisations.size());
+        return (organisationsNames.size());
     }
 
     @Override
@@ -50,13 +49,13 @@ public class OrganisationsSearchListViewAdapter extends BaseAdapter {
 
         // Set Organisation Name
         TextView textView = (TextView) view.findViewById(R.id.organisations_search_name);
-        textView.setText(organisations.get(position).getName());
+        textView.setText(organisationsNames.get(position));
 
         return view;
     }
 
-    public void setOrganisations(List<Organisation> organisations) {
-        this.organisations = organisations;
+    public void setOrganisationsNames(List<String> organisationsNames) {
+        this.organisationsNames = organisationsNames;
     }
 }
 

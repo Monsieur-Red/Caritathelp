@@ -16,8 +16,11 @@ import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.User;
 import com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations.MyOrganisationsPresenter;
 import com.eip.red.caritathelp.R;
-import com.eip.red.caritathelp.Views.OrganisationViews.Organisation.OrganisationView;
+import com.eip.red.caritathelp.Views.Organisation.OrganisationView;
+import com.eip.red.caritathelp.Views.OrganisationSearch.OrganisationsSearchListViewAdapter;
 import com.eip.red.caritathelp.Views.SubMenu.MyOrganisations.OrganisationCreation.OrganisationCreationView;
+
+import java.util.List;
 
 /**
  * Created by pierr on 16/11/2015.
@@ -25,9 +28,6 @@ import com.eip.red.caritathelp.Views.SubMenu.MyOrganisations.OrganisationCreatio
 public class MyOrganisationsView extends Fragment implements IMyOrganisationsView, View.OnClickListener{
 
     private MyOrganisationsPresenter    presenter;
-
-    private OrganisationCreationView    organisationCreationView;
-    private OrganisationView            organisationView;
 
     private ListView        listView;
     private ProgressBar     progressBar;
@@ -43,10 +43,6 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
 
         // Init Presenter
         presenter = new MyOrganisationsPresenter(this, user, network);
-
-        // Init View
-        organisationCreationView = new OrganisationCreationView();
-        organisationView = new OrganisationView();
     }
 
 
@@ -60,7 +56,7 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
 
         // Init ListView & Listener & Adapter
         listView = (ListView)view.findViewById(R.id.orga_list_view);
-        listView.setAdapter(new MyOrganisationsListViewAdapter(this, ((MainActivity) getActivity()).getModelManager().getUser().getOrganisations()));
+        listView.setAdapter(new MyOrganisationsListViewAdapter(this));
         initListener();
 
         // Init Button Listener
@@ -83,9 +79,9 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Page Change
-                TextView textView = (TextView) view.findViewById(R.id.my_organisations_title);
+                String          orgaName = ((TextView) view.findViewById(R.id.my_organisations_name)).getText().toString();
 
-                ((MainActivity) getActivity()).replaceView(OrganisationView.newInstance(textView.getText().toString()), true);
+                presenter.goToOrganisationView(orgaName);
             }
         });
     }
@@ -93,15 +89,7 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.top_bar_my_organisations_btn_add_orga:
-                // Page Change
-               ((MainActivity) getActivity()).replaceView(organisationCreationView, true);
-                break;
-            case R.id.top_bar_my_organisations_return:
-                ((MainActivity) getActivity()).goToPreviousPage();
-                break;
-        }
+        presenter.onClick(v.getId());
     }
 
     @Override
@@ -115,14 +103,16 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
     }
 
     @Override
-    public void setConnectionInternetError(String error) {
-        dialog.setTitle("Problème de connection");
-        dialog.setMessage("Vérifiez votre connexion Internet");
+    public void setDialogError(String title, String msg) {
+        dialog.setTitle(title);
+        dialog.setMessage(msg);
         dialog.show();
     }
 
     @Override
-    public void updateListView() {
-        listView.invalidateViews();
+    public void updateListView(List<String> myOrganisationsNames) {
+        ((MyOrganisationsListViewAdapter) listView.getAdapter()).setMyOrganisationsNames(myOrganisationsNames);
+        ((MyOrganisationsListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
+
 }

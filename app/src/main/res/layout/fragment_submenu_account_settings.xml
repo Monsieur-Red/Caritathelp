@@ -68,7 +68,7 @@
             android:layout_weight="1"
             android:paddingLeft="@dimen/_20sdp"
             android:background="@drawable/border_normal_grey"
-            android:textSize="@dimen/_13sdp"/>
+            android:textSize="@dimen/_12sdp"/>
 
 
         <EditText
@@ -79,7 +79,7 @@
             android:layout_marginBottom="@dimen/_10sdp"
             android:paddingLeft="@dimen/_20sdp"
             android:background="@drawable/border_normal_grey"
-            android:textSize="@dimen/_13sdp"/>
+            android:textSize="@dimen/_12sdp"/>
 
 
         <EditText
@@ -90,7 +90,7 @@
             android:layout_marginBottom="@dimen/_15sdp"
             android:paddingLeft="@dimen/_20sdp"
             android:background="@drawable/border_normal_grey"
-            android:textSize="@dimen/_13sdp"/>
+            android:textSize="@dimen/_12sdp"/>
 
 
         <EditText
@@ -103,7 +103,7 @@
             android:background="@drawable/border_normal_grey"
             android:hint="@string/account_settings_current_password"
             android:inputType="textPassword"
-            android:textSize="@dimen/_13sdp"/>
+            android:textSize="@dimen/_12sdp"/>
 
         <EditText
             android:id="@+id/submenu_account_settings_new_password"
@@ -114,7 +114,7 @@
             android:background="@drawable/border_normal_grey"
             android:hint="@string/account_settings_new_password"
             android:inputType="textPassword"
-            android:textSize="@dimen/_13sdp"/>
+            android:textSize="@dimen/_12sdp"/>
 
         <EditText
             android:id="@+id/submenu_account_settings_checking_new_password"
@@ -126,7 +126,7 @@
             android:background="@drawable/border_normal_grey"
             android:hint="@string/account_settings_new_password_checking"
             android:inputType="textPassword"
-            android:textSize="@dimen/_13sdp"/>
+            android:textSize="@dimen/_12sdp"/>
 
         <Button
             android:id="@+id/submenu_account_settings_btn_save"

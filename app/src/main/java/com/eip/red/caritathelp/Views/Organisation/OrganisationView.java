@@ -1,10 +1,9 @@
-package com.eip.red.caritathelp.Views.OrganisationViews.Organisation;
+package com.eip.red.caritathelp.Views.Organisation;
 
 import android.graphics.LightingColorFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -16,10 +15,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.eip.red.caritathelp.MainActivity.MainActivity;
+import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation;
+import com.eip.red.caritathelp.Presenters.Organisation.OrganisationPresenter;
 import com.eip.red.caritathelp.R;
-import com.eip.red.caritathelp.Views.OrganisationViews.Organisation.OrganisationManagement.OrganisationManagementView;
-import com.eip.red.caritathelp.Views.OrganisationViews.Organisation.OrganisationMembers.OrganisationMembersView;
+import com.eip.red.caritathelp.Views.Organisation.OrganisationManagement.OrganisationManagementView;
+import com.eip.red.caritathelp.Views.Organisation.OrganisationMembers.OrganisationMembersView;
 
 /**
  * Created by pierr on 18/02/2016.
@@ -27,16 +28,16 @@ import com.eip.red.caritathelp.Views.OrganisationViews.Organisation.Organisation
 
 public class OrganisationView extends Fragment implements View.OnClickListener {
 
-    private OrganisationManagementView  organisationManagementView;
-    private OrganisationMembersView     organisationMembersView;
+    private OrganisationPresenter   presenter;
 
     private ListView    listView;
 
-    public static OrganisationView newInstance(String organisation) {
+    public static OrganisationView newInstance(Organisation organisation) {
         OrganisationView    myFragment = new OrganisationView();
 
         Bundle args = new Bundle();
-        args.putString("organisation", organisation);
+
+        args.putSerializable("organisation", organisation);
         myFragment.setArguments(args);
 
         return (myFragment);
@@ -46,9 +47,12 @@ public class OrganisationView extends Fragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Init Views
-        organisationManagementView = new OrganisationManagementView();
-        organisationMembersView = new OrganisationMembersView();
+        // Get Network & Organisation Model
+        Network         network = ((MainActivity) getActivity()).getModelManager().getNetwork();
+        Organisation    organisation = (Organisation) getArguments().getSerializable("organisation");
+
+        // Init Presenter
+        presenter = new OrganisationPresenter(this, network, organisation);
     }
 
     @Override
@@ -57,7 +61,7 @@ public class OrganisationView extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_organisation, container, false);
 
         // Get Organisation Name
-        String organisation = getArguments().getString("organisation");
+        String organisation = presenter.getOrganisationName();
 
         // Init ToolBar text
         EditText    editText = (EditText) view.findViewById(R.id.top_bar_organisation_search_text);
@@ -97,18 +101,7 @@ public class OrganisationView extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.top_bar_organisation_return:
-                ((MainActivity)getActivity()).goToPreviousPage();
-                break;
-            case R.id.top_bar_organisation_management:
-                ((MainActivity) getActivity()).replaceView(organisationManagementView, true);
-                break;
-//            case R.id.organisation_btn_members:
-//                organisationMembersView.setOrganisation(((MainActivity) getActivity()).getModelManager());
-//                ((MainActivity) getActivity()).replaceView(organisationMembersView, true);
-//                break;
-        }
+        presenter.onClick(v.getId());
     }
 
     /**** Method for Setting the Height of the ListView dynamically.

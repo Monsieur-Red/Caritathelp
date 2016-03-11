@@ -1,9 +1,8 @@
-package com.eip.red.caritathelp.Views.OrganisationViews.Organisation.OrganisationMembers;
+package com.eip.red.caritathelp.Views.Organisation.OrganisationMembers;
 
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 import com.eip.red.caritathelp.R;
 
