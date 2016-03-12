@@ -3,16 +3,20 @@ package com.eip.red.caritathelp.Views.SubMenu.MyOrganisations;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.eip.red.caritathelp.MainActivity.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
+import com.eip.red.caritathelp.Models.Organisation;
 import com.eip.red.caritathelp.Models.User;
 import com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations.MyOrganisationsPresenter;
 import com.eip.red.caritathelp.R;
@@ -21,6 +25,7 @@ import com.eip.red.caritathelp.Views.OrganisationSearch.OrganisationsSearchListV
 import com.eip.red.caritathelp.Views.SubMenu.MyOrganisations.OrganisationCreation.OrganisationCreationView;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pierr on 16/11/2015.
@@ -30,6 +35,7 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
     private MyOrganisationsPresenter    presenter;
 
     private ListView        listView;
+    private EditText        searchBar;
     private ProgressBar     progressBar;
     private AlertDialog     dialog;
 
@@ -43,6 +49,11 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
 
         // Init Presenter
         presenter = new MyOrganisationsPresenter(this, user, network);
+
+        // Init Dialog
+        dialog = new AlertDialog.Builder(getContext())
+                .setCancelable(true)
+                .create();
     }
 
 
@@ -52,12 +63,16 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
         View    view = inflater.inflate(R.layout.fragment_my_organisations, container, false);
 
         // Init UI Element
+        searchBar = (EditText) view.findViewById(R.id.top_bar_my_organisations_search_text);
         progressBar = (ProgressBar)  view.findViewById(R.id.my_organisations_progress_bar);
 
         // Init ListView & Listener & Adapter
         listView = (ListView)view.findViewById(R.id.orga_list_view);
         listView.setAdapter(new MyOrganisationsListViewAdapter(this));
-        initListener();
+        initListViewListener();
+
+        // Init Filter
+        initSearchBarListener();
 
         // Init Button Listener
         view.findViewById(R.id.top_bar_my_organisations_return).setOnClickListener(this);
@@ -66,26 +81,45 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
         // Init MyOrganisation Model by requesting the api
         presenter.getMyOrganisations();
 
-        // Init Dialog
-        dialog = new AlertDialog.Builder(getContext())
-                .setCancelable(true)
-                .create();
-
         return (view);
     }
 
-    private void initListener() {
+    private void initListViewListener() {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Page Change
-                String          orgaName = ((TextView) view.findViewById(R.id.my_organisations_name)).getText().toString();
+                // Init Text Search Bar
+                searchBar.invalidate();
+                searchBar.getText().clear();
+                searchBar.setHint(android.R.string.search_go);
 
-                presenter.goToOrganisationView(orgaName);
+                // Go to organisation page
+                presenter.goToOrganisationView((Organisation) listView.getItemAtPosition(position));
             }
         });
     }
 
+    private void initSearchBarListener() {
+        searchBar.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+                String  text = searchBar.getText().toString().toLowerCase(Locale.getDefault());
+
+                ((MyOrganisationsListViewAdapter) listView.getAdapter()).filter(text);
+            }
+        });
+    }
 
     @Override
     public void onClick(View v) {
@@ -110,8 +144,8 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
     }
 
     @Override
-    public void updateListView(List<String> myOrganisationsNames) {
-        ((MyOrganisationsListViewAdapter) listView.getAdapter()).setMyOrganisationsNames(myOrganisationsNames);
+    public void updateListView(List<Organisation> myOrganisations) {
+        ((MyOrganisationsListViewAdapter) listView.getAdapter()).setMyOrganisations(myOrganisations);
         ((MyOrganisationsListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 

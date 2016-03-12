@@ -31,7 +31,7 @@
     <string name="subscribe">S\'inscrire</string>
 
     <!-- OrganisationSearch View -->
-    <string name="organisation_search_title">Rechercher une association</string>
+    <string name="organisations_search_bar">Rechercher une association</string>
 
     <!-- MailBox View -->
     <string name="mailbox_toolbar_title">Messagerie</string>
@@ -67,6 +67,7 @@
     <string name="organisation_management_bar_title">Gérer mon association</string>
     <string name="organisation_management_post">Ajouter une publication</string>
     <string name="organisation_management_create_event">Créer un événement</string>
+    <string name="organisation_management_members">Gérer les membres</string>
     <string name="organisation_management_settings">Modifier les paramètres</string>
     <string name="organisation_management_emergency_system">Système d\'urgence</string>
     <string name="organisation_management_delete">Supprimer l\'association</string>

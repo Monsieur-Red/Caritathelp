@@ -65,7 +65,7 @@ public class OrganisationView extends Fragment implements View.OnClickListener {
 
         // Init ToolBar text
         EditText    editText = (EditText) view.findViewById(R.id.top_bar_organisation_search_text);
-        editText.setText(organisation);
+        editText.setHint(organisation);
 
         // Init TextView Organisation Name
         TextView textView = (TextView) view.findViewById(R.id.organisation_name);

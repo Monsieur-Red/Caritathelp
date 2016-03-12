@@ -1,5 +1,7 @@
 package com.eip.red.caritathelp.Views.SubMenu.MyOrganisations;
 
+import com.eip.red.caritathelp.Models.Organisation;
+
 import java.util.List;
 
 /**
@@ -14,6 +16,6 @@ public interface IMyOrganisationsView {
 
     void setDialogError(String title, String msg);
 
-    void updateListView(List<String> myOrganisationsNames);
+    void updateListView(List<Organisation> myOrganisationsNames);
 
 }

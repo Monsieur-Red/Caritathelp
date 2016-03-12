@@ -1,5 +1,7 @@
 package com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations;
 
+import com.eip.red.caritathelp.Models.Organisation;
+
 /**
  * Created by pierr on 24/02/2016.
  */
@@ -10,5 +12,5 @@ public interface IMyOrganisationsPresenter {
 
     void getMyOrganisations();
 
-    void goToOrganisationView(String name);
+    void goToOrganisationView(Organisation organisation);
 }

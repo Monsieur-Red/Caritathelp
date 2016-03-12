@@ -7,9 +7,11 @@ import android.widget.TextView;
 
 import com.eip.red.caritathelp.Models.Organisation;
 import com.eip.red.caritathelp.R;
+import com.eip.red.caritathelp.Tools;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by pierr on 18/11/2015.
@@ -18,21 +20,27 @@ import java.util.List;
 public class MyOrganisationsListViewAdapter extends BaseAdapter {
 
     private MyOrganisationsView     fragment;
-    private List<String>            myOrganisationsNames;
+    private List<Organisation>      myOrganisationsFilter;
+    private List<Organisation>      myOrganisations;
 
     public MyOrganisationsListViewAdapter(MyOrganisationsView fragment) {
         this.fragment = fragment;
-        this.myOrganisationsNames = new ArrayList<>();
+        this.myOrganisationsFilter = new ArrayList<>();
+        this.myOrganisations = new ArrayList<>();
+    }
+
+    private class ViewHolder {
+        TextView    organisationName;
     }
 
     @Override
     public int getCount() {
-        return (myOrganisationsNames.size());
+        return (myOrganisationsFilter.size());
     }
 
     @Override
     public Object getItem(int position) {
-        return position;
+        return (myOrganisationsFilter.get(position));
     }
 
     @Override
@@ -41,20 +49,45 @@ public class MyOrganisationsListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View    view = convertView;
+    public View getView(int position, View view, ViewGroup parent) {
+        final ViewHolder holder;
 
-        if (convertView == null)
+        if (view == null) {
+            holder = new ViewHolder();
             view = fragment.getActivity().getLayoutInflater().inflate(R.layout.fragment_my_organisations_list_row, null);
+            holder.organisationName = (TextView) view.findViewById(R.id.my_organisations_name);
+            view.setTag(holder);
+        }
+        else
+            holder = (ViewHolder) view.getTag();
 
         // Set Organisation Name
-        TextView    textView = (TextView) view.findViewById(R.id.my_organisations_name);
-        textView.setText(myOrganisationsNames.get(position));
+        holder.organisationName.setText(Tools.upperCaseFirstLetter(myOrganisationsFilter.get(position).getName()));
 
-        return view;
+        return (view);
     }
 
-    public void setMyOrganisationsNames(List<String> myOrganisationsNames) {
-        this.myOrganisationsNames = myOrganisationsNames;
+    // Filter Class
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        myOrganisationsFilter.clear();
+        if (charText.length() == 0)
+            myOrganisationsFilter.addAll(myOrganisations);
+        else {
+            for (Organisation organisation : myOrganisations) {
+                String name = organisation.getName();
+                if (name.toLowerCase(Locale.getDefault()).contains(charText))
+                    myOrganisationsFilter.add(organisation);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void setMyOrganisations(List<Organisation> myOrganisations) {
+        this.myOrganisationsFilter.clear();
+        this.myOrganisations.clear();
+
+        this.myOrganisationsFilter.addAll(myOrganisations);
+        this.myOrganisations.addAll(myOrganisations);
     }
 }

@@ -1,17 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="@dimen/_50sdp"
+
+    android:background="@color/icons">
+
+    <ImageView
+        android:id="@+id/organisation_members_list_row_image"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_margin="@dimen/_6sdp"
+
+        android:layout_gravity="center"
+        android:src="@drawable/profile_example"
+        />
 
     <TextView
         android:id="@+id/organisation_members_list_row_name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/_40sdp"
+        android:paddingLeft="@dimen/_20sdp"
 
         android:background="@color/icons"
-        android:gravity="center"
+        android:layout_gravity="center"
+        android:gravity="left|center"
+        android:text="test"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/_18sdp" />
 

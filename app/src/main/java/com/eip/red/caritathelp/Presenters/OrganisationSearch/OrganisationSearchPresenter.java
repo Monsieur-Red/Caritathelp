@@ -29,9 +29,7 @@ public class OrganisationSearchPresenter implements IOrganisationSearchPresenter
     }
 
     @Override
-    public void goToOrganisationView(String name) {
-        Organisation    organisation = interactor.getOrganisation(name);
-
+    public void goToOrganisationView(Organisation organisation) {
         if (organisation != null)
             ((MainActivity) view.getActivity()).replaceView(OrganisationView.newInstance(organisation), true);
     }
@@ -43,8 +41,8 @@ public class OrganisationSearchPresenter implements IOrganisationSearchPresenter
     }
 
     @Override
-    public void onSuccess(List<String> organisationsNames) {
+    public void onSuccess(List<Organisation> organisations) {
         view.hideProgress();
-        view.updateListView(organisationsNames);
+        view.updateListView(organisations);
     }
 }

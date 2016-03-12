@@ -69,7 +69,9 @@
                     android:layout_gravity="center"
                     android:hint="@string/organisation_members_search"
                     android:textColorHint="@color/bootstrap_gray"
-                    android:textColor="@android:color/white">
+                    android:textColor="@android:color/white"
+                    android:imeActionLabel="@android:string/search_go"
+                    android:singleLine="true">
                 </EditText>
 
             </LinearLayout>

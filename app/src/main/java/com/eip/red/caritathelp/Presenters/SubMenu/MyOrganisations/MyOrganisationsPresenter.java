@@ -53,9 +53,7 @@ public class MyOrganisationsPresenter implements IMyOrganisationsPresenter, IOnM
     }
 
     @Override
-    public void goToOrganisationView(String name) {
-        Organisation organisation = interactor.getOrganisation(name);
-
+    public void goToOrganisationView(Organisation organisation) {
         if (organisation != null)
             ((MainActivity) view.getActivity()).replaceView(OrganisationView.newInstance(organisation), true);
     }
@@ -67,8 +65,8 @@ public class MyOrganisationsPresenter implements IMyOrganisationsPresenter, IOnM
     }
 
     @Override
-    public void onSuccess(List<String> myOrganisationsNames) {
+    public void onSuccess(List<Organisation> myOrganisations) {
         view.hideProgress();
-        view.updateListView(myOrganisationsNames);
+        view.updateListView(myOrganisations);
     }
 }

@@ -1,5 +1,6 @@
 package com.eip.red.caritathelp.MainActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import com.eip.red.caritathelp.Models.ModelManager;
 import com.eip.red.caritathelp.R;
@@ -54,6 +56,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void replaceView(Fragment fragment, boolean animation) {
+        // Hide Keyboard
+//        InputMethodManager keyboard = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//        keyboard.hideSoftInputFromWindow(oldView.getWindowToken(), 0);
+
+        // Replace Fragment
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         if (animation)
             ft.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);

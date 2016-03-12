@@ -5,10 +5,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.eip.red.caritathelp.Models.Member;
+import com.eip.red.caritathelp.Models.Organisation;
 import com.eip.red.caritathelp.R;
+import com.eip.red.caritathelp.Tools;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -18,21 +22,27 @@ import java.util.List;
 public class OrganisationsSearchListViewAdapter extends BaseAdapter {
 
     private OrganisationSearchView  fragment;
-    private List<String>            organisationsNames;
+    private List<Organisation>      organisationsFilter;
+    private List<Organisation>      organisations;
 
     public OrganisationsSearchListViewAdapter(OrganisationSearchView fragment) {
         this.fragment = fragment;
-        organisationsNames = new ArrayList<>();
+        organisationsFilter = new ArrayList<>();
+        organisations = new ArrayList<>();
+    }
+
+    private class ViewHolder {
+        TextView    organisationName;
     }
 
     @Override
     public int getCount() {
-        return (organisationsNames.size());
+        return (organisationsFilter.size());
     }
 
     @Override
     public Object getItem(int position) {
-        return position;
+        return (organisationsFilter.get(position));
     }
 
     @Override
@@ -41,21 +51,47 @@ public class OrganisationsSearchListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View    view = convertView;
+    public View getView(int position, View view, ViewGroup parent) {
+        final ViewHolder holder;
 
-        if (convertView == null)
+        if (view == null) {
+            holder = new ViewHolder();
             view = fragment.getActivity().getLayoutInflater().inflate(R.layout.fragment_organisations_search_list_row, null);
+            holder.organisationName = (TextView) view.findViewById(R.id.organisations_search_name);
+            view.setTag(holder);
+        }
+        else
+            holder = (ViewHolder) view.getTag();
 
         // Set Organisation Name
-        TextView textView = (TextView) view.findViewById(R.id.organisations_search_name);
-        textView.setText(organisationsNames.get(position));
+        holder.organisationName.setText(Tools.upperCaseFirstLetter(organisationsFilter.get(position).getName()));
 
         return view;
     }
 
-    public void setOrganisationsNames(List<String> organisationsNames) {
-        this.organisationsNames = organisationsNames;
+    // Filter Class
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        organisationsFilter.clear();
+        if (charText.length() == 0)
+            organisationsFilter.addAll(organisations);
+        else {
+            for (Organisation organisation : organisations) {
+                String name = organisation.getName();
+                if (name.toLowerCase(Locale.getDefault()).contains(charText))
+                    organisationsFilter.add(organisation);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+
+    public void setOrganisations(List<Organisation> organisations) {
+        this.organisationsFilter.clear();
+        this.organisations.clear();
+
+        this.organisationsFilter.addAll(organisations);
+        this.organisations.addAll(organisations);
     }
 }
 

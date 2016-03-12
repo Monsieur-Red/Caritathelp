@@ -16,6 +16,6 @@ public interface IOrganisationSearchView {
 
     void setDialogError(String title, String msg);
 
-    void updateListView(List<String> organisations);
+    void updateListView(List<Organisation> organisations);
 
 }

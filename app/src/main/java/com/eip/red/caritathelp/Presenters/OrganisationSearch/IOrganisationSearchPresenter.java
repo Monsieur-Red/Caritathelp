@@ -10,5 +10,5 @@ public interface IOrganisationSearchPresenter {
 
     void getAllOrganisations();
 
-    void goToOrganisationView(String name);
+    void goToOrganisationView(Organisation organisation);
 }
