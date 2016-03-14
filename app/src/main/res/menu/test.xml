@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <item android:id="@+id/item1"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="Blog" />
+
+    <item android:id="@+id/action_search"
+        android:title="Rechercher"
+        android:icon="@android:drawable/ic_menu_search"
+        app:showAsAction="ifRoom"
+        android:actionViewClass="android.widget.SearchView" />
 
     <item
-        android:id="@+id/action_refresh"
+        android:id="@+id/action_mailbox"
         android:orderInCategory="100"
-        android:showAsAction="always"
-        android:icon="@android:drawable/ic_popup_reminder"
-        android:title="Refresh"/>
+        android:title="Access Messages"
+        app:showAsAction="always"
+        android:icon="@android:drawable/sym_action_chat" />
+
+<!--
     <item
         android:id="@+id/action_settings"
         android:title="Settings">
     </item>
+-->
 
 </menu>

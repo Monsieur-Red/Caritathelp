@@ -6,57 +6,57 @@
     android:layout_height="match_parent">
 
     <!-- TOP BAR -->
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
+    <!--<LinearLayout-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/_50sdp"-->
 
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:background="@color/primary">
+        <!--android:focusable="true"-->
+        <!--android:focusableInTouchMode="true"-->
+        <!--android:background="@color/primary">-->
 
-        <!-- Home BAR -->
-        <LinearLayout
-            android:id="@+id/home_top_bar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"
+        <!--&lt;!&ndash; Home BAR &ndash;&gt;-->
+        <!--<LinearLayout-->
+            <!--android:id="@+id/home_top_bar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/_40sdp"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_marginTop="@dimen/_5sdp"-->
+            <!--android:layout_marginBottom="@dimen/_5sdp"-->
+            <!--android:layout_marginLeft="@dimen/_10sdp"-->
+            <!--android:layout_marginRight="@dimen/_10sdp"-->
 
-            android:layout_gravity="center"
-            android:weightSum="6"
-            android:background="@drawable/border_search_bar"
-            android:visibility="visible">
+            <!--android:layout_gravity="center"-->
+            <!--android:weightSum="6"-->
+            <!--android:background="@drawable/border_search_bar"-->
+            <!--android:visibility="visible">-->
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/_5sdp"
+            <!--<ImageView-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:padding="@dimen/_5sdp"-->
 
-                android:layout_gravity="center"
-                android:src="@android:drawable/ic_menu_search"/>
+                <!--android:layout_gravity="center"-->
+                <!--android:src="@android:drawable/ic_menu_search"/>-->
 
-            <EditText
-                android:id="@+id/top_bar_home_search"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:padding="@dimen/_5sdp"
+            <!--<EditText-->
+                <!--android:id="@+id/top_bar_home_search"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="5"-->
+                <!--android:layout_marginRight="@dimen/_10sdp"-->
+                <!--android:padding="@dimen/_5sdp"-->
 
-                android:background="@android:color/transparent"
-                android:layout_gravity="center"
-                android:hint="@android:string/search_go"
-                android:textColorHint="@color/bootstrap_gray"
-                android:textColor="@android:color/white">
-            </EditText>
+                <!--android:background="@android:color/transparent"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:hint="@android:string/search_go"-->
+                <!--android:textColorHint="@color/bootstrap_gray"-->
+                <!--android:textColor="@android:color/white">-->
+            <!--</EditText>-->
 
-        </LinearLayout>
-    </LinearLayout>
+        <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
 
 
     <ListView

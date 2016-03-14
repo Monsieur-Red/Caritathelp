@@ -1,6 +1,6 @@
 package com.eip.red.caritathelp.Presenters.Organisation.OrganisationMembers;
 
-import com.eip.red.caritathelp.MainActivity.MainActivity;
+import com.eip.red.caritathelp.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Member;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.R;

@@ -9,11 +9,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import com.eip.red.caritathelp.MainActivity.MainActivity;
+import com.eip.red.caritathelp.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations.OrganisationCreation.OrganisationCreationPresenter;
 import com.eip.red.caritathelp.R;
-import com.eip.red.caritathelp.Views.Organisation.OrganisationView;
 
 /**
  * Created by pierr on 23/02/2016.

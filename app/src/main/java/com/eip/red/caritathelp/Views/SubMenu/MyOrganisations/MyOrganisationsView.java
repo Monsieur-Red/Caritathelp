@@ -12,17 +12,13 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import com.eip.red.caritathelp.MainActivity.MainActivity;
+import com.eip.red.caritathelp.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation;
 import com.eip.red.caritathelp.Models.User;
 import com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations.MyOrganisationsPresenter;
 import com.eip.red.caritathelp.R;
-import com.eip.red.caritathelp.Views.Organisation.OrganisationView;
-import com.eip.red.caritathelp.Views.OrganisationSearch.OrganisationsSearchListViewAdapter;
-import com.eip.red.caritathelp.Views.SubMenu.MyOrganisations.OrganisationCreation.OrganisationCreationView;
 
 import java.util.List;
 import java.util.Locale;

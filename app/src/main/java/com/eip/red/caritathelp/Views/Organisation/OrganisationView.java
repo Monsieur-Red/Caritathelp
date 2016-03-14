@@ -14,13 +14,12 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.eip.red.caritathelp.MainActivity.MainActivity;
+import com.eip.red.caritathelp.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation;
 import com.eip.red.caritathelp.Presenters.Organisation.OrganisationPresenter;
 import com.eip.red.caritathelp.R;
-import com.eip.red.caritathelp.Views.Organisation.OrganisationManagement.OrganisationManagementView;
-import com.eip.red.caritathelp.Views.Organisation.OrganisationMembers.OrganisationMembersView;
+import com.eip.red.caritathelp.Tools;
 
 /**
  * Created by pierr on 18/02/2016.
@@ -79,7 +78,7 @@ public class OrganisationView extends Fragment implements View.OnClickListener {
         // Init ListView & Listener & Adapter
         listView = (ListView) view.findViewById(R.id.organisation_list_view);
         listView.setAdapter(new OrganisationListViewAdapter(this));
-        setListViewHeightBasedOnChildren(listView);
+        Tools.setListViewHeightBasedOnChildren(listView);
         initListener();
 
         // Init Listener
@@ -104,27 +103,5 @@ public class OrganisationView extends Fragment implements View.OnClickListener {
         presenter.onClick(v.getId());
     }
 
-    /**** Method for Setting the Height of the ListView dynamically.
-     **** Hack to fix the issue of not showing all the items of the ListView
-     **** when placed inside a ScrollView  ****/
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null)
-            return;
 
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, listView);
-            if (i == 0)
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, WindowManager.LayoutParams.WRAP_CONTENT));
-
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += view.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
-    }
 }

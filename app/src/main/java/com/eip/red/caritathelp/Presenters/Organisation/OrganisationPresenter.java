@@ -1,6 +1,7 @@
 package com.eip.red.caritathelp.Presenters.Organisation;
 
-import com.eip.red.caritathelp.MainActivity.MainActivity;
+import com.eip.red.caritathelp.Main.MainActivity;
+import com.eip.red.caritathelp.Models.Animation;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation;
 import com.eip.red.caritathelp.R;
@@ -39,10 +40,10 @@ public class OrganisationPresenter implements IOrganisationPresenter {
                 ((MainActivity) view.getActivity()).goToPreviousPage();
                 break;
             case R.id.top_bar_organisation_management:
-                ((MainActivity) view.getActivity()).replaceView(organisationManagementView, true);
+                ((MainActivity) view.getActivity()).replaceView(organisationManagementView, Animation.SLIDE_UP_DOWN);
                 break;
             case R.id.organisation_btn_members:
-                ((MainActivity) view.getActivity()).replaceView(OrganisationMembersView.newInstance(interactor.getOrganisationId()), true);
+                ((MainActivity) view.getActivity()).replaceView(OrganisationMembersView.newInstance(interactor.getOrganisationId()), Animation.SLIDE_UP_DOWN);
                 break;
         }
 

@@ -1,6 +1,7 @@
 package com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations.OrganisationCreation;
 
-import com.eip.red.caritathelp.MainActivity.MainActivity;
+import com.eip.red.caritathelp.Main.MainActivity;
+import com.eip.red.caritathelp.Models.Animation;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation;
 import com.eip.red.caritathelp.R;
@@ -74,6 +75,6 @@ public class OrganisationCreationPresenter implements IOrganisationCreationPrese
     public void onSuccess(Organisation organisation) {
         view.hideProgress();
         view.navigateToOrganisationView(organisation.getName());
-        ((MainActivity) view.getActivity()).replaceView(OrganisationView.newInstance(organisation), false);
+        ((MainActivity) view.getActivity()).replaceView(OrganisationView.newInstance(organisation), Animation.SLIDE_LEFT_RIGHT);
     }
 }

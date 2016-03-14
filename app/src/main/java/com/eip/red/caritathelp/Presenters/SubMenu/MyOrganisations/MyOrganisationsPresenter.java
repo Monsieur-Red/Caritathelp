@@ -1,6 +1,7 @@
 package com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations;
 
-import com.eip.red.caritathelp.MainActivity.MainActivity;
+import com.eip.red.caritathelp.Main.MainActivity;
+import com.eip.red.caritathelp.Models.Animation;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation;
 import com.eip.red.caritathelp.Models.User;
@@ -38,7 +39,7 @@ public class MyOrganisationsPresenter implements IMyOrganisationsPresenter, IOnM
         switch (viewId) {
             case R.id.top_bar_my_organisations_btn_add_orga:
                 // Page Change
-                ((MainActivity) view.getActivity()).replaceView(organisationCreationView, true);
+                ((MainActivity) view.getActivity()).replaceView(organisationCreationView, Animation.SLIDE_UP_DOWN);
                 break;
             case R.id.top_bar_my_organisations_return:
                 ((MainActivity) view.getActivity()).goToPreviousPage();
@@ -55,7 +56,7 @@ public class MyOrganisationsPresenter implements IMyOrganisationsPresenter, IOnM
     @Override
     public void goToOrganisationView(Organisation organisation) {
         if (organisation != null)
-            ((MainActivity) view.getActivity()).replaceView(OrganisationView.newInstance(organisation), true);
+            ((MainActivity) view.getActivity()).replaceView(OrganisationView.newInstance(organisation), Animation.SLIDE_LEFT_RIGHT);
     }
 
     @Override

@@ -7,7 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.eip.red.caritathelp.MainActivity.MainActivity;
+import com.eip.red.caritathelp.Main.MainActivity;
+import com.eip.red.caritathelp.Models.Animation;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.User;
 import com.eip.red.caritathelp.R;
@@ -62,11 +63,11 @@ public class SubMenuView extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.submenu_my_organisations:
                 // Page Change
-                ((MainActivity) getActivity()).replaceView(myOrganisationsView, true);
+                ((MainActivity) getActivity()).replaceView(myOrganisationsView, Animation.SLIDE_LEFT_RIGHT);
                 break;
             case R.id.submenu_account_settings:
                 // Page Change
-                ((MainActivity) getActivity()).replaceView(accountSettingsView, true);
+                ((MainActivity) getActivity()).replaceView(accountSettingsView, Animation.SLIDE_LEFT_RIGHT);
                 break;
             case R.id.submenu_logout:
                 ((MainActivity) getActivity()).logout();

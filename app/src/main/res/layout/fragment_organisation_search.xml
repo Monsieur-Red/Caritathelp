@@ -4,68 +4,89 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- TOP BAR -->
-    <LinearLayout
-        android:id="@+id/organisations_search_bar"
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="wrap_content">
 
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:background="@color/primary">
-
-        <!-- Search bar -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            android:layout_gravity="center"
-            android:weightSum="6"
-            android:background="@drawable/border_search_bar"
-            android:visibility="visible">
+            <LinearLayout
+                android:id="@+id/organisations_search_top_bar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/_5sdp"
+                android:orientation="horizontal"
+                android:background="@color/primary">
 
-                android:layout_gravity="center"
-                android:src="@android:drawable/ic_menu_search"/>
+                <!-- Search bar -->
+                <LinearLayout
+                    android:id="@+id/organisations_search_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:orientation="horizontal"
+                    android:layout_weight="4"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
 
-            <EditText
-                android:id="@+id/organisations_search_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:padding="@dimen/_5sdp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/border_search_bar"
+                    android:visibility="visible">
 
-                android:background="@android:color/transparent"
-                android:layout_gravity="center"
-                android:hint="@string/organisations_search_bar"
-                android:textColorHint="@color/bootstrap_gray"
-                android:textColor="@android:color/white"
-                android:singleLine="true"
-                android:imeActionLabel="@android:string/search_go"
-                android:inputType="text">
-            </EditText>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+
+                        android:layout_gravity="center"
+                        android:src="@android:drawable/ic_menu_search"/>
+
+                    <EditText
+                        android:id="@+id/organisations_search_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_5sdp"
+
+                        android:background="@android:color/transparent"
+                        android:layout_gravity="center"
+                        android:hint="@string/organisations_search_bar"
+                        android:textColorHint="@color/bootstrap_gray"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/_14sdp"
+                        android:singleLine="true"
+                        android:imeActionLabel="@android:string/search_go"
+                        android:inputType="text">
+                    </EditText>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/organisation_search_btn_cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginRight="@dimen/_5sdp"
+
+                    android:background="@android:color/transparent"
+                    android:text="Annuler"
+                    android:textSize="@dimen/_14sdp"
+                    android:textColor="@color/icons"
+                    android:visibility="gone"
+                    android:textAllCaps="false"/>
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/organisations_search_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </ListView>
 
         </LinearLayout>
-    </LinearLayout>
 
-    <ListView
-        android:id="@+id/organisations_search_list_view"
-        android:layout_below="@+id/organisations_search_bar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
-    </ListView>
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/organisation_search_progress_bar"

@@ -10,7 +10,7 @@ import android.widget.ListView;
 
 import com.eip.red.caritathelp.Models.Home.NewsList;
 import com.eip.red.caritathelp.R;
-import com.eip.red.caritathelp.MainActivity.MainActivity;
+import com.eip.red.caritathelp.Main.MainActivity;
 
 /**
  * Created by pierr on 16/11/2015.

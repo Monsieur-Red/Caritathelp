@@ -1,10 +1,11 @@
-package com.eip.red.caritathelp.MainActivity;
+package com.eip.red.caritathelp.Main;
 
 import android.graphics.Color;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.eip.red.caritathelp.Models.Animation;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Views.Home.HomeView;
 import com.eip.red.caritathelp.Views.MailBox.MailBoxView;
@@ -50,7 +51,7 @@ public class MyBottomBar {
 
         // Display First View
         FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.main_fragment, homeView).commit();
+//        ft.replace(R.id.main_fragment, homeView).commit();
 
         // Init Buttons
         buttons = new ArrayList<>();
@@ -62,7 +63,7 @@ public class MyBottomBar {
 
         // Init Listener & Color Button & Color background Button
         for (ImageButton button : buttons) {
-            button.setOnClickListener(activity);
+//            button.setOnClickListener(activity);
             button.setColorFilter(Color.LTGRAY);
             button.setBackgroundColor(Color.TRANSPARENT);
         }
@@ -79,35 +80,35 @@ public class MyBottomBar {
                 selectButton(STATE_HOME);
 
                 // Page Change
-                activity.replaceView(homeView, false);
+                activity.replaceView(homeView, Animation.ZERO);
                 break;
             case R.id.bottom_bar_btn_organisations:
                 // Set Button view
                 selectButton(STATE_ORGA);
 
                 // Page Change
-                activity.replaceView(organisationSearchView, false);
+                activity.replaceView(organisationSearchView, Animation.ZERO);
                 break;
             case R.id.bottom_bar_btn_mailbox:
                 // Set Button view
                 selectButton(STATE_MAILBOX);
 
                 // Page Change
-                activity.replaceView(mailBoxView, false);
+                activity.replaceView(mailBoxView, Animation.ZERO);
                 break;
             case R.id.bottom_bar_btn_notifications:
                 // Set Button view
                 selectButton(STATE_NOTIFICATIONS);
 
                 // Page Change
-                activity.replaceView(notificationsView, false);
+                activity.replaceView(notificationsView, Animation.ZERO);
                 break;
             case R.id.bottom_bar_btn_submenu:
                 // Set Button view
                 selectButton(STATE_SUBMENU);
 
                 // Page Change
-                activity.replaceView(subMenuView, false);
+                activity.replaceView(subMenuView, Animation.ZERO);
                 break;
         }
     }
