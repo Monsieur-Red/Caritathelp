@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/primary_dark"
+        android:weightSum="6"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <!-- LOGO Starts -->
+        <ImageView
+            android:src="@drawable/logo_caritathelp_2017_x2_tisser"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:padding="@dimen/_40sdp"
+
+            android:layout_gravity="center"
+            android:cropToPadding="true"
+            android:clickable="false" />
+        <!-- LOGO Ends -->
+
+
+        <!--  Connection Form Starts -->
+        <LinearLayout
+            android:id="@+id/connection_form"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:paddingBottom="@dimen/_20sdp"
+            android:paddingLeft="@dimen/_28sdp"
+            android:paddingRight="@dimen/_28sdp"
+
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <!-- Email Label Starts -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/primary">
+                <EditText
+                    android:id="@+id/connection_text_input_email"
+                    android:nextFocusDown="@+id/connection_text_input_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/_10sdp"
+
+                    android:text="test@test.com"
+
+                    android:theme="@style/My_Connection_Edit_Text"
+                    android:inputType="textEmailAddress"
+                    android:hint="@string/text_view_email"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14sdp"
+                    android:singleLine="true"/>
+        </android.support.design.widget.TextInputLayout>
+            <!-- Email Label Ends -->
+
+            <!-- Password Label Starts -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:textColorHint="@color/primary">
+                <EditText android:id="@+id/connection_text_input_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/_10sdp"
+
+                    android:text="test"
+
+                    android:theme="@style/My_Connection_Edit_Text"
+                    android:inputType="textPassword"
+                    android:hint="@string/text_view_password"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14sdp"
+                    android:singleLine="true"/>
+            </android.support.design.widget.TextInputLayout>
+            <!-- Password Label Ends -->
+
+        </LinearLayout>
+        <!--  Connection Form Ends -->
+
+        <!-- Footer Starts -->
+        <LinearLayout
+            android:id="@+id/connection_footer"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:paddingBottom="@dimen/_2sdp"
+            android:paddingLeft="@dimen/_28sdp"
+            android:paddingRight="@dimen/_28sdp"
+
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <!-- Login button -->
+            <Button
+                android:id="@+id/connection_btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:padding="@dimen/_12sdp"
+                android:shadowColor="@color/colorPrimaryDark"
+                android:text="@string/btn_connection"
+
+                android:background="@color/primary"
+                android:textColor="@color/white" />
+
+            <!-- Subscribe button -->
+            <Button
+                android:id="@+id/connection_btn_subscribe"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:padding="@dimen/_12sdp"
+                android:shadowColor="@color/colorPrimaryDark"
+                android:text="@string/btn_subscribe"
+
+                android:background="@color/primary"
+                android:textColor="@color/white" />
+
+            <!-- Subscribe text -->
+            <TextView android:id="@+id/connection_link_missing_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_14sdp"
+                android:text="@string/text_view_password_missing"
+                android:gravity="center"
+                android:textSize="@dimen/_12sdp"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+        <!-- Footer Ends -->
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/connection_bar_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+
+        android:visibility="gone"
+        />
+
+</RelativeLayout>

@@ -31,7 +31,7 @@ public class LoginView extends AppCompatActivity implements ILoginView, View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.connection);
+        setContentView(R.layout.activity_connection);
 
         // Init UI
         email = (EditText) findViewById(R.id.connection_text_input_email);

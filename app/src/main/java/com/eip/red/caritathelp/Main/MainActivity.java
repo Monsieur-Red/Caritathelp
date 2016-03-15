@@ -33,11 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager       viewPager;
     private MyPagerAdapter  myPagerAdapter;
     private TabLayout       topBar;
-//    private PagerSlidingTabStrip    tabStrip;
 
     private TextView    toolbarTitle;
-
-//    private MyBottomBar bottomBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +45,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Init ModelManager
         modelManager = new ModelManager(getIntent());
-
-        // Init Bar
-//        bottomBar = new MyBottomBar(this);
 
         // Init Tool Bar
         initToolBar();
@@ -85,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         // Init Top Bar
         topBar = (TabLayout) findViewById(R.id.activity_main_tabs);
 
-        // Add Tabs Icons
+        // Add Tabs & set Icons
         topBar.addTab(topBar.newTab().setIcon(android.R.drawable.ic_dialog_dialer));
         topBar.addTab(topBar.newTab().setIcon(android.R.drawable.ic_menu_myplaces));
         topBar.addTab(topBar.newTab().setIcon(android.R.drawable.ic_popup_reminder));
@@ -99,6 +93,10 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onTabSelected(TabLayout.Tab tab) {
                         super.onTabSelected(tab);
+
+                        //topBar.getChildAt(1).setVisibility(View.GONE);
+//                        topBar.addTab(topBar.newTab().setIcon(android.R.drawable.ic_menu_add), 2, true);
+//                        myPagerAdapter.getFragment(1).getView().setVisibility(View.GONE);
 
                         // Set Icon Alpha
                         tab.getIcon().setAlpha(255);
@@ -139,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
                 icon.setColorFilter(white, PorterDuff.Mode.SRC_IN);
             }
         }
-
     }
 
     private void changeTitleToolBar(int position) {
@@ -172,12 +169,6 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-//    @Override
-//    public void onClick(View v) {
-//        topBar.onClick(v);
-//        bottomBar.onClick(v);
-//    }
 
     public void replaceView(Fragment fragment, int animation) {
         // Hide Keyboard
