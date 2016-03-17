@@ -2,7 +2,7 @@ package com.eip.red.caritathelp.Presenters.Organisation.OrganisationMembers;
 
 import android.content.Context;
 
-import com.eip.red.caritathelp.Models.Members;
+import com.eip.red.caritathelp.Models.Organisation.Members;
 import com.eip.red.caritathelp.Models.Network;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;

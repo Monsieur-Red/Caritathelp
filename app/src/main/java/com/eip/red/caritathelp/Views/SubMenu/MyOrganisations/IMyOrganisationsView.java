@@ -1,6 +1,6 @@
 package com.eip.red.caritathelp.Views.SubMenu.MyOrganisations;
 
-import com.eip.red.caritathelp.Models.Organisation;
+import com.eip.red.caritathelp.Models.Organisation.Organisation;
 
 import java.util.List;
 

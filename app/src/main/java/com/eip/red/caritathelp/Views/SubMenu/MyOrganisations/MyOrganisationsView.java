@@ -1,8 +1,8 @@
 package com.eip.red.caritathelp.Views.SubMenu.MyOrganisations;
 
+import android.app.AlertDialog;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.Organisation;
+import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.Models.User;
 import com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations.MyOrganisationsPresenter;
 import com.eip.red.caritathelp.R;
@@ -47,7 +47,7 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
         presenter = new MyOrganisationsPresenter(this, user, network);
 
         // Init Dialog
-        dialog = new AlertDialog.Builder(getContext())
+        dialog = new AlertDialog.Builder(getActivity().getBaseContext())
                 .setCancelable(true)
                 .create();
     }

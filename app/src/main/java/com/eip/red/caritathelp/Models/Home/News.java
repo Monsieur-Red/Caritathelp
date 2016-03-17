@@ -2,11 +2,13 @@ package com.eip.red.caritathelp.Models.Home;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
+
 /**
  * Created by pierr on 11/01/2016.
  */
 
-public class News {
+public class News implements Serializable {
 
 //    private Bitmap  logo;
     private int     logo;

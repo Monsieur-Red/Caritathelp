@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.Organisation;
+import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;

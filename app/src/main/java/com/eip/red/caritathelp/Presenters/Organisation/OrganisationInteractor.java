@@ -3,7 +3,7 @@ package com.eip.red.caritathelp.Presenters.Organisation;
 import android.content.Context;
 
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.Organisation;
+import com.eip.red.caritathelp.Models.Organisation.Organisation;
 
 /**
  * Created by pierr on 11/03/2016.

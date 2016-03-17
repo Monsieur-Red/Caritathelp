@@ -29,7 +29,7 @@
                     android:orientation="horizontal"
                     android:layout_weight="4"
                     android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_5sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
 
                     android:layout_gravity="center"
                     android:background="@drawable/border_search_bar"
@@ -52,7 +52,7 @@
                         android:background="@android:color/transparent"
                         android:layout_gravity="center"
                         android:hint="@string/organisations_search_bar"
-                        android:textColorHint="@color/bootstrap_gray_light"
+                        android:textColorHint="@color/secondary_text"
                         android:textColor="@color/primary_text"
                         android:textSize="@dimen/_14sdp"
                         android:singleLine="true"

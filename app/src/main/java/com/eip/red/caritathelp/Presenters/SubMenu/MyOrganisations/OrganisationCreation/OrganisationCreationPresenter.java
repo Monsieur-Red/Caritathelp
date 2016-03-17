@@ -1,9 +1,9 @@
 package com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations.OrganisationCreation;
 
 import com.eip.red.caritathelp.Main.MainActivity;
-import com.eip.red.caritathelp.Models.Animation;
+import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.Organisation;
+import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Views.Organisation.OrganisationView;
 import com.eip.red.caritathelp.Views.SubMenu.MyOrganisations.OrganisationCreation.OrganisationCreationView;

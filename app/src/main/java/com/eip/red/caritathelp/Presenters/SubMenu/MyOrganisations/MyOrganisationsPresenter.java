@@ -1,9 +1,9 @@
 package com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations;
 
 import com.eip.red.caritathelp.Main.MainActivity;
-import com.eip.red.caritathelp.Models.Animation;
+import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.Organisation;
+import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.Models.User;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Views.Organisation.OrganisationView;
@@ -27,7 +27,7 @@ public class MyOrganisationsPresenter implements IMyOrganisationsPresenter, IOnM
         this.view = view;
 
         // Init Interactor
-        interactor = new MyOrganisationsInteractor(view.getContext(), user, network);
+        interactor = new MyOrganisationsInteractor(view.getActivity().getBaseContext(), user, network);
 
         // Init View
         organisationCreationView = new OrganisationCreationView();

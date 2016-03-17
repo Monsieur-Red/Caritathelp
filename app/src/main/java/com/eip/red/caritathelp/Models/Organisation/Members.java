@@ -1,4 +1,4 @@
-package com.eip.red.caritathelp.Models;
+package com.eip.red.caritathelp.Models.Organisation;
 
 import java.util.ArrayList;
 

@@ -3,18 +3,11 @@ package com.eip.red.caritathelp.Presenters.OrganisationSearch;
 import android.content.Context;
 
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.Organisation;
-import com.eip.red.caritathelp.Models.Organisations;
-import com.google.gson.JsonElement;
+import com.eip.red.caritathelp.Models.Organisation.Organisations;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-
-import junit.framework.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by pierr on 25/02/2016.

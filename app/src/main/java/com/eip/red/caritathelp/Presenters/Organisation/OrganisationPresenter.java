@@ -1,10 +1,11 @@
 package com.eip.red.caritathelp.Presenters.Organisation;
 
 import com.eip.red.caritathelp.Main.MainActivity;
-import com.eip.red.caritathelp.Models.Animation;
+import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.Organisation;
+import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.R;
+import com.eip.red.caritathelp.Views.Organisation.OrganisationEvents.OrganisationEventsView;
 import com.eip.red.caritathelp.Views.Organisation.OrganisationManagement.OrganisationManagementView;
 import com.eip.red.caritathelp.Views.Organisation.OrganisationMembers.OrganisationMembersView;
 import com.eip.red.caritathelp.Views.Organisation.OrganisationView;
@@ -26,7 +27,7 @@ public class OrganisationPresenter implements IOrganisationPresenter {
         this.view = view;
 
         // Init Interactor
-        interactor = new OrganisationInteractor(view.getContext(), network, organisation);
+        interactor = new OrganisationInteractor(view.getActivity().getBaseContext(), network, organisation);
 
         // Init Views
         organisationManagementView = new OrganisationManagementView();
@@ -36,14 +37,16 @@ public class OrganisationPresenter implements IOrganisationPresenter {
     @Override
     public void onClick(int viewId) {
         switch (viewId) {
-            case R.id.top_bar_organisation_return:
-                ((MainActivity) view.getActivity()).goToPreviousPage();
+            case R.id.organisation_btn_management:
+                ((MainActivity) view.getActivity()).replaceView(organisationManagementView, Animation.FLIP_LEFT_RIGHT);
                 break;
-            case R.id.top_bar_organisation_management:
-                ((MainActivity) view.getActivity()).replaceView(organisationManagementView, Animation.SLIDE_UP_DOWN);
+            case R.id.organisation_btn_join:
                 break;
             case R.id.organisation_btn_members:
-                ((MainActivity) view.getActivity()).replaceView(OrganisationMembersView.newInstance(interactor.getOrganisationId()), Animation.SLIDE_UP_DOWN);
+                ((MainActivity) view.getActivity()).replaceView(OrganisationMembersView.newInstance(interactor.getOrganisationId()), Animation.FLIP_LEFT_RIGHT);
+                break;
+            case R.id.organisation_btn_events:
+                ((MainActivity) view.getActivity()).replaceView(OrganisationEventsView.newInstance(interactor.getOrganisationId()), Animation.FLIP_LEFT_RIGHT);
                 break;
         }
 

@@ -1,7 +1,7 @@
 package com.eip.red.caritathelp.Views.OrganisationSearch;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,7 +16,7 @@ import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.Organisation;
+import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.Presenters.OrganisationSearch.OrganisationSearchPresenter;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
@@ -50,7 +50,7 @@ public class OrganisationSearchView extends Fragment implements IOrganisationSea
         presenter = new OrganisationSearchPresenter(this, network);
 
         // Init Dialog
-        dialog = new AlertDialog.Builder(getContext())
+        dialog = new AlertDialog.Builder(getActivity().getApplicationContext())
                 .setCancelable(true)
                 .create();
     }
@@ -59,6 +59,9 @@ public class OrganisationSearchView extends Fragment implements IOrganisationSea
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_organisation_search, container, false);
+
+        // Set ToolBar
+        ((MainActivity) getActivity()).getToolBar().update("Associations", false, false);
 
         // Init UI Element
         searchBar = (EditText) view.findViewById(R.id.organisations_search_text);
@@ -87,13 +90,13 @@ public class OrganisationSearchView extends Fragment implements IOrganisationSea
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Go to organisation page
+                presenter.goToOrganisationView((Organisation) parent.getItemAtPosition(position));
+
                 // Init Text Search Bar
                 searchBar.invalidate();
                 searchBar.getText().clear();
                 searchBar.setHint(R.string.organisations_search_bar);
-
-                // Go to organisation page
-                presenter.goToOrganisationView((Organisation) listView.getItemAtPosition(position));
             }
         });
     }
@@ -132,7 +135,7 @@ public class OrganisationSearchView extends Fragment implements IOrganisationSea
                 searchBar.requestFocus();
 
                 // Show Keyboard
-                Tools.showKeyboard(getContext(), searchBar);
+                Tools.showKeyboard(getActivity().getBaseContext(), searchBar);
             }
         });
 
@@ -146,7 +149,7 @@ public class OrganisationSearchView extends Fragment implements IOrganisationSea
                 searchBar.clearFocus();
 
                 // Hide Keyboard
-                Tools.hideKeyboard(getContext(), view);
+                Tools.hideKeyboard(getActivity().getBaseContext(), view);
             }
         });
     }

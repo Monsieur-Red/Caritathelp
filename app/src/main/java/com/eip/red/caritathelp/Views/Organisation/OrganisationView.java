@@ -1,22 +1,19 @@
 package com.eip.red.caritathelp.Views.Organisation;
 
+import android.app.Fragment;
 import android.graphics.LightingColorFilter;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.eip.red.caritathelp.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.Organisation;
+import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.Presenters.Organisation.OrganisationPresenter;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
@@ -47,6 +44,7 @@ public class OrganisationView extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
         // Get Network & Organisation Model
+//        Network         network = ((SecondContainer) getActivity()).getModelManager().getNetwork();
         Network         network = ((MainActivity) getActivity()).getModelManager().getNetwork();
         Organisation    organisation = (Organisation) getArguments().getSerializable("organisation");
 
@@ -62,9 +60,8 @@ public class OrganisationView extends Fragment implements View.OnClickListener {
         // Get Organisation Name
         String organisation = presenter.getOrganisationName();
 
-        // Init ToolBar text
-        EditText    editText = (EditText) view.findViewById(R.id.top_bar_organisation_search_text);
-        editText.setHint(organisation);
+        // Set ToolBar
+        ((MainActivity) getActivity()).getToolBar().update(organisation, true, false);
 
         // Init TextView Organisation Name
         TextView textView = (TextView) view.findViewById(R.id.organisation_name);
@@ -82,9 +79,10 @@ public class OrganisationView extends Fragment implements View.OnClickListener {
         initListener();
 
         // Init Listener
-        view.findViewById(R.id.top_bar_organisation_return).setOnClickListener(this);
-        view.findViewById(R.id.top_bar_organisation_management).setOnClickListener(this);
+        view.findViewById(R.id.organisation_btn_join).setOnClickListener(this);
+        view.findViewById(R.id.organisation_btn_management).setOnClickListener(this);
         view.findViewById(R.id.organisation_btn_members).setOnClickListener(this);
+        view.findViewById(R.id.organisation_btn_events).setOnClickListener(this);
 
         return (view);
     }

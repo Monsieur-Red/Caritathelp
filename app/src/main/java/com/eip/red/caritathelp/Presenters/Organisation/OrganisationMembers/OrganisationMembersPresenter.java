@@ -1,7 +1,7 @@
 package com.eip.red.caritathelp.Presenters.Organisation.OrganisationMembers;
 
 import com.eip.red.caritathelp.Main.MainActivity;
-import com.eip.red.caritathelp.Models.Member;
+import com.eip.red.caritathelp.Models.Organisation.Member;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Views.Organisation.OrganisationMembers.OrganisationMembersView;
@@ -19,19 +19,19 @@ public class OrganisationMembersPresenter implements IOrganisationMembersPresent
 
     public OrganisationMembersPresenter(OrganisationMembersView view, Network network, int organisationId) {
         this.view = view;
-        interactor = new OrganisationMembersInteractor(view.getContext(), network, organisationId);
+        interactor = new OrganisationMembersInteractor(view.getActivity().getApplicationContext(), network, organisationId);
     }
 
 
-    @Override
-    public void onClick(int viewId) {
-        switch (viewId) {
-            case R.id.top_bar_organisation_members_return:
-                ((MainActivity) view.getActivity()).goToPreviousPage();
-                break;
-        }
-
-    }
+//    @Override
+//    public void onClick(int viewId) {
+//        switch (viewId) {
+//            case R.id.top_bar_organisation_members_return:
+//                ((MainActivity) view.getActivity()).goToPreviousPage();
+//                break;
+//        }
+//
+//    }
 
     @Override
     public void getMembers() {

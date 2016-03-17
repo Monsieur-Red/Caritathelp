@@ -1,8 +1,8 @@
 package com.eip.red.caritathelp.Views.SubMenu.AccountSettings;
 
+import android.app.AlertDialog;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -130,7 +130,7 @@ public class AccountSettingsView extends Fragment implements IAccountSettingsVie
         refreshEditText(getView());
 
         // Display a dialog box
-        new AlertDialog.Builder(getContext())
+        new AlertDialog.Builder(getActivity().getBaseContext())
                 .setMessage("Vos changements ont bien été enregistrés")
                 .show();
     }

@@ -5,22 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!-- DIVIDER -->
-    <View
-        android:id="@+id/news_first_divider"
-        style="@style/Divider" />
-    <View
-        android:id="@+id/news_second_divider"
-        android:layout_below="@+id/news_first_divider"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_10sdp"
-        android:background="@color/divider"
-        android:alpha="0.5"/>
-
-
     <RelativeLayout
         android:id="@+id/news_list_top_content"
-        android:layout_below="@+id/news_second_divider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/_10sdp"
@@ -81,16 +67,16 @@
         />
     <!--DESCRIPTION Ends -->
 
-    <!--&lt;!&ndash; DIVIDER &ndash;&gt;-->
-    <!--<View-->
-        <!--android:id="@+id/news_second_divider"-->
-        <!--android:layout_below="@+id/news_description"-->
-        <!--style="@style/Divider" />-->
-    <!--<View-->
-        <!--android:layout_below="@+id/news_second_divider"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/_10sdp"-->
-        <!--android:background="@color/divider"-->
-        <!--android:alpha="0.5"/>-->
+    <!-- DIVIDER -->
+    <View
+        android:id="@+id/news_second_divider"
+        android:layout_below="@+id/news_description"
+        style="@style/Divider" />
+    <View
+        android:layout_below="@+id/news_second_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_10sdp"
+        android:background="@color/divider"
+        android:alpha="0.5"/>
 
 </RelativeLayout>

@@ -1,11 +1,12 @@
 package com.eip.red.caritathelp.Views.AccountManagement;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.eip.red.caritathelp.Main.MainActivity;
 import com.eip.red.caritathelp.R;
 
 /**
@@ -25,6 +26,9 @@ public class AccountManagementView extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        // Set ToolBar
+        ((MainActivity) getActivity()).getToolBar().update("Gestion de l'association", true, false);
 
         return (view);
     }

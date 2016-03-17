@@ -1,4 +1,4 @@
-package com.eip.red.caritathelp.Models;
+package com.eip.red.caritathelp.Models.Organisation;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

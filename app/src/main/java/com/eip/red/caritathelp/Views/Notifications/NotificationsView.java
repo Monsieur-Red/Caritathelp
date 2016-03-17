@@ -1,11 +1,12 @@
 package com.eip.red.caritathelp.Views.Notifications;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.eip.red.caritathelp.Main.MainActivity;
 import com.eip.red.caritathelp.R;
 
 /**
@@ -20,6 +21,9 @@ public class NotificationsView extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_notifications, container, false);
+
+        // Set ToolBar
+        ((MainActivity) getActivity()).getToolBar().update("Notifications", false, false);
 
         return (view);
     }

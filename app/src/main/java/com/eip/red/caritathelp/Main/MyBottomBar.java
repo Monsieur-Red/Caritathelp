@@ -1,11 +1,11 @@
 package com.eip.red.caritathelp.Main;
 
+import android.app.FragmentTransaction;
 import android.graphics.Color;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.eip.red.caritathelp.Models.Animation;
+import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Views.Home.HomeView;
 import com.eip.red.caritathelp.Views.MailBox.MailBoxView;
@@ -30,7 +30,7 @@ public class MyBottomBar {
     private int                     state;
     private ArrayList<ImageButton>  buttons;
 
-    private MainActivity activity;
+    private MainActivity            activity;
 
     private HomeView                homeView;
     private OrganisationSearchView  organisationSearchView;
@@ -50,8 +50,8 @@ public class MyBottomBar {
         subMenuView = new SubMenuView();
 
         // Display First View
-        FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
-//        ft.replace(R.id.main_fragment, homeView).commit();
+        FragmentTransaction ft = activity.getFragmentManager().beginTransaction();
+        ft.replace(R.id.main_fragment, homeView).commit();
 
         // Init Buttons
         buttons = new ArrayList<>();
@@ -63,7 +63,7 @@ public class MyBottomBar {
 
         // Init Listener & Color Button & Color background Button
         for (ImageButton button : buttons) {
-//            button.setOnClickListener(activity);
+            button.setOnClickListener(activity);
             button.setColorFilter(Color.LTGRAY);
             button.setBackgroundColor(Color.TRANSPARENT);
         }
@@ -73,42 +73,42 @@ public class MyBottomBar {
         buttons.get(state).setColorFilter(activity.getResources().getColor(R.color.primary));
     }
 
-    public void onClick(View v) {
-        switch (v.getId()) {
+    public void onClick(int id) {
+        switch (id) {
             case R.id.bottom_bar_btn_home:
                 // Set Button view
                 selectButton(STATE_HOME);
 
                 // Page Change
-                activity.replaceView(homeView, Animation.ZERO);
+                activity.replaceView(homeView, Animation.FADE_IN_OUT);
                 break;
             case R.id.bottom_bar_btn_organisations:
                 // Set Button view
                 selectButton(STATE_ORGA);
 
                 // Page Change
-                activity.replaceView(organisationSearchView, Animation.ZERO);
+                activity.replaceView(organisationSearchView, Animation.FADE_IN_OUT);
                 break;
             case R.id.bottom_bar_btn_mailbox:
                 // Set Button view
                 selectButton(STATE_MAILBOX);
 
                 // Page Change
-                activity.replaceView(mailBoxView, Animation.ZERO);
+                activity.replaceView(mailBoxView, Animation.FADE_IN_OUT);
                 break;
             case R.id.bottom_bar_btn_notifications:
                 // Set Button view
                 selectButton(STATE_NOTIFICATIONS);
 
                 // Page Change
-                activity.replaceView(notificationsView, Animation.ZERO);
+                activity.replaceView(notificationsView, Animation.FADE_IN_OUT);
                 break;
             case R.id.bottom_bar_btn_submenu:
                 // Set Button view
                 selectButton(STATE_SUBMENU);
 
                 // Page Change
-                activity.replaceView(subMenuView, Animation.ZERO);
+                activity.replaceView(subMenuView, Animation.FADE_IN_OUT);
                 break;
         }
     }

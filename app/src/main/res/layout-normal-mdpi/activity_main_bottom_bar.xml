@@ -4,10 +4,11 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="@dimen/_50sdp"
+    android:layout_marginTop="@dimen/_2sdp"
     android:background="@color/icons">
 
     <!-- DIVIDER -->
-    <View style="@style/Divider" />
+    <!--<View style="@style/Divider" />-->
 
     <LinearLayout
         android:layout_width="match_parent"

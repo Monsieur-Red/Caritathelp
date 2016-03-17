@@ -3,18 +3,12 @@ package com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations;
 import android.content.Context;
 
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.Organisation;
-import com.eip.red.caritathelp.Models.Organisations;
+import com.eip.red.caritathelp.Models.Organisation.Organisations;
 import com.eip.red.caritathelp.Models.User;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-
-import org.json.JSONArray;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by pierr on 24/02/2016.

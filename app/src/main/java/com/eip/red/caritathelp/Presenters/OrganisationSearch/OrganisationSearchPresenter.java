@@ -1,9 +1,9 @@
 package com.eip.red.caritathelp.Presenters.OrganisationSearch;
 
 import com.eip.red.caritathelp.Main.MainActivity;
-import com.eip.red.caritathelp.Models.Animation;
+import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.Organisation;
+import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.Views.Organisation.OrganisationView;
 import com.eip.red.caritathelp.Views.OrganisationSearch.OrganisationSearchView;
 
@@ -20,7 +20,7 @@ public class OrganisationSearchPresenter implements IOrganisationSearchPresenter
 
     public OrganisationSearchPresenter(OrganisationSearchView view, Network network) {
         this.view = view;
-        this.interactor = new OrganisationSearchInteractor(view.getContext(), network);
+        this.interactor = new OrganisationSearchInteractor(view.getActivity().getBaseContext(), network);
     }
 
     @Override
@@ -31,8 +31,15 @@ public class OrganisationSearchPresenter implements IOrganisationSearchPresenter
 
     @Override
     public void goToOrganisationView(Organisation organisation) {
-        if (organisation != null)
+        if (organisation != null) {
+//            Intent intent = new Intent(view.getContext(), SecondContainer.class);
+//
+//            intent.putExtra("viewId", Views.ORGANISATION);
+//            intent.putExtra("organisation", organisation);
+
+//            ((MainActivity) view.getActivity()).replaceView(intent);
             ((MainActivity) view.getActivity()).replaceView(OrganisationView.newInstance(organisation), Animation.SLIDE_LEFT_RIGHT);
+        }
     }
 
     @Override
@@ -43,7 +50,7 @@ public class OrganisationSearchPresenter implements IOrganisationSearchPresenter
 
     @Override
     public void onSuccess(List<Organisation> organisations) {
-        view.hideProgress();
         view.updateListView(organisations);
+        view.hideProgress();
     }
 }

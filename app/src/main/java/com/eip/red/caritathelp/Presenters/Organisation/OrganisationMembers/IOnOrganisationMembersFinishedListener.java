@@ -1,6 +1,6 @@
 package com.eip.red.caritathelp.Presenters.Organisation.OrganisationMembers;
 
-import com.eip.red.caritathelp.Models.Member;
+import com.eip.red.caritathelp.Models.Organisation.Member;
 
 import java.util.List;
 

@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/bootstrap_gray_lighter">
 
-    <!-- TOP BAR -->
+<!--
+    &lt;!&ndash; TOP BAR &ndash;&gt;
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"
@@ -53,6 +54,7 @@
 
         </LinearLayout>
     </LinearLayout>
+-->
 
     <ScrollView
         android:layout_width="match_parent"

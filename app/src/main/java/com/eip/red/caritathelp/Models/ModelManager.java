@@ -4,11 +4,13 @@ import android.content.Intent;
 
 import com.eip.red.caritathelp.Models.Home.NewsList;
 
+import java.io.Serializable;
+
 /**
  * Created by pierr on 11/01/2016.
  */
 
-public class ModelManager {
+public class ModelManager implements Serializable {
 
     private User        user;
     private Network     network;

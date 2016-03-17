@@ -5,94 +5,59 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- TOP BAR -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
+    <!--&lt;!&ndash; TOP BAR &ndash;&gt;-->
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/_50sdp"-->
 
-        android:focusable="true"
-        android:focusableInTouchMode="true"
+        <!--android:focusable="true"-->
+        <!--android:focusableInTouchMode="true"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:background="@color/primary"-->
+        <!--android:weightSum="6">-->
 
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:background="@color/primary">
+        <!--<ImageView-->
+            <!--android:id="@+id/organisation_top_bar_btn_return"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_margin="@dimen/_10sdp"-->
 
-        <LinearLayout
-            android:id="@+id/top_bar_organisation_bar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="7">
+            <!--android:src="@drawable/arrow_top_bar"-->
+            <!--android:layout_weight="1"/>-->
 
-            <LinearLayout
-                android:id="@+id/top_bar_organisation_return"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical">
+        <!--<TextView-->
+            <!--android:id="@+id/organisation_top_bar_tv_title"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="3"-->
+            <!--android:paddingLeft="@dimen/_10sdp"-->
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
-                    android:src="@drawable/arrow_top_bar"/>
+            <!--android:layout_gravity="center"-->
+            <!--android:gravity="center|left"-->
+            <!--android:text="Test"-->
+            <!--android:textSize="@dimen/_20sdp"-->
+            <!--android:textColor="@color/icons"-->
+            <!--android:singleLine="true"/>-->
 
-            </LinearLayout>
+        <!--<ImageButton-->
+            <!--android:id="@+id/organisation_top_bar_btn_search"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
 
-            <!--SEARCH BAR -->
-            <LinearLayout
-                android:id="@+id/top_bar_organisation_search"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_weight="5"
-                android:orientation="horizontal"
+            <!--android:background="@android:color/transparent"-->
+            <!--android:src="@android:drawable/ic_menu_search"/>-->
 
-                android:layout_gravity="center"
-                android:background="@drawable/border_search_bar">
+        <!--<ImageButton-->
+            <!--android:id="@+id/organisation_top_bar_btn_management"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
 
-                <ImageView
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/_5sdp"
+            <!--android:background="@android:color/transparent"-->
+            <!--android:src="@android:drawable/ic_menu_preferences"/>-->
 
-                    android:layout_gravity="center"
-                    android:src="@android:drawable/ic_menu_search"/>
-
-                <EditText
-                    android:id="@+id/top_bar_organisation_search_text"
-                    android:layout_width="@dimen/_160sdp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:padding="@dimen/_5sdp"
-
-                    android:background="@android:color/transparent"
-                    android:layout_gravity="center"
-                    android:hint="@android:string/search_go"
-                    android:textColorHint="@color/bootstrap_gray"
-                    android:textColor="@android:color/white">
-                </EditText>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/top_bar_organisation_management"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="center"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_30sdp"
-                    android:src="@android:drawable/ic_menu_preferences" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-    </LinearLayout>
-
-
+    <!--</LinearLayout>-->
 
     <ScrollView
         android:layout_width="match_parent"
@@ -116,6 +81,18 @@
 
                     android:scaleType="centerInside"
                     android:src="@drawable/logo_caritathelp_2017_x2_tisser"/>
+
+                <ImageButton
+                    android:id="@+id/organisation_btn_management"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_margin="@dimen/_10sdp"
+
+                    android:layout_alignParentRight="true"
+                    android:src="@android:drawable/ic_menu_preferences"
+                    android:background="@android:color/transparent"
+                    android:scaleType="centerCrop"/>
+
 
                 <TextView
                     android:id="@+id/organisation_name"
@@ -160,62 +137,90 @@
 
             <!-- BAR 2 - MENU -->
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:padding="@dimen/_10sdp"
-                android:background="@color/icons">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
+                android:orientation="horizontal"
+                android:background="@color/icons"
+                android:weightSum="3">
 
-                    <TextView
-                        android:id="@+id/organisation_btn_members"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_40sdp"
-                        android:layout_weight="1"
+                <TextView
+                    android:id="@+id/organisation_btn_join"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_weight="1"
 
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="@string/organisation_members"
-                        android:textSize="@dimen/_14sdp"
-                        android:textStyle="bold"/>
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Rejoindre"
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="bold"/>
 
-                    <TextView
-                        android:id="@+id/organisation_btn_events"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_40sdp"
-                        android:layout_weight="1"
+                <TextView
+                    android:id="@+id/organisation_btn_members"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_weight="1"
 
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="@string/organisation_events"
-                        android:textSize="@dimen/_14sdp"
-                        android:textStyle="bold"/>
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/organisation_members"
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="bold"/>
 
-                    <TextView
-                        android:id="@+id/organisation_btn_informations"
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/_40sdp"
-                        android:layout_weight="1"
+                <TextView
+                    android:id="@+id/organisation_btn_events"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_weight="1"
 
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="@string/organisation_informations"
-                        android:textSize="@dimen/_14sdp"
-                        android:textStyle="bold"/>
-
-                </LinearLayout>
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/organisation_events"
+                    android:textSize="@dimen/_14sdp"
+                    android:textStyle="bold"/>
 
             </LinearLayout>
 
             <!-- DIVIDER -->
+            <View style="@style/Divider" />
             <View
-                android:id="@+id/news_second_divider"
-                style="@style/Divider" />
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/_10sdp"
+
+                android:orientation="vertical"
+                android:background="@color/icons">
+
+                <TextView
+                    android:id="@+id/organisation_btn_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:text="Description"
+                    android:textSize="@dimen/_14sdp"
+                    android:textColor="@color/primary_text"/>
+
+                <TextView
+                    android:id="@+id/organisation_tv_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_6sdp"
+
+                    android:text="Fondés par Coluche en 1985, les Restos du Cœur est une association loi de 1901, reconnue d'utilité publique, sous le nom officiel de « les Restaurants du Cœur - les Relais du Cœur ». Ils ont pour but « d'aider et d'apporter une assistance bénévole aux personnes démunies, notamment dans le domaine alimentaire par l'accès à des repas gratuits, et par la participation à leur insertion sociale et économique, ainsi qu'à toute action contre la pauvreté sous toutes ses formes »."
+                    android:textSize="@dimen/_12sdp"
+                    android:textColor="@color/secondary_text"/>
+
+            </LinearLayout>
+
+            <!-- DIVIDER -->
+            <View style="@style/Divider" />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_10sdp"

@@ -1,8 +1,8 @@
 package com.eip.red.caritathelp.Views.SubMenu.MyOrganisations.OrganisationCreation;
 
+import android.app.AlertDialog;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +28,7 @@ public class OrganisationCreationView extends Fragment implements IOrganisationC
     private EditText    description;
     private ProgressBar progressBar;
 
-    private AlertDialog     dialog;
+    private AlertDialog dialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +59,7 @@ public class OrganisationCreationView extends Fragment implements IOrganisationC
         view.findViewById(R.id.organisation_creation_btn_create).setOnClickListener(this);
 
         // Init Dialog
-        dialog = new AlertDialog.Builder(getContext())
+        dialog = new AlertDialog.Builder(getActivity().getBaseContext())
                 .setCancelable(true)
                 .create();
 

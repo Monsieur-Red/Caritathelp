@@ -1,8 +1,8 @@
 package com.eip.red.caritathelp.Views.Organisation.OrganisationMembers;
 
+import android.app.AlertDialog;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Main.MainActivity;
-import com.eip.red.caritathelp.Models.Member;
+import com.eip.red.caritathelp.Models.Organisation.Member;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Presenters.Organisation.OrganisationMembers.OrganisationMembersPresenter;
 import com.eip.red.caritathelp.R;
@@ -26,7 +26,7 @@ import java.util.Locale;
  * Created by pierr on 25/02/2016.
  */
 
-public class OrganisationMembersView extends Fragment implements View.OnClickListener, IOrganisationMembersView {
+public class OrganisationMembersView extends Fragment implements IOrganisationMembersView {
 
     private OrganisationMembersPresenter    presenter;
 
@@ -57,7 +57,7 @@ public class OrganisationMembersView extends Fragment implements View.OnClickLis
         presenter = new OrganisationMembersPresenter(this, network, organisationId);
 
         // Init Dialog
-        dialog = new AlertDialog.Builder(getContext())
+        dialog = new AlertDialog.Builder(getActivity().getBaseContext())
                 .setCancelable(true)
                 .create();
     }
@@ -68,8 +68,11 @@ public class OrganisationMembersView extends Fragment implements View.OnClickLis
         // Inflate the layout for this fragment
         View    view = inflater.inflate(R.layout.fragment_organisation_members, container, false);
 
+        // Set ToolBar
+        ((MainActivity) getActivity()).getToolBar().update("Membres", true, false);
+
         // Init UI Element
-        searchBar = (EditText) view.findViewById(R.id.top_bar_organisation_members_search_text);
+        searchBar = (EditText) view.findViewById(R.id.organisation_members_search_text);
         progressBar = (ProgressBar) view.findViewById(R.id.organisation_members_progress_bar);
 
         // Init ListView & Listener & Adapter
@@ -79,9 +82,6 @@ public class OrganisationMembersView extends Fragment implements View.OnClickLis
 
         // Init Filter
         initSearchBarListener();
-
-        // Init Button Listener
-        view.findViewById(R.id.top_bar_organisation_members_return).setOnClickListener(this);
 
         // Init Members Model
         presenter.getMembers();
@@ -93,8 +93,15 @@ public class OrganisationMembersView extends Fragment implements View.OnClickLis
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Page Change
-//                presenter.goToOrganisationView((Organisation) listView.getItemAtPosition(position));
+/*
+                // Go to organisation page
+                presenter.goToOrganisationView((Organisation) parent.getItemAtPosition(position));
+
+                // Init Text Search Bar
+                searchBar.invalidate();
+                searchBar.getText().clear();
+                searchBar.setHint(R.string.organisations_search_bar);
+*/
             }
         });
     }
@@ -121,10 +128,10 @@ public class OrganisationMembersView extends Fragment implements View.OnClickLis
         });
     }
 
-    @Override
-    public void onClick(View v) {
-        presenter.onClick(v.getId());
-    }
+//    @Override
+//    public void onClick(View v) {
+//        presenter.onClick(v.getId());
+//    }
 
     @Override
     public void showProgress() {

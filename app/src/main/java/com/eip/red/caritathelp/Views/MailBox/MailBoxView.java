@@ -1,11 +1,12 @@
 package com.eip.red.caritathelp.Views.MailBox;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.eip.red.caritathelp.Main.MainActivity;
 import com.eip.red.caritathelp.R;
 
 /**
@@ -20,6 +21,10 @@ public class MailBoxView extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_mailbox, container, false);
+
+        // Set Tool Bar Title
+        // Set ToolBar
+        ((MainActivity) getActivity()).getToolBar().update("Messagerie", false, false);
 
         return (view);
     }

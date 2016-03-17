@@ -6,7 +6,5 @@ package com.eip.red.caritathelp.Presenters.Organisation.OrganisationMembers;
 
 public interface IOrganisationMembersPresenter {
 
-    void onClick(int viewId);
-
     void getMembers();
 }

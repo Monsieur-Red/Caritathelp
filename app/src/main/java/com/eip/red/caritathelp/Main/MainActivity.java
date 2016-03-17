@@ -1,40 +1,28 @@
 package com.eip.red.caritathelp.Main;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
-import com.eip.red.caritathelp.Models.Animation;
+import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.ModelManager;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Views.Login.LoginView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity implements View.OnClickListener {
 
     private ModelManager    modelManager;
 
-    private ViewPager       viewPager;
-    private MyPagerAdapter  myPagerAdapter;
-    private TabLayout       topBar;
-
-    private TextView    toolbarTitle;
+    private MyToolBar       toolBar;
+    private MyBottomBar     bottomBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,17 +35,14 @@ public class MainActivity extends AppCompatActivity {
         modelManager = new ModelManager(getIntent());
 
         // Init Tool Bar
-        initToolBar();
+        toolBar = new MyToolBar(this);
 
-        // Init ViewPager & Adapter & listener
-        viewPager = (ViewPager) findViewById(R.id.activity_main_viewpager);
+        // Init Bottom Bar
+        bottomBar = new MyBottomBar(this);
 
-        // Setting Adapter
-        myPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(myPagerAdapter);
-
-        // Init TabLayout
-        initTableLayout();
+//        // Display First View
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        ft.replace(R.id.main_fragment, new MainView()).commit();
 
         // Set Status Bar Color
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -66,108 +51,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void initToolBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
-        setSupportActionBar(toolbar);
-
-        // Get ToolBar title
-        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("Actualités");
-    }
-
-    private void initTableLayout() {
-        // Init Top Bar
-        topBar = (TabLayout) findViewById(R.id.activity_main_tabs);
-
-        // Add Tabs & set Icons
-        topBar.addTab(topBar.newTab().setIcon(android.R.drawable.ic_dialog_dialer));
-        topBar.addTab(topBar.newTab().setIcon(android.R.drawable.ic_menu_myplaces));
-        topBar.addTab(topBar.newTab().setIcon(android.R.drawable.ic_popup_reminder));
-        topBar.addTab(topBar.newTab().setIcon(android.R.drawable.ic_menu_add));
-
-        // Setting Listener
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(topBar));
-        topBar.setOnTabSelectedListener(
-                new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
-
-                    @Override
-                    public void onTabSelected(TabLayout.Tab tab) {
-                        super.onTabSelected(tab);
-
-                        //topBar.getChildAt(1).setVisibility(View.GONE);
-//                        topBar.addTab(topBar.newTab().setIcon(android.R.drawable.ic_menu_add), 2, true);
-//                        myPagerAdapter.getFragment(1).getView().setVisibility(View.GONE);
-
-                        // Set Icon Alpha
-                        tab.getIcon().setAlpha(255);
-
-                        // Change ToolBar Title
-                        changeTitleToolBar(tab.getPosition());
-                    }
-
-                    @Override
-                    public void onTabUnselected(TabLayout.Tab tab) {
-                        super.onTabUnselected(tab);
-
-                        // Set Icon Alpha
-                        tab.getIcon().setAlpha(60);
-                    }
-
-                    @Override
-                    public void onTabReselected(TabLayout.Tab tab) {
-                        super.onTabReselected(tab);
-                    }
-                }
-        );
-
-        // Init Icons Color
-        int white = ContextCompat.getColor(getBaseContext(), R.color.icons);
-
-        for (int i = 0; i < topBar.getTabCount(); i++) {
-            TabLayout.Tab   tab = topBar.getTabAt(i);
-
-            if (tab != null) {
-                Drawable    icon = tab.getIcon();
-
-                if (i == 0)
-                    icon.setAlpha(255);
-                else
-                    icon.setAlpha(60);
-
-                icon.setColorFilter(white, PorterDuff.Mode.SRC_IN);
-            }
-        }
-    }
-
-    private void changeTitleToolBar(int position) {
-        // Set Toolbar Title
-        switch (position) {
-            case 0:
-                toolbarTitle.setText("Actualités");
-                break;
-            case 1:
-                toolbarTitle.setText("Associations");
-                break;
-            case 2:
-                toolbarTitle.setText("Notifications");
-                break;
-            case 3:
-                toolbarTitle.setText("Autres");
-                break;
-        }
-    }
-
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.toolbar_btn_search:
-                return true;
-            case R.id.toolbar_btn_mailbox:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+    public void onClick(View v) {
+        toolBar.onClick(v.getId());
+        bottomBar.onClick(v.getId());
     }
 
     public void replaceView(Fragment fragment, int animation) {
@@ -178,20 +65,43 @@ public class MainActivity extends AppCompatActivity {
             keyboard.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
         // Replace Fragment
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
 
         // Set Animation
         switch (animation) {
             case Animation.SLIDE_LEFT_RIGHT:
-                ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+                  ft.setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_in, R.animator.fade_out);
+//                fragment.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//                fragment.setExitTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+//                ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);//, R.anim.enter_from_left, R.anim.exit_to_right);
                 break;
             case Animation.SLIDE_UP_DOWN:
-                ft.setCustomAnimations(R.anim.enter_from_bot, R.anim.exit_to_bot, R.anim.enter_from_top, R.anim.exit_to_top);
+//                fragment.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//                fragment.setExitTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+//                ft.setCustomAnimations(R.anim.enter_from_bot, R.anim.exit_to_bot, R.anim.enter_from_top, R.anim.exit_to_top);
+                ft.setCustomAnimations(R.animator.slide_up, R.animator.slide_down, R.animator.slide_up, R.animator.slide_down);
+                break;
+            case Animation.FLIP_LEFT_RIGHT:
+//                fragment.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+
+//                fragment.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+//                fragment.setExitTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+
+                ft.setCustomAnimations(R.animator.card_flip_right_in, R.animator.card_flip_right_out, R.animator.fade_in, R.animator.fade_out);//,0 R.animator.card_flip_left_in, R.animator.card_flip_left_out);
+//                ft.setCustomAnimations(R.anim.card_flip_right_in, R.anim.card_flip_right_out, R.anim.card_flip_left_in, R.anim.card_flip_left_out);
+
+//                ft.setCustomAnimations(R.anim.test, R.anim.test);
+
+//                ft.setCustomAnimations(R.anim.to_middle, R.anim.from_middle);
+
+                break;
+            case Animation.FADE_IN_OUT:
+                ft.setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_in, R.animator.fade_out);
                 break;
         }
 
         // Replace Fragment
-//        ft.replace(R.id.main_fragment, fragment);
+        ft.replace(R.id.main_fragment, fragment);
 
         // Save old fragment in the stack
         ft.addToBackStack(null);
@@ -220,5 +130,9 @@ public class MainActivity extends AppCompatActivity {
 
     public ModelManager getModelManager() {
         return (modelManager);
+    }
+
+    public MyToolBar getToolBar() {
+        return toolBar;
     }
 }

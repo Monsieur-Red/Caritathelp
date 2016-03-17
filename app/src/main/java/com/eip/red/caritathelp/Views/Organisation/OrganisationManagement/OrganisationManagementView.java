@@ -1,7 +1,7 @@
 package com.eip.red.caritathelp.Views.Organisation.OrganisationManagement;
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,19 +27,19 @@ public class OrganisationManagementView extends Fragment implements View.OnClick
         // Inflate the layout for this fragment
         View    view = inflater.inflate(R.layout.fragment_organisation_management, container, false);
 
-        // Init Listener
-        view.findViewById(R.id.top_bar_organisation_management_return).setOnClickListener(this);
+        // Set ToolBar
+        ((MainActivity) getActivity()).getToolBar().update("Gestion", true, false);
 
         return (view);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.top_bar_organisation_management_return:
-                ((MainActivity) getActivity()).goToPreviousPage();
-                break;
-        }
+//        switch (v.getId()) {
+//            case R.id.top_bar_organisation_management_return:
+//                ((MainActivity) getActivity()).goToPreviousPage();
+//                break;
+//        }
     }
 
 }

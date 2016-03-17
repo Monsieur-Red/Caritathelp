@@ -1,14 +1,14 @@
 package com.eip.red.caritathelp.Views.SubMenu;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.eip.red.caritathelp.Main.MainActivity;
-import com.eip.red.caritathelp.Models.Animation;
+import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.User;
 import com.eip.red.caritathelp.R;
@@ -48,6 +48,9 @@ public class SubMenuView extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_submenu, container, false);
+
+        // Set ToolBar
+        ((MainActivity) getActivity()).getToolBar().update("Autres", false, false);
 
         // Init Listener
         view.findViewById(R.id.submenu_my_organisations).setOnClickListener(this);
@@ -91,7 +94,7 @@ public class SubMenuView extends Fragment implements View.OnClickListener {
                     @Override
                     public void onCompleted(Exception error, JsonObject result) {
                         if (error == null) {
-                            MainActivity   activity = (MainActivity) getActivity();
+                            MainActivity activity = (MainActivity) getActivity();
 
                             startActivity(new Intent(activity, LoginView.class));
                             activity.finish();

@@ -3,11 +3,9 @@ package com.eip.red.caritathelp.Views.Organisation.OrganisationMembers;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.TextView;
 
-import com.eip.red.caritathelp.Models.Member;
+import com.eip.red.caritathelp.Models.Organisation.Member;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
 

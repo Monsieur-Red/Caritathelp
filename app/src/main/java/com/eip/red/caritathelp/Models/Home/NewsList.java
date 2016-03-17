@@ -2,13 +2,14 @@ package com.eip.red.caritathelp.Models.Home;
 
 import com.eip.red.caritathelp.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by pierr on 11/01/2016.
  */
-public class NewsList {
+public class NewsList implements Serializable {
 
     private List<News> news;
 
