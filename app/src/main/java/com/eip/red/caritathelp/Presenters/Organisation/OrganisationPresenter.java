@@ -5,9 +5,9 @@ import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.R;
-import com.eip.red.caritathelp.Views.Organisation.OrganisationEvents.OrganisationEventsView;
-import com.eip.red.caritathelp.Views.Organisation.OrganisationManagement.OrganisationManagementView;
-import com.eip.red.caritathelp.Views.Organisation.OrganisationMembers.OrganisationMembersView;
+import com.eip.red.caritathelp.Views.Organisation.Events.OrganisationEventsView;
+import com.eip.red.caritathelp.Views.Organisation.Management.OrganisationManagementView;
+import com.eip.red.caritathelp.Views.Organisation.Members.OrganisationMembersView;
 import com.eip.red.caritathelp.Views.Organisation.OrganisationView;
 
 /**
@@ -38,7 +38,7 @@ public class OrganisationPresenter implements IOrganisationPresenter {
     public void onClick(int viewId) {
         switch (viewId) {
             case R.id.organisation_btn_management:
-                ((MainActivity) view.getActivity()).replaceView(organisationManagementView, Animation.FLIP_LEFT_RIGHT);
+                ((MainActivity) view.getActivity()).replaceView(OrganisationManagementView.newInstance(interactor.getOrganisationId()), Animation.FLIP_LEFT_RIGHT);
                 break;
             case R.id.organisation_btn_join:
                 break;

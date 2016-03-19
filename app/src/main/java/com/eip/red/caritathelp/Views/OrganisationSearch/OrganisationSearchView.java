@@ -50,7 +50,7 @@ public class OrganisationSearchView extends Fragment implements IOrganisationSea
         presenter = new OrganisationSearchPresenter(this, network);
 
         // Init Dialog
-        dialog = new AlertDialog.Builder(getActivity().getApplicationContext())
+        dialog = new AlertDialog.Builder(getActivity())
                 .setCancelable(true)
                 .create();
     }

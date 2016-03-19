@@ -31,15 +31,8 @@ public class OrganisationSearchPresenter implements IOrganisationSearchPresenter
 
     @Override
     public void goToOrganisationView(Organisation organisation) {
-        if (organisation != null) {
-//            Intent intent = new Intent(view.getContext(), SecondContainer.class);
-//
-//            intent.putExtra("viewId", Views.ORGANISATION);
-//            intent.putExtra("organisation", organisation);
-
-//            ((MainActivity) view.getActivity()).replaceView(intent);
-            ((MainActivity) view.getActivity()).replaceView(OrganisationView.newInstance(organisation), Animation.SLIDE_LEFT_RIGHT);
-        }
+        if (organisation != null)
+            ((MainActivity) view.getActivity()).replaceView(OrganisationView.newInstance(organisation), Animation.FADE_IN_OUT);
     }
 
     @Override

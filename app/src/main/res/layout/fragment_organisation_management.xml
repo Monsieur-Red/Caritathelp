@@ -6,56 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/bootstrap_gray_lighter">
 
-<!--
-    &lt;!&ndash; TOP BAR &ndash;&gt;
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
-
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:background="@color/primary">
-
-        <LinearLayout
-            android:id="@+id/top_bar_organisation_bar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="7">
-
-            <LinearLayout
-                android:id="@+id/top_bar_organisation_management_return"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
-                    android:src="@drawable/arrow_top_bar"/>
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_40sdp"
-                android:layout_weight="6"
-                android:layout_marginLeft="@dimen/_12sdp"
-
-                android:gravity="left|center"
-                android:text="@string/organisation_management_bar_title"
-                android:textColor="@color/icons"
-                android:textSize="@dimen/_22sdp" />
-
-        </LinearLayout>
-    </LinearLayout>
--->
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

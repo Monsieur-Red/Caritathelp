@@ -73,8 +73,8 @@
                     android:text="Annuler"
                     android:textSize="@dimen/_14sdp"
                     android:textColor="@color/icons"
-                    android:visibility="gone"
-                    android:textAllCaps="false"/>
+                    android:textAllCaps="false"
+                    android:visibility="gone" />
 
             </LinearLayout>
 

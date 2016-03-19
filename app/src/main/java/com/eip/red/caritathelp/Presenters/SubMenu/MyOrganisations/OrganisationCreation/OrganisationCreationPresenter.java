@@ -75,6 +75,6 @@ public class OrganisationCreationPresenter implements IOrganisationCreationPrese
     public void onSuccess(Organisation organisation) {
         view.hideProgress();
         view.navigateToOrganisationView(organisation.getName());
-        ((MainActivity) view.getActivity()).replaceView(OrganisationView.newInstance(organisation), Animation.SLIDE_LEFT_RIGHT);
+        ((MainActivity) view.getActivity()).replaceView(OrganisationView.newInstance(organisation), Animation.FADE_IN_OUT);
     }
 }

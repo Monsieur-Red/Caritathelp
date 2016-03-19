@@ -59,7 +59,7 @@ public class OrganisationCreationView extends Fragment implements IOrganisationC
         view.findViewById(R.id.organisation_creation_btn_create).setOnClickListener(this);
 
         // Init Dialog
-        dialog = new AlertDialog.Builder(getActivity().getBaseContext())
+        dialog = new AlertDialog.Builder(getActivity())
                 .setCancelable(true)
                 .create();
 

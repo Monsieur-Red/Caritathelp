@@ -19,9 +19,12 @@ public class Network implements Serializable {
     static final public  String     API_REQUEST_LOGIN = "login";
     static final public  String     API_REQUEST_ORGANISATION = "associations";
     static final public  String     API_REQUEST_ORGANISATION_MEMBERS = "/members";
+    static final public  String     API_REQUEST_ORGANISATION_EVENTS = "/events";
+    static final public  String     API_REQUEST_ORGANISATION_EVENTS_INFORMATIONS = "/events/";
     static final public  String     API_REQUEST_VOLUNTEERS = "volunteers/";
 
     static final public  String     API_REQUEST_GET_MY_ORGANISATIONS = "/associations";
+    static final public  String     API_REQUEST_MY_EVENTS = "/volunteers/";
 
     static final public  String     API_REQUEST_SUBSCRIBE = "volunteers";
     static final public  String     API_REQUEST_ACCOUNT_SETTINGS_MODIFICATION = "volunteers/";

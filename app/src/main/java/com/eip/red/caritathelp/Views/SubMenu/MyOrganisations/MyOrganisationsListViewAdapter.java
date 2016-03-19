@@ -54,7 +54,7 @@ public class MyOrganisationsListViewAdapter extends BaseAdapter {
 
         if (view == null) {
             holder = new ViewHolder();
-            view = fragment.getActivity().getLayoutInflater().inflate(R.layout.fragment_my_organisations_list_row, null);
+            view = fragment.getActivity().getLayoutInflater().inflate(R.layout.fragment_submenu_my_organisations_list_row, null);
             holder.organisationName = (TextView) view.findViewById(R.id.my_organisations_name);
             view.setTag(holder);
         }

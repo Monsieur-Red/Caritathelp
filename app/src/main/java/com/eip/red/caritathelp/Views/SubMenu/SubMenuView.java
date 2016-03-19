@@ -13,6 +13,7 @@ import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.User;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Views.Login.LoginView;
+import com.eip.red.caritathelp.Views.SubMenu.MyEvents.MyEventsView;
 import com.eip.red.caritathelp.Views.SubMenu.MyOrganisations.MyOrganisationsView;
 import com.eip.red.caritathelp.Views.SubMenu.AccountSettings.AccountSettingsView;
 import com.google.gson.JsonObject;
@@ -29,6 +30,7 @@ public class SubMenuView extends Fragment implements View.OnClickListener {
     private Network     network;
 
     private MyOrganisationsView myOrganisationsView;
+    private MyEventsView        myEventsView;
     private AccountSettingsView accountSettingsView;
 
     @Override
@@ -40,6 +42,7 @@ public class SubMenuView extends Fragment implements View.OnClickListener {
 
         // Init Views
         myOrganisationsView = new MyOrganisationsView();
+        myEventsView = MyEventsView.newInstance(user.getId());
         accountSettingsView = new AccountSettingsView();
     }
 
@@ -54,6 +57,7 @@ public class SubMenuView extends Fragment implements View.OnClickListener {
 
         // Init Listener
         view.findViewById(R.id.submenu_my_organisations).setOnClickListener(this);
+        view.findViewById(R.id.submenu_my_events).setOnClickListener(this);
         view.findViewById(R.id.submenu_account_settings).setOnClickListener(this);
         view.findViewById(R.id.submenu_logout).setOnClickListener(this);
         view.findViewById(R.id.submenu_delete_account).setOnClickListener(this);
@@ -66,11 +70,15 @@ public class SubMenuView extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.submenu_my_organisations:
                 // Page Change
-                ((MainActivity) getActivity()).replaceView(myOrganisationsView, Animation.SLIDE_LEFT_RIGHT);
+                ((MainActivity) getActivity()).replaceView(myOrganisationsView, Animation.FADE_IN_OUT);
+                break;
+            case R.id.submenu_my_events:
+                // Page Change
+                ((MainActivity) getActivity()).replaceView(myEventsView, Animation.FADE_IN_OUT);
                 break;
             case R.id.submenu_account_settings:
                 // Page Change
-                ((MainActivity) getActivity()).replaceView(accountSettingsView, Animation.SLIDE_LEFT_RIGHT);
+                ((MainActivity) getActivity()).replaceView(accountSettingsView, Animation.FADE_IN_OUT);
                 break;
             case R.id.submenu_logout:
                 ((MainActivity) getActivity()).logout();
@@ -86,7 +94,7 @@ public class SubMenuView extends Fragment implements View.OnClickListener {
 
         json.addProperty("token", network.getToken());
 
-        Ion.with(this.getContext())
+        Ion.with(this.getActivity().getApplicationContext())
                 .load("DELETE", Network.API_LOCATION + Network.API_REQUEST_VOLUNTEER_DELETE_ACCOUNT + user.getId())
                 .setJsonObjectBody(json)
                 .asJsonObject()

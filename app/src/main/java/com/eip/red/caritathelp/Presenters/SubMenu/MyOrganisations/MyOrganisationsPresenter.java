@@ -56,7 +56,7 @@ public class MyOrganisationsPresenter implements IMyOrganisationsPresenter, IOnM
     @Override
     public void goToOrganisationView(Organisation organisation) {
         if (organisation != null)
-            ((MainActivity) view.getActivity()).replaceView(OrganisationView.newInstance(organisation), Animation.SLIDE_LEFT_RIGHT);
+            ((MainActivity) view.getActivity()).replaceView(OrganisationView.newInstance(organisation), Animation.FADE_IN_OUT);
     }
 
     @Override

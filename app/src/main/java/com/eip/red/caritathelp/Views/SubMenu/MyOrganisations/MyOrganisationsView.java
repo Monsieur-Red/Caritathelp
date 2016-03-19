@@ -47,7 +47,7 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
         presenter = new MyOrganisationsPresenter(this, user, network);
 
         // Init Dialog
-        dialog = new AlertDialog.Builder(getActivity().getBaseContext())
+        dialog = new AlertDialog.Builder(getActivity())
                 .setCancelable(true)
                 .create();
     }
@@ -56,7 +56,10 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View    view = inflater.inflate(R.layout.fragment_my_organisations, container, false);
+        View    view = inflater.inflate(R.layout.fragment_submenu_my_organisations, container, false);
+
+        // Set ToolBar
+        ((MainActivity) getActivity()).getToolBar().update("Mes associations", true, false);
 
         // Init UI Element
         searchBar = (EditText) view.findViewById(R.id.top_bar_my_organisations_search_text);

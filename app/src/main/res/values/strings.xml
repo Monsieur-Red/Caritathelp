@@ -66,6 +66,10 @@
     <!-- Organisation Events View -->
     <string name="organisation_events_search">Rechercher un événement</string>
 
+    <!-- Organisation Event View -->
+    <string name="organisation_event_members">Participants</string>
+    <string name="organisation_event_informations">Informations</string>
+
     <!-- OrganisationManagement View -->
     <string name="organisation_management_bar_title">Gérer mon association</string>
     <string name="organisation_management_post">Ajouter une publication</string>
