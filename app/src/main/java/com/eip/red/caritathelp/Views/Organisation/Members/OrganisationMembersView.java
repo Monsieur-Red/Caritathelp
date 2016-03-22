@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import com.eip.red.caritathelp.Main.MainActivity;
+import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Organisation.Member;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Presenters.Organisation.Members.OrganisationMembersPresenter;

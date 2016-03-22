@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.eip.red.caritathelp.Main.MainActivity;
+import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.Presenters.Organisation.OrganisationPresenter;

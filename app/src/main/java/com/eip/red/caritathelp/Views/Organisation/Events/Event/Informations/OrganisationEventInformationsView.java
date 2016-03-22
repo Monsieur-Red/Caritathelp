@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.eip.red.caritathelp.Main.MainActivity;
+import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Presenters.Organisation.Events.Event.Informations.OrganisationEventInformationsPresenter;
 import com.eip.red.caritathelp.R;

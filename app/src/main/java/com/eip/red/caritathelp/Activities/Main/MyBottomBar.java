@@ -1,8 +1,7 @@
-package com.eip.red.caritathelp.Main;
+package com.eip.red.caritathelp.Activities.Main;
 
 import android.app.FragmentTransaction;
 import android.graphics.Color;
-import android.view.View;
 import android.widget.ImageButton;
 
 import com.eip.red.caritathelp.Models.Enum.Animation;

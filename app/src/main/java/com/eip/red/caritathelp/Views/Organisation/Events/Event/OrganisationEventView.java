@@ -13,13 +13,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.eip.red.caritathelp.Main.MainActivity;
+import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Home.News;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Presenters.Organisation.Events.Event.OrganisationEventPresenter;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
-import com.eip.red.caritathelp.Views.Organisation.Events.OrganisationEventsRVAdapter;
 
 import java.util.List;
 

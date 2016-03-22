@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import com.eip.red.caritathelp.Main.MainActivity;
+import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.User;
 import com.eip.red.caritathelp.Presenters.SubMenu.AccountSettings.AccountSettingsPresenter;

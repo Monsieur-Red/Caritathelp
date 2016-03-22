@@ -1,6 +1,6 @@
 package com.eip.red.caritathelp.Presenters.Organisation;
 
-import com.eip.red.caritathelp.Main.MainActivity;
+import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Organisation;
@@ -27,7 +27,7 @@ public class OrganisationPresenter implements IOrganisationPresenter {
         this.view = view;
 
         // Init Interactor
-        interactor = new OrganisationInteractor(view.getActivity().getBaseContext(), network, organisation);
+        interactor = new OrganisationInteractor(view.getActivity().getApplicationContext(), network, organisation);
 
         // Init Views
         organisationManagementView = new OrganisationManagementView();

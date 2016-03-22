@@ -12,8 +12,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.eip.red.caritathelp.Main.MainActivity;
-import com.eip.red.caritathelp.Models.Enum.Animation;
+import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Presenters.Organisation.Management.EventCreation.OrganisationEventCreationPresenter;
 import com.eip.red.caritathelp.R;

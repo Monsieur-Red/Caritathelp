@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Main.MainActivity"
+    tools:context=".Activities.Main.MainActivity"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:background="@color/bootstrap_gray_lighter">
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <include layout="@layout/toolbar" />
+        <include layout="@layout/activity_main_toolbar" />
 
     </android.support.design.widget.AppBarLayout>
 

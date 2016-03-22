@@ -1,4 +1,4 @@
-package com.eip.red.caritathelp.Views.AccountManagement;
+package com.eip.red.caritathelp.Views.Splash;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -6,29 +6,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.R;
 
 /**
- * Created by pierr on 11/01/2016.
+ * Created by pierr on 22/03/2016.
  */
 
-public class AccountManagementView extends Fragment {
+public class SplashScreen extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        newsList = ((MainActivity) getActivity()).getModelManager().getNewsList();
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-
-        // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Gestion de l'association", true, false);
+        View view = inflater.inflate(R.layout.fragment_splashscreen, container, false);
 
         return (view);
     }

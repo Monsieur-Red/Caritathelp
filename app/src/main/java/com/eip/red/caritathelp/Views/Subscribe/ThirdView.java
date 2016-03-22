@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 
-import com.eip.red.caritathelp.Main.MainActivity;
+import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.User;
 import com.eip.red.caritathelp.Presenters.Subscribe.SubscribePresenter;

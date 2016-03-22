@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+
+            android:orientation="vertical"
+            android:background="@color/icons">
+
+            <EditText
+                android:id="@+id/mail"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:paddingLeft="@dimen/_20sdp"
+
+                android:background="@android:color/transparent"
+                android:hint="E-mail"
+                android:textColorHint="@color/secondary_text"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/_16sdp"
+                android:singleLine="true" />
+
+            <View
+                android:layout_marginLeft="@dimen/_40sdp"
+                android:layout_marginRight="@dimen/_40sdp"
+                style="@style/Divider" />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:paddingLeft="@dimen/_20sdp"
+
+                android:background="@android:color/transparent"
+                android:hint="Password"
+                android:textColorHint="@color/secondary_text"
+                android:textColor="@color/primary_text"
+                android:textSize="@dimen/_16sdp"
+                android:singleLine="true" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_sign_in"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+
+            android:background="@color/primary"
+            android:text="Connection"
+            android:textColor="@color/icons"
+            android:textSize="@dimen/_18sdp"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/btn_password_forgot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@android:color/transparent"
+            android:text="Mot de passe oublié ?"
+            android:textColor="@color/secondary_text"
+            android:textSize="@dimen/_12sdp"
+            android:singleLine="true"
+            android:textAllCaps="false"/>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_60sdp"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone" />
+
+</RelativeLayout>

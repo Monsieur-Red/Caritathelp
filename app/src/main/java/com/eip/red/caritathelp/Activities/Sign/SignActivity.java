@@ -1,48 +1,61 @@
-package com.eip.red.caritathelp.Main;
+package com.eip.red.caritathelp.Activities.Sign;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
 
 import com.eip.red.caritathelp.Models.Enum.Animation;
-import com.eip.red.caritathelp.Models.ModelManager;
 import com.eip.red.caritathelp.R;
-import com.eip.red.caritathelp.Views.Login.LoginView;
+import com.eip.red.caritathelp.Views.Sign.In.SignInView;
+import com.eip.red.caritathelp.Views.Splash.SplashScreen;
 
-public class MainActivity extends Activity implements View.OnClickListener {
+/**
+ * Created by pierr on 22/03/2016.
+ */
 
-    private ModelManager    modelManager;
+public class SignActivity extends Activity implements View.OnClickListener {
 
-    private MyToolBar       toolBar;
-    private MyBottomBar     bottomBar;
+    private SignActivityToolbar toolBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Set View
-        setContentView(R.layout.activity_main);
-
-        // Init ModelManager
-        modelManager = new ModelManager(getIntent());
+        setContentView(R.layout.activity_sign_in_up);
 
         // Init Tool Bar
-        toolBar = new MyToolBar(this);
+        toolBar = new SignActivityToolbar(this);
 
-        // Init Bottom Bar
-        bottomBar = new MyBottomBar(this);
+        // Display Splash Screen
+        replaceView(new SplashScreen(), Animation.FADE_IN_OUT);
 
-//        // Display First View
-//        FragmentTransaction ft = getFragmentManager().beginTransaction();
-//        ft.replace(R.id.main_fragment, new MainView()).commit();
+        // Launch SignIn View in 4 sec
+        new Handler().postDelayed(new Runnable() {
+            @Override public void run() {
+                replaceView(new SignInView(), Animation.FADE_IN_OUT);
+            }
+        }, 4000);
+
+//        Thread thread = new Thread(){
+//            public void run(){
+//                try {
+//                    Thread.sleep(4000);
+//                    replaceView(new SignInView(), Animation.FADE_IN_OUT);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        };
+//        thread.start();
 
         // Set Status Bar Color
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -54,7 +67,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         toolBar.onClick(v.getId());
-        bottomBar.onClick(v.getId());
     }
 
     public void replaceView(Fragment fragment, int animation) {
@@ -70,30 +82,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
         // Set Animation
         switch (animation) {
             case Animation.SLIDE_LEFT_RIGHT:
-                  ft.setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_in, R.animator.fade_out);
-//                fragment.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//                fragment.setExitTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-//                ft.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left);//, R.anim.enter_from_left, R.anim.exit_to_right);
+                ft.setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_in, R.animator.fade_out);
                 break;
             case Animation.SLIDE_UP_DOWN:
-//                fragment.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//                fragment.setExitTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-//                ft.setCustomAnimations(R.anim.enter_from_bot, R.anim.exit_to_bot, R.anim.enter_from_top, R.anim.exit_to_top);
                 ft.setCustomAnimations(R.animator.slide_up, R.animator.slide_down, R.animator.slide_up, R.animator.slide_down);
                 break;
             case Animation.FLIP_LEFT_RIGHT:
-//                fragment.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-
-//                fragment.setEnterTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-//                fragment.setExitTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-
                 ft.setCustomAnimations(R.animator.card_flip_right_in, R.animator.card_flip_right_out, R.animator.fade_in, R.animator.fade_out);//,0 R.animator.card_flip_left_in, R.animator.card_flip_left_out);
-//                ft.setCustomAnimations(R.anim.card_flip_right_in, R.anim.card_flip_right_out, R.anim.card_flip_left_in, R.anim.card_flip_left_out);
-
-//                ft.setCustomAnimations(R.anim.test, R.anim.test);
-
-//                ft.setCustomAnimations(R.anim.to_middle, R.anim.from_middle);
-
                 break;
             case Animation.FADE_IN_OUT:
                 ft.setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_in, R.animator.fade_out);
@@ -111,8 +106,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     public void goToPreviousPage() {
-//        System.out.println("SIZEEEEEEEEEEEEE : " + getFragmentManager().getBackStackEntryCount());
-
         // Hide Keyboard
         InputMethodManager keyboard = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         View    view = getCurrentFocus();
@@ -123,16 +116,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         super.onBackPressed();
     }
 
-    public void logout() {
-        startActivity(new Intent(this, LoginView.class));
-        finish();
-    }
-
-    public ModelManager getModelManager() {
-        return (modelManager);
-    }
-
-    public MyToolBar getToolBar() {
+    public SignActivityToolbar getToolBar() {
         return toolBar;
     }
 }

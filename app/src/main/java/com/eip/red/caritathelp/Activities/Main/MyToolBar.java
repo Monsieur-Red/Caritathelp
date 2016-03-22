@@ -1,4 +1,4 @@
-package com.eip.red.caritathelp.Main;
+package com.eip.red.caritathelp.Activities.Main;
 
 import android.view.View;
 import android.widget.ImageButton;

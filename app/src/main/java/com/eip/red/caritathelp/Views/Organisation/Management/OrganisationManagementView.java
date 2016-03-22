@@ -1,16 +1,14 @@
 package com.eip.red.caritathelp.Views.Organisation.Management;
 
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.eip.red.caritathelp.Main.MainActivity;
+import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Presenters.Organisation.Members.OrganisationMembersPresenter;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Views.Organisation.Management.OrganisationEventCreation.OrganisationEventCreationView;
 
