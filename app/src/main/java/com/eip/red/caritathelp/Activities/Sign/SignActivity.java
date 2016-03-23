@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.eip.red.caritathelp.Models.Enum.Animation;
+import com.eip.red.caritathelp.Models.User;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Views.Sign.In.SignInView;
 import com.eip.red.caritathelp.Views.Splash.SplashScreen;
@@ -23,6 +24,8 @@ import com.eip.red.caritathelp.Views.Splash.SplashScreen;
 public class SignActivity extends Activity implements View.OnClickListener {
 
     private SignActivityToolbar toolBar;
+
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,24 +47,14 @@ public class SignActivity extends Activity implements View.OnClickListener {
             }
         }, 4000);
 
-//        Thread thread = new Thread(){
-//            public void run(){
-//                try {
-//                    Thread.sleep(4000);
-//                    replaceView(new SignInView(), Animation.FADE_IN_OUT);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//        };
-//        thread.start();
-
         // Set Status Bar Color
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.primary));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
         }
+
+        // Init User Model for the SignUp Fragments
+        user = new User();
     }
 
     @Override
@@ -118,5 +111,13 @@ public class SignActivity extends Activity implements View.OnClickListener {
 
     public SignActivityToolbar getToolBar() {
         return toolBar;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

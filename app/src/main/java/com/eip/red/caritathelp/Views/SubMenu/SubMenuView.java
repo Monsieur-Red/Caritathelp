@@ -1,5 +1,6 @@
 package com.eip.red.caritathelp.Views.SubMenu;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +13,7 @@ import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.User;
 import com.eip.red.caritathelp.R;
-import com.eip.red.caritathelp.Views.Login.LoginView;
+import com.eip.red.caritathelp.Views.Sign.In.SignInView;
 import com.eip.red.caritathelp.Views.SubMenu.MyEvents.MyEventsView;
 import com.eip.red.caritathelp.Views.SubMenu.MyOrganisations.MyOrganisationsView;
 import com.eip.red.caritathelp.Views.SubMenu.AccountSettings.AccountSettingsView;
@@ -104,11 +105,11 @@ public class SubMenuView extends Fragment implements View.OnClickListener {
                         if (error == null) {
                             MainActivity activity = (MainActivity) getActivity();
 
-                            startActivity(new Intent(activity, LoginView.class));
+                            startActivity(new Intent(activity, SignInView.class));
                             activity.finish();
                         }
                         else
-                            System.out.println("ERROR : " + error.toString());
+                            new AlertDialog.Builder(getActivity()).setMessage(error.toString()).show();
                     }
                 });
     }

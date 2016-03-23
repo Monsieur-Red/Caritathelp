@@ -15,7 +15,7 @@ import com.eip.red.caritathelp.Views.Sign.In.SignInView;
 
 public class SignInPresenter implements ISignInPresenter, IOnSignInFinishedListener{
 
-    SignInView          view;
+    SignInView view;
     SignInInteractor    interactor;
 
     public SignInPresenter(SignInView view) {
@@ -28,16 +28,12 @@ public class SignInPresenter implements ISignInPresenter, IOnSignInFinishedListe
     public void onClick(int viewId) {
         switch (viewId) {
             case R.id.btn_sign_in:
+                view.showProgress();
                 interactor.signIn(view.getMail(), view.getPassword(), this);
                 break;
             case R.id.btn_password_forgot:
                 break;
         }
-    }
-
-    @Override
-    public void signIn(String email, String password) {
-        view.showProgress();
     }
 
     @Override

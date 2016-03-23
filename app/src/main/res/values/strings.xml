@@ -9,6 +9,20 @@
     <string name="btn_subscribe">Inscription</string>
     <string name="text_view_password_missing">Mot de passe oublié?</string>
 
+    <!-- SignUp Views-->
+    <string name="sign_up_geolocation">Géolocalisation</string>
+    <string name="sign_up_notifications">Notifications</string>
+    <string name="sign_up_firstname">Prénom</string>
+    <string name="sign_up_lastname">Nom</string>
+    <string name="sign_up_birthday">Date de naissance</string>
+    <string name="sign_up_man">Homme</string>
+    <string name="sign_up_woman">Femme</string>
+    <string name="sign_up_mail">E-mail</string>
+    <string name="sign_up_password">Mot de passe</string>
+    <string name="sign_up_password_verifiction">Vérification du mot de passe</string>
+    <string name="sign_up_btn_next">Continuer</string>
+    <string name="sign_up_btn_next_end">Continuer (fin)</string>
+
     <!-- Subscribe View -->
     <!-- Presentation Page -->
     <string name="subscribe_title">Rejoindre CaritatHelp</string>

@@ -7,6 +7,4 @@ package com.eip.red.caritathelp.Presenters.Sign.In;
 public interface ISignInPresenter {
 
     void onClick(int viewId);
-
-    void signIn(String email, String password);
 }

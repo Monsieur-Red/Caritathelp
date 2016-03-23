@@ -7,7 +7,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.R;
+import com.eip.red.caritathelp.Views.Sign.Up.SignUpBeginView;
 
 /**
  * Created by pierr on 22/03/2016.
@@ -59,11 +61,7 @@ public class SignActivityToolbar {
                 activity.goToPreviousPage();
                 break;
             case R.id.btn_sign_up:
-                new android.support.v7.app.AlertDialog.Builder(activity)
-                        .setCancelable(true)
-                        .setTitle("Not implemented yet!")
-                        .setMessage("Work in progress...")
-                        .show();
+                activity.replaceView(new SignUpBeginView(), Animation.SLIDE_LEFT_RIGHT);
                 break;
         }
     }

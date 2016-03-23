@@ -11,10 +11,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import com.eip.red.caritathelp.Activities.Sign.SignActivity;
 import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.ModelManager;
 import com.eip.red.caritathelp.R;
-import com.eip.red.caritathelp.Views.Login.LoginView;
 import com.eip.red.caritathelp.Views.Sign.In.SignInView;
 
 public class MainActivity extends Activity implements View.OnClickListener {
@@ -124,7 +124,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     public void logout() {
-        startActivity(new Intent(this, SignInView.class));
+        startActivity(new Intent(this, SignActivity.class));
         finish();
     }
 
