@@ -37,7 +37,10 @@ public class HomeView extends Fragment {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Actualités", false, false);
+        ((MainActivity) getActivity()).getToolBar().update("Actualités", false);
+
+        // Init SearchBar
+        ((MainActivity) getActivity()).getToolBar().getSearchBar().setVisibility(View.GONE);
 
         // Init ListView & Listener & Adapter
         listView = (ListView)view.findViewById(R.id.home_list_view);

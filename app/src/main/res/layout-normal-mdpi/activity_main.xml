@@ -1,41 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    android:background="@color/bootstrap_gray_lighter">
+    android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/fragment_mainview_appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <include layout="@layout/activity_main_toolbar" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/main_fragment"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/divider">
+        android:background="@color/background">
 
-    </FrameLayout>
+        <include layout="@layout/activity_main_toolbar" />
+
+        <FrameLayout
+            android:id="@+id/main_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        </FrameLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
 
     <include layout="@layout/activity_main_bottom_bar" />
 
-
-    <!--<android.support.design.widget.TabLayout-->
-        <!--android:id="@+id/fragment_mainview_tabs"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/_40sdp"-->
-
-        <!--style="@style/MyCustomTabLayout"-->
-        <!--android:background="@color/primary"/>-->
-
 </LinearLayout>
-

@@ -38,7 +38,7 @@ public class OrganisationListViewAdapter extends BaseAdapter {
         View view = convertView;
 
         if (convertView == null)
-            view = fragment.getActivity().getLayoutInflater().inflate(R.layout.fragment_organisation_list_row, null);
+            view = fragment.getActivity().getLayoutInflater().inflate(R.layout.fragment_organisation_rv_row, null);
 
         return view;
     }

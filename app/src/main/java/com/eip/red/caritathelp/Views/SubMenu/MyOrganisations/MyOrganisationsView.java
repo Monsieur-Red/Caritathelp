@@ -3,20 +3,24 @@ package com.eip.red.caritathelp.Views.SubMenu.MyOrganisations;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
+import com.eip.red.caritathelp.Activities.Main.MySearchBar;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.Models.User;
+import com.eip.red.caritathelp.MyWidgets.DividerItemDecoration;
 import com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations.MyOrganisationsPresenter;
 import com.eip.red.caritathelp.R;
 
@@ -30,10 +34,12 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
 
     private MyOrganisationsPresenter    presenter;
 
-    private ListView        listView;
-    private EditText        searchBar;
-    private ProgressBar     progressBar;
-    private AlertDialog     dialog;
+    private RecyclerView                recyclerViewOwner;
+    private RecyclerView                recyclerViewMember;
+    private MyOrganisationsRVAdapter    adapterOwner;
+    private MyOrganisationsRVAdapter    adapterMember;
+    private ProgressBar                 progressBar;
+    private AlertDialog                 dialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,23 +65,19 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
         View    view = inflater.inflate(R.layout.fragment_submenu_my_organisations, container, false);
 
         // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Mes associations", true, false);
+        ((MainActivity) getActivity()).getToolBar().update("Mes associations", true);
+
+        // Init SearchBar
+        initSearchBar();
 
         // Init UI Element
-        searchBar = (EditText) view.findViewById(R.id.top_bar_my_organisations_search_text);
-        progressBar = (ProgressBar)  view.findViewById(R.id.my_organisations_progress_bar);
+        progressBar = (ProgressBar)  view.findViewById(R.id.progress_bar);
 
-        // Init ListView & Listener & Adapter
-        listView = (ListView)view.findViewById(R.id.orga_list_view);
-        listView.setAdapter(new MyOrganisationsListViewAdapter(this));
-        initListViewListener();
-
-        // Init Filter
-        initSearchBarListener();
+        // Init RecyclerView
+        initRecyclerViews(view);
 
         // Init Button Listener
-        view.findViewById(R.id.top_bar_my_organisations_return).setOnClickListener(this);
-        view.findViewById(R.id.top_bar_my_organisations_btn_add_orga).setOnClickListener(this);
+        view.findViewById(R.id.btn_create).setOnClickListener(this);
 
         // Init MyOrganisation Model by requesting the api
         presenter.getMyOrganisations();
@@ -83,23 +85,19 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
         return (view);
     }
 
-    private void initListViewListener() {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Init Text Search Bar
-                searchBar.invalidate();
-                searchBar.getText().clear();
-                searchBar.setHint(android.R.string.search_go);
+    private void initSearchBar() {
+        MySearchBar searchBar = ((MainActivity) getActivity()).getToolBar().getSearchBar();
+        final EditText    searchText = searchBar.getSearchText();
+        final ImageButton cancelBtn = searchBar.getCancelBtn();
 
-                // Go to organisation page
-                presenter.goToOrganisationView((Organisation) listView.getItemAtPosition(position));
-            }
-        });
-    }
+        // Show SearchBar
+        searchBar.setVisibility(View.VISIBLE);
 
-    private void initSearchBarListener() {
-        searchBar.addTextChangedListener(new TextWatcher() {
+        // Show the SearchBar
+        searchBar.show(R.string.search_bar_organisation);
+
+        //Init SearchText listener & filter
+        searchText.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void afterTextChanged(Editable arg0) {
@@ -113,11 +111,54 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
 
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                String  text = searchBar.getText().toString().toLowerCase(Locale.getDefault());
+                if (TextUtils.isEmpty(arg0)) {
+                    // Hide Cancel Btn
+                    cancelBtn.setVisibility(View.GONE);
 
-                ((MyOrganisationsListViewAdapter) listView.getAdapter()).filter(text);
+                    // Flush Filter
+                    adapterOwner.flushFilter();
+                    adapterMember.flushFilter();
+                }
+                else {
+                    // Show Cancel Btn
+                    cancelBtn.setVisibility(View.VISIBLE);
+
+                    // Filter text
+                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
+                    adapterOwner.filter(text);
+                    adapterMember.filter(text);
+                }
             }
         });
+    }
+
+    private void initRecyclerViews(View view) {
+        // Init Recycler Views
+        recyclerViewOwner = (RecyclerView) view.findViewById(R.id.my_organisations_owner_profile_recycler_view);
+        recyclerViewMember = (RecyclerView) view.findViewById(R.id.my_organisations_member_profile_recycler_view);
+
+        // Init Adapter
+        adapterOwner = new MyOrganisationsRVAdapter(presenter);
+        adapterMember = new MyOrganisationsRVAdapter(presenter);
+
+        // Set Adapter
+        recyclerViewOwner.setAdapter(adapterOwner);
+        recyclerViewMember.setAdapter(adapterMember);
+
+        // Init LayoutManager
+        recyclerViewOwner.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        recyclerViewMember.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+
+        // Set Options to enable toolbar display/hide
+        recyclerViewOwner.setNestedScrollingEnabled(false);
+        recyclerViewMember.setNestedScrollingEnabled(false);
+        recyclerViewOwner.setHasFixedSize(false);
+        recyclerViewMember.setHasFixedSize(false);
+
+        // Init Divider (between items)
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this.getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL);
+        recyclerViewOwner.addItemDecoration(itemDecoration);
+        recyclerViewMember.addItemDecoration(itemDecoration);
     }
 
     @Override
@@ -143,9 +184,8 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
     }
 
     @Override
-    public void updateListView(List<Organisation> myOrganisations) {
-        ((MyOrganisationsListViewAdapter) listView.getAdapter()).setMyOrganisations(myOrganisations);
-        ((MyOrganisationsListViewAdapter) listView.getAdapter()).notifyDataSetChanged();
+    public void updateListView(List<Organisation> myOrganisationsOwner, List<Organisation> myOrganisationsMember) {
+        adapterOwner.update(myOrganisationsOwner);
+        adapterMember.update(myOrganisationsMember);
     }
-
 }

@@ -23,7 +23,10 @@ public class NotificationsView extends Fragment implements View.OnClickListener 
         view = inflater.inflate(R.layout.fragment_notifications, container, false);
 
         // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Notifications", false, false);
+        ((MainActivity) getActivity()).getToolBar().update("Notifications", false);
+
+        // Init SearchBar
+        ((MainActivity) getActivity()).getToolBar().getSearchBar().setVisibility(View.GONE);
 
         return (view);
     }

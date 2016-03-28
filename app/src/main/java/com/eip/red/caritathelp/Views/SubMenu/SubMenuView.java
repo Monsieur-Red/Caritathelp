@@ -30,21 +30,12 @@ public class SubMenuView extends Fragment implements View.OnClickListener {
     private User        user;
     private Network     network;
 
-    private MyOrganisationsView myOrganisationsView;
-    private MyEventsView        myEventsView;
-    private AccountSettingsView accountSettingsView;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         user = ((MainActivity) getActivity()).getModelManager().getUser();
         network = ((MainActivity) getActivity()).getModelManager().getNetwork();
-
-        // Init Views
-        myOrganisationsView = new MyOrganisationsView();
-        myEventsView = MyEventsView.newInstance(user.getId());
-        accountSettingsView = new AccountSettingsView();
     }
 
 
@@ -54,7 +45,10 @@ public class SubMenuView extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_submenu, container, false);
 
         // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Autres", false, false);
+        ((MainActivity) getActivity()).getToolBar().update("Autres", false);
+
+        // Init SearchBar
+        ((MainActivity) getActivity()).getToolBar().getSearchBar().setVisibility(View.GONE);
 
         // Init Listener
         view.findViewById(R.id.submenu_my_organisations).setOnClickListener(this);
@@ -71,15 +65,15 @@ public class SubMenuView extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.submenu_my_organisations:
                 // Page Change
-                ((MainActivity) getActivity()).replaceView(myOrganisationsView, Animation.FADE_IN_OUT);
+                ((MainActivity) getActivity()).replaceView(new MyOrganisationsView(), Animation.FADE_IN_OUT);
                 break;
             case R.id.submenu_my_events:
                 // Page Change
-                ((MainActivity) getActivity()).replaceView(myEventsView, Animation.FADE_IN_OUT);
+                ((MainActivity) getActivity()).replaceView(MyEventsView.newInstance(user.getId()), Animation.FADE_IN_OUT);
                 break;
             case R.id.submenu_account_settings:
                 // Page Change
-                ((MainActivity) getActivity()).replaceView(accountSettingsView, Animation.FADE_IN_OUT);
+                ((MainActivity) getActivity()).replaceView(new AccountSettingsView(), Animation.FADE_IN_OUT);
                 break;
             case R.id.submenu_logout:
                 ((MainActivity) getActivity()).logout();

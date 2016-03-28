@@ -5,16 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/_50sdp"
     android:layout_marginTop="@dimen/_2sdp"
-    android:background="@color/icons">
-
-    <!-- DIVIDER -->
-    <!--<View style="@style/Divider" />-->
+    android:background="@color/icons"
+    android:layout_gravity="bottom">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/_2sdp"
-        android:weightSum="5">
+        android:weightSum="4">
 
         <ImageButton
             android:id="@+id/bottom_bar_btn_home"
@@ -23,18 +21,22 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center"
+            android:src="@drawable/btn_selector_home"
+            android:scaleType="centerInside"
+            android:background="@android:color/transparent"
+            android:focusableInTouchMode="true"/>
 
-            android:src="@android:drawable/ic_dialog_dialer" />
+            <!--android:src="@android:drawable/ic_dialog_dialer" />-->
 
-        <ImageButton
-            android:id="@+id/bottom_bar_btn_organisations"
+        <!--<ImageButton-->
+            <!--android:id="@+id/bottom_bar_btn_organisations"-->
 
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center"
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_gravity="center"-->
 
-            android:src="@android:drawable/ic_menu_myplaces" />
+            <!--android:src="@android:drawable/ic_menu_myplaces" />-->
 
         <ImageButton
             android:id="@+id/bottom_bar_btn_mailbox"
@@ -44,7 +46,11 @@
             android:layout_weight="1"
             android:layout_gravity="center"
 
-            android:src="@android:drawable/sym_action_chat" />
+            android:src="@drawable/btn_selector_chat"
+            android:scaleType="centerInside"
+            android:background="@android:color/transparent"
+            android:focusableInTouchMode="true"/>
+            <!--android:src="@android:drawable/sym_action_chat" />-->
 
         <ImageButton
             android:id="@+id/bottom_bar_btn_notifications"
@@ -54,7 +60,11 @@
             android:layout_weight="1"
             android:layout_gravity="center"
 
-            android:src="@android:drawable/ic_popup_reminder" />
+            android:src="@drawable/btn_selector_notifications"
+            android:scaleType="centerInside"
+            android:background="@android:color/transparent"
+            android:focusableInTouchMode="true"/>
+            <!--android:src="@android:drawable/ic_popup_reminder" />-->
 
         <ImageButton
             android:id="@+id/bottom_bar_btn_submenu"
@@ -64,7 +74,11 @@
             android:layout_weight="1"
             android:layout_gravity="center"
 
-            android:src="@android:drawable/ic_menu_add" />
+            android:src="@drawable/btn_selector_more"
+            android:scaleType="centerInside"
+            android:background="@android:color/transparent"
+            android:focusableInTouchMode="true"/>
+            <!--android:src="@android:drawable/ic_menu_add" />-->
 
     </LinearLayout>
 

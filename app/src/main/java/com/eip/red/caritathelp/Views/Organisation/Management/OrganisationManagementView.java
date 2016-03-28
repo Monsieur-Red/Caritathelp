@@ -49,7 +49,10 @@ public class OrganisationManagementView extends Fragment implements View.OnClick
         View    view = inflater.inflate(R.layout.fragment_organisation_management, container, false);
 
         // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Gestion", true, false);
+        ((MainActivity) getActivity()).getToolBar().update("Gestion", true);
+
+        // Init SearchBar
+        ((MainActivity) getActivity()).getToolBar().getSearchBar().setVisibility(View.GONE);
 
         // Init Listener
         view.findViewById(R.id.organisation_management_create_event).setOnClickListener(this);

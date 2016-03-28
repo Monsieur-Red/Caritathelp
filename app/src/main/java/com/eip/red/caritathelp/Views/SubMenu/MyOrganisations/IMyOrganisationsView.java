@@ -16,6 +16,6 @@ public interface IMyOrganisationsView {
 
     void setDialogError(String title, String msg);
 
-    void updateListView(List<Organisation> myOrganisationsNames);
+    void updateListView(List<Organisation> myOrganisationsOwner, List<Organisation> myOrganisationsMember);
 
 }

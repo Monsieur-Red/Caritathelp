@@ -22,9 +22,12 @@ public class MailBoxView extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_mailbox, container, false);
 
-        // Set Tool Bar Title
         // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Messagerie", false, false);
+        ((MainActivity) getActivity()).getToolBar().update("Messagerie", false);
+
+        // Init SearchBar
+        ((MainActivity) getActivity()).getToolBar().getSearchBar().setVisibility(View.GONE);
+
 
         return (view);
     }

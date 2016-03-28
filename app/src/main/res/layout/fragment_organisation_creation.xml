@@ -1,63 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
-    <!-- TOP BAR -->
-    <LinearLayout
-        android:id="@+id/organisation_creation_bar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="wrap_content">
 
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:background="@color/primary">
-
-        <LinearLayout
-            android:id="@+id/top_bar_organisation_creation_bar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="7">
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view_1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            card_view:cardCornerRadius="@dimen/_2sdp"
+            card_view:contentPadding="@dimen/_10sdp">
 
             <LinearLayout
-                android:id="@+id/top_bar_organisation_creation_return"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical">
+                android:orientation="horizontal"
+                android:weightSum="5">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
-                    android:src="@drawable/arrow_top_bar"/>
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_60sdp"
+                    android:layout_weight="4"
+
+                    android:nextFocusDown="@+id/theme"
+                    android:hint="Nom de l'association"
+                    android:textSize="@dimen/_22sdp"
+                    android:textColorHint="@color/secondary_text"
+                    android:textColor="@color/primary_text"
+                    android:singleLine="true"
+                    android:background="@android:color/transparent" />
+
+                <ImageButton
+                    android:id="@+id/btn_photo"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_weight="1"
+
+                    android:layout_gravity="center"
+                    android:src="@android:drawable/ic_menu_camera"
+                    android:scaleType="centerInside"
+                    android:background="@android:color/transparent" />
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="0dp"
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view_2"
+            android:layout_below="@+id/card_view_1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            card_view:cardCornerRadius="@dimen/_2sdp"
+            card_view:contentPadding="@dimen/_10sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_20sdp"
+
+                    android:nextFocusDown="@+id/location"
+                    android:hint="Thème (mot clés)"
+                    android:textSize="@dimen/_18sdp"
+                    android:textColorHint="@color/secondary_text"
+                    android:textColor="@color/primary_text"
+                    android:background="@android:color/transparent"/>
+
+                <!-- DIVIDER -->
+                <View
+                    style="@style/Divider"
+                    android:layout_margin="@dimen/_10sdp"/>
+
+                <EditText
+                    android:id="@+id/location"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_20sdp"
+
+                    android:nextFocusDown="@+id/description"
+                    android:hint="Ville"
+                    android:textSize="@dimen/_18sdp"
+                    android:textColorHint="@color/secondary_text"
+                    android:textColor="@color/primary_text"
+                    android:background="@android:color/transparent"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view_3"
+            android:layout_below="@+id/card_view_2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            card_view:cardCornerRadius="@dimen/_2sdp"
+            card_view:contentPadding="@dimen/_10sdp">
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
-                android:layout_weight="6"
 
-                android:gravity="center"
-                android:text="@string/organisation_creation_bar_title"
-                android:textColor="@color/icons"
-                android:textSize="@dimen/_22sdp" />
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:hint="Description"
+                android:textSize="@dimen/_16sdp"
+                android:textColorHint="@color/secondary_text"
+                android:textColor="@color/primary_text"/>
 
-        </LinearLayout>
-    </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <Button
+            android:id="@+id/btn_create"
+            android:layout_below="@+id/card_view_3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_60sdp"
+            android:layout_marginRight="@dimen/_60sdp"
+
+            android:alpha="0.8"
+            android:background="@color/primary_dark"
+            android:text="Créer"
+            android:textSize="@dimen/_22sdp"
+            android:textColor="@color/icons"
+            android:textAllCaps="false" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</android.support.v4.widget.NestedScrollView>
+
+<!--
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ScrollView
         android:id="@+id/organisation_creation_scroll_view"
-        android:layout_below="@+id/organisation_creation_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/bootstrap_gray_lighter">
+        android:layout_height="wrap_content" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -145,4 +246,4 @@
 
         android:visibility="gone" />
 
-</RelativeLayout>
+</RelativeLayout>-->

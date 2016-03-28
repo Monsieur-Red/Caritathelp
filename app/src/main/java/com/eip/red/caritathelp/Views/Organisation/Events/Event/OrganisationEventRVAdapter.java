@@ -8,10 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eip.red.caritathelp.Models.Home.News;
-import com.eip.red.caritathelp.Models.Organisation.Event;
 import com.eip.red.caritathelp.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,7 +51,7 @@ public class OrganisationEventRVAdapter extends RecyclerView.Adapter<Organisatio
 
     @Override
     public EventObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_organisation_event_recycler_view_row, parent, false);
+        View                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_organisation_event_rv_row, parent, false);
         EventObjectHolder   holder = new EventObjectHolder(view);
 
         return (holder);

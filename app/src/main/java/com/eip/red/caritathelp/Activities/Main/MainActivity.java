@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -15,13 +18,12 @@ import com.eip.red.caritathelp.Activities.Sign.SignActivity;
 import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.ModelManager;
 import com.eip.red.caritathelp.R;
-import com.eip.red.caritathelp.Views.Sign.In.SignInView;
 
-public class MainActivity extends Activity implements View.OnClickListener {
+public class MainActivity extends Activity implements View.OnClickListener, View.OnFocusChangeListener {
 
     private ModelManager    modelManager;
 
-    private MyToolBar       toolBar;
+    private MainActivityToolbar toolBar;
     private MyBottomBar     bottomBar;
 
     @Override
@@ -35,27 +37,35 @@ public class MainActivity extends Activity implements View.OnClickListener {
         modelManager = new ModelManager(getIntent());
 
         // Init Tool Bar
-        toolBar = new MyToolBar(this);
+        toolBar = new MainActivityToolbar(this);
 
         // Init Bottom Bar
         bottomBar = new MyBottomBar(this);
 
-//        // Display First View
-//        FragmentTransaction ft = getFragmentManager().beginTransaction();
-//        ft.replace(R.id.main_fragment, new MainView()).commit();
-
         // Set Status Bar Color
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.primary));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.primary_dark));
         }
+
     }
 
     @Override
     public void onClick(View v) {
         toolBar.onClick(v.getId());
-        bottomBar.onClick(v.getId());
+//        bottomBar.onClick(v.getId());
     }
+
+//    @Override
+//    public void onBackPressed() {
+//        Fragment fragment = getFragmentManager().findFragmentById(R.id.main_fragment);
+//
+//        System.out.println("MAINACTIVITY");
+//        if (fragment instanceof MyEventsView)
+//            ((MyEventsView) fragment).onBackPressed();
+//        else
+//            super.onBackPressed();
+//    }
 
     public void replaceView(Fragment fragment, int animation) {
         // Hide Keyboard
@@ -111,11 +121,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     public void goToPreviousPage() {
-//        System.out.println("SIZEEEEEEEEEEEEE : " + getFragmentManager().getBackStackEntryCount());
+//        int count = getFragmentManager().getBackStackEntryCount();
 
         // Hide Keyboard
         InputMethodManager keyboard = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        View    view = getCurrentFocus();
+        View view = getCurrentFocus();
         if (view != null)
             keyboard.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
@@ -132,7 +142,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
         return (modelManager);
     }
 
-    public MyToolBar getToolBar() {
+    public MainActivityToolbar getToolBar() {
         return toolBar;
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if (hasFocus)
+            bottomBar.onClick(v.getId());
     }
 }

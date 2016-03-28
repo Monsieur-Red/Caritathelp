@@ -64,7 +64,10 @@ public class OrganisationEventInformationsView extends Fragment implements IOrga
         View    view = inflater.inflate(R.layout.fragment_organisation_event_informations, container, false);
 
         // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Informations", true, false);
+        ((MainActivity) getActivity()).getToolBar().update("Informations", true);
+
+        // Init SearchBar
+        ((MainActivity) getActivity()).getToolBar().getSearchBar().setVisibility(View.GONE);
 
         // Init UI Element
         dateBegin = (TextView) view.findViewById(R.id.date_begin);

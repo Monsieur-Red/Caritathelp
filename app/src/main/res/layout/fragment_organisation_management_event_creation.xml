@@ -80,6 +80,7 @@
                         android:nextFocusDown="@id/date_end"
                         android:hint="Date de début"
                         android:textSize="@dimen/_18sdp"
+                        android:textColorHint="@color/secondary_text"
                         android:textColor="@color/primary_text" />
 
                     <!-- DIVIDER -->
@@ -156,9 +157,8 @@
                 android:text="Créer"
                 android:textSize="@dimen/_22sdp"
                 android:textColor="@color/icons"
-                android:textAllCaps="false"
+                android:textAllCaps="false" />
 
-                />
         </LinearLayout>
 
     </ScrollView>

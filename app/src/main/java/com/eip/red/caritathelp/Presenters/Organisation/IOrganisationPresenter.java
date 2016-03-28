@@ -10,4 +10,7 @@ public interface IOrganisationPresenter {
 
     String getOrganisationName();
 
+    void getOrganisation();
+
+    void getNews();
 }

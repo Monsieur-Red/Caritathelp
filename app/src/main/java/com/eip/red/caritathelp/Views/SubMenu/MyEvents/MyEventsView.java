@@ -9,16 +9,22 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.TextKeyListener;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
+import com.eip.red.caritathelp.Activities.Main.MySearchBar;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Event;
+import com.eip.red.caritathelp.MyWidgets.DividerItemDecoration;
+import com.eip.red.caritathelp.MyWidgets.MyEditText;
 import com.eip.red.caritathelp.Presenters.SubMenu.MyEvents.MyEventsPresenter;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
@@ -35,10 +41,10 @@ public class MyEventsView extends Fragment implements IMyEventsView {
     private MyEventsPresenter presenter;
 
     private RecyclerView    recyclerView;
-    private EditText        searchBar;
-    private Button          cancelBtn;
     private ProgressBar     progressBar;
     private AlertDialog     dialog;
+
+    private boolean searchBFocus = false;
 
 
     public static MyEventsView newInstance(int userId) {
@@ -75,26 +81,16 @@ public class MyEventsView extends Fragment implements IMyEventsView {
         View    view = inflater.inflate(R.layout.fragment_submenu_my_events, container, false);
 
         // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Mes événements", true, false);
+        ((MainActivity) getActivity()).getToolBar().update("Mes événements", true);
+
+        // Init SearchBar
+        initSearchBar();
 
         // Init UI Element
-        searchBar = (EditText) view.findViewById(R.id.search_text);
-        cancelBtn = (Button) view.findViewById(R.id.btn_cancel);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
 
-        // Init RecyclerView & Listener & Adapter
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(new MyEventsRVAdapter(presenter));
-
-        // Init LayoutManager
-        LinearLayoutManager llayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        recyclerView.setLayoutManager(llayoutManager);
-
-        // Init Filter
-        initSearchBarListener();
-
-        // Init Listener
-        initTopBarListener(view);
+        // Init RecyclerView
+        initRecyclerView(view);
 
         // Init Events Model
         presenter.getMyEvents();
@@ -102,8 +98,19 @@ public class MyEventsView extends Fragment implements IMyEventsView {
         return (view);
     }
 
-    private void initSearchBarListener() {
-        searchBar.addTextChangedListener(new TextWatcher() {
+    private void initSearchBar() {
+        MySearchBar searchBar = ((MainActivity) getActivity()).getToolBar().getSearchBar();
+        final EditText    searchText = searchBar.getSearchText();
+        final ImageButton cancelBtn = searchBar.getCancelBtn();
+
+        // Show SearchBar
+        searchBar.setVisibility(View.VISIBLE);
+
+        // Show the SearchBar
+        searchBar.show(R.string.search_bar_event);
+
+        //Init SearchText listener & filter
+        searchText.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void afterTextChanged(Editable arg0) {
@@ -117,72 +124,37 @@ public class MyEventsView extends Fragment implements IMyEventsView {
 
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                if (TextUtils.isEmpty(arg0))
+                if (TextUtils.isEmpty(arg0)) {
+                    // Hide Cancel Btn
+                    cancelBtn.setVisibility(View.GONE);
+
+                    // Flush Filter
                     ((MyEventsRVAdapter) recyclerView.getAdapter()).flushFilter();
+                }
                 else {
-                    String text = searchBar.getText().toString().toLowerCase(Locale.getDefault());
+                    // Show Cancel Btn
+                    cancelBtn.setVisibility(View.VISIBLE);
+
+                    // Filter text
+                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     ((MyEventsRVAdapter) recyclerView.getAdapter()).filter(text);
                 }
             }
         });
     }
 
-    private void initTopBarListener(final View view) {
-        searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+    private void initRecyclerView(View view) {
+        // Init RecyclerView
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        recyclerView.setAdapter(new MyEventsRVAdapter(presenter));
 
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    // Clear Text
-                    TextKeyListener.clear(searchBar.getText());
+        // Init LayoutManager
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
-                    // Hide Add Btn
-//                    view.findViewById(R.id.btn_add).setVisibility(View.GONE);
-
-                    // Show Cancel Btn
-                    cancelBtn.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
-        view.findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Show Add Btn
-//                view.findViewById(R.id.btn_add).setVisibility(View.VISIBLE);
-
-                // Hide Cancel Btn
-                cancelBtn.setVisibility(View.GONE);
-
-                // Hide Keyboard
-                Tools.hideKeyboard(getActivity().getApplicationContext(), getActivity().getCurrentFocus());
-
-                // Search Bar EditText Clear Focus
-                searchBar.clearFocus();
-            }
-        });
-
-
+        // Init Divider (between items)
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this.getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL);
+        recyclerView.addItemDecoration(itemDecoration);
     }
-
-//    @Override
-//    public void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.btn_cancel:
-//                // Show Add Btn
-//                view.findViewById(R.id.btn_add).setVisibility(View.VISIBLE);
-//
-//                // Hide Cancel Btn
-//                cancelBtn.setVisibility(View.GONE);
-//
-//                // Hide Keyboard
-//                Tools.hideKeyboard(getActivity().getApplicationContext(), getActivity().getCurrentFocus());
-//
-//                // Search Bar EditText Clear Focus
-//                searchBar.clearFocus();
-//                break;
-//        }
-//    }
 
     @Override
     public void showProgress() {

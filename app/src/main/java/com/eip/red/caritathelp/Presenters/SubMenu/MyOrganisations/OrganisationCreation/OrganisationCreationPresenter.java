@@ -19,26 +19,20 @@ public class OrganisationCreationPresenter implements IOrganisationCreationPrese
 
     public OrganisationCreationPresenter(OrganisationCreationView view, Network network) {
         this.view = view;
-        interactor = new OrganisationCreationInteractor(view.getContext(), network);
+        interactor = new OrganisationCreationInteractor(view.getActivity().getApplicationContext(), network);
     }
 
     @Override
     public void onClick(int viewId) {
-        switch (viewId) {
-            case R.id.top_bar_organisation_creation_return:
-                ((MainActivity) view.getActivity()).goToPreviousPage();
-                break;
-            case R.id.organisation_creation_btn_create:
-                String  name = view.getName().getText().toString();
-                String  theme = view.getTheme().getText().toString();
-                String  city = view.getCity().getText().toString();
-                String  description = view.getDescription().getText().toString();
+        if (viewId == R.id.btn_create) {
+            String  name = view.getName().getText().toString();
+            String  theme = view.getTheme().getText().toString();
+            String  city = view.getCity().getText().toString();
+            String  description = view.getDescription().getText().toString();
 
-                view.showProgress();
-                interactor.createOrganisation(name, theme, city, description, this);
-                break;
+            view.showProgress();
+            interactor.createOrganisation(name, theme, city, description, this);
         }
-
     }
 
     @Override

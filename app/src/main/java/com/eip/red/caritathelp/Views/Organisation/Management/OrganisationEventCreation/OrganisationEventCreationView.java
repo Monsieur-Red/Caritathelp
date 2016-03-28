@@ -103,7 +103,10 @@ public class OrganisationEventCreationView extends Fragment implements IOrganisa
         View    view = inflater.inflate(R.layout.fragment_organisation_management_event_creation, container, false);
 
         // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Création événement", true, false);
+        ((MainActivity) getActivity()).getToolBar().update("Création événement", true);
+
+        // Init SearchBar
+        ((MainActivity) getActivity()).getToolBar().getSearchBar().setVisibility(View.GONE);
 
         // Init UI Elements
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);

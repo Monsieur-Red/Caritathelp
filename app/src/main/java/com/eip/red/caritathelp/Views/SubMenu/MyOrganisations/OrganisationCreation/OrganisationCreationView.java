@@ -39,6 +39,11 @@ public class OrganisationCreationView extends Fragment implements IOrganisationC
 
         // Init Presenter
         presenter = new OrganisationCreationPresenter(this, network);
+
+        // Init Dialog
+        dialog = new AlertDialog.Builder(getActivity())
+                .setCancelable(true)
+                .create();
     }
 
 
@@ -47,21 +52,21 @@ public class OrganisationCreationView extends Fragment implements IOrganisationC
         // Inflate the layout for this fragment
         View    view = inflater.inflate(R.layout.fragment_organisation_creation, container, false);
 
+        // Set ToolBar
+        ((MainActivity) getActivity()).getToolBar().update("Créer une association", true);
+
+        // Init SearchBar
+        ((MainActivity) getActivity()).getToolBar().getSearchBar().setVisibility(View.GONE);
+
         // Init UI Element
-        name = (EditText) view.findViewById(R.id.organisation_creation_name);
-        theme = (EditText) view.findViewById(R.id.organisation_creation_theme);
-        city = (EditText) view.findViewById(R.id.organisation_creation_city);
-        description = (EditText) view.findViewById(R.id.organisation_creation_description);
-        progressBar = (ProgressBar) view.findViewById(R.id.organisation_creation_progress_bar);
+        name = (EditText) view.findViewById(R.id.name);
+        theme = (EditText) view.findViewById(R.id.theme);
+        city = (EditText) view.findViewById(R.id.location);
+        description = (EditText) view.findViewById(R.id.description);
+        progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
 
         // Init Button Listener
-        view.findViewById(R.id.top_bar_organisation_creation_return).setOnClickListener(this);
-        view.findViewById(R.id.organisation_creation_btn_create).setOnClickListener(this);
-
-        // Init Dialog
-        dialog = new AlertDialog.Builder(getActivity())
-                .setCancelable(true)
-                .create();
+        view.findViewById(R.id.btn_create).setOnClickListener(this);
 
         return (view);
     }

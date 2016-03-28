@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Caritathelp</string>
 
+    <!-- Search Bar -->
+    <string name="search_bar_organisation">Rechercher une association</string>
+    <string name="search_bar_event">Rechercher un événement</string>
+    <string name="search_bar_member">Rechercher un membre</string>
+
     <!-- Connection View -->
     <string name="connectionview_title">Connexion</string>
     <string name="text_view_email">Email</string>
@@ -45,7 +50,6 @@
     <string name="subscribe">S\'inscrire</string>
 
     <!-- OrganisationSearch View -->
-    <string name="organisations_search_bar">Rechercher une association</string>
 
     <!-- MailBox View -->
     <string name="mailbox_toolbar_title">Messagerie</string>
@@ -75,10 +79,8 @@
     <string name="organisation_informations">Informations</string>
 
     <!-- Organisation Members View -->
-    <string name="organisation_members_search">Rechercher un membre</string>
 
     <!-- Organisation Events View -->
-    <string name="organisation_events_search">Rechercher un événement</string>
 
     <!-- Organisation Event View -->
     <string name="organisation_event_members">Participants</string>

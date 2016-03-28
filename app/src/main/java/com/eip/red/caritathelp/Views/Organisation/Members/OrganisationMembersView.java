@@ -4,20 +4,24 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
+import com.eip.red.caritathelp.Activities.Main.MySearchBar;
 import com.eip.red.caritathelp.Models.Organisation.Member;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Presenters.Organisation.Members.OrganisationMembersPresenter;
 import com.eip.red.caritathelp.R;
+import com.eip.red.caritathelp.Views.Organisation.Events.OrganisationEventsRVAdapter;
 
 import java.util.List;
 import java.util.Locale;
@@ -31,7 +35,6 @@ public class OrganisationMembersView extends Fragment implements IOrganisationMe
     private OrganisationMembersPresenter    presenter;
 
     private ListView    listView;
-    private EditText    searchBar;
     private ProgressBar progressBar;
     private AlertDialog dialog;
 
@@ -69,10 +72,12 @@ public class OrganisationMembersView extends Fragment implements IOrganisationMe
         View    view = inflater.inflate(R.layout.fragment_organisation_members, container, false);
 
         // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Membres", true, false);
+        ((MainActivity) getActivity()).getToolBar().update("Membres", true);
+
+        // Init SearchBar
+        initSearchBar();
 
         // Init UI Element
-        searchBar = (EditText) view.findViewById(R.id.organisation_members_search_text);
         progressBar = (ProgressBar) view.findViewById(R.id.organisation_members_progress_bar);
 
         // Init ListView & Listener & Adapter
@@ -80,13 +85,55 @@ public class OrganisationMembersView extends Fragment implements IOrganisationMe
         listView.setAdapter(new OrganisationMembersListViewAdapter(this));
         initListViewListener();
 
-        // Init Filter
-        initSearchBarListener();
-
         // Init Members Model
         presenter.getMembers();
 
         return (view);
+    }
+
+    private void initSearchBar() {
+        MySearchBar searchBar = ((MainActivity) getActivity()).getToolBar().getSearchBar();
+        final EditText    searchText = searchBar.getSearchText();
+        final ImageButton cancelBtn = searchBar.getCancelBtn();
+
+        // Show SearchBar
+        searchBar.setVisibility(View.VISIBLE);
+
+        // Show the SearchBar
+        searchBar.show(R.string.search_bar_member);
+
+        //Init SearchText listener & filter
+        searchText.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+                if (TextUtils.isEmpty(arg0)) {
+                    // Hide Cancel Btn
+                    cancelBtn.setVisibility(View.GONE);
+
+                    // Flush Filter
+//                    ((OrganisationEventsRVAdapter) recyclerView.getAdapter()).flushFilter();
+                }
+                else {
+                    // Show Cancel Btn
+                    cancelBtn.setVisibility(View.VISIBLE);
+
+                    // Filter text
+                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
+                    ((OrganisationMembersListViewAdapter) listView.getAdapter()).filter(text);
+                }
+            }
+        });
     }
 
     private void initListViewListener() {
@@ -105,33 +152,6 @@ public class OrganisationMembersView extends Fragment implements IOrganisationMe
             }
         });
     }
-
-    private void initSearchBarListener() {
-        searchBar.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void afterTextChanged(Editable arg0) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                String  text = searchBar.getText().toString().toLowerCase(Locale.getDefault());
-
-                ((OrganisationMembersListViewAdapter) listView.getAdapter()).filter(text);
-            }
-        });
-    }
-
-//    @Override
-//    public void onClick(View v) {
-//        presenter.onClick(v.getId());
-//    }
 
     @Override
     public void showProgress() {

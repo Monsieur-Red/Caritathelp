@@ -59,7 +59,7 @@ public class MyEventsRVAdapter extends RecyclerView.Adapter<MyEventsRVAdapter.Da
 
     @Override
     public DataObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_submenu_my_events_recycler_view_row, parent, false);
+        View                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_submenu_my_events_rv_row, parent, false);
         DataObjectHolder    holder = new DataObjectHolder(view);
 
         return (holder);

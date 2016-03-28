@@ -70,7 +70,10 @@ public class OrganisationEventView extends Fragment implements IOrganisationEven
         View    view = inflater.inflate(R.layout.fragment_organisation_event, container, false);
 
         // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Événement", true, false);
+        ((MainActivity) getActivity()).getToolBar().update("Événement", true);
+
+        // Init SearchBar
+        ((MainActivity) getActivity()).getToolBar().getSearchBar().setVisibility(View.GONE);
 
         // Init UI Element
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);

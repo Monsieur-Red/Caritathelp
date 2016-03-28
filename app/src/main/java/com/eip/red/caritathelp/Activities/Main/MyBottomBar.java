@@ -21,10 +21,10 @@ import java.util.ArrayList;
 public class MyBottomBar {
 
     public static final int STATE_HOME = 0;
-    public static final int STATE_ORGA = 1;
-    public static final int STATE_MAILBOX = 2;
-    public static final int STATE_NOTIFICATIONS = 3;
-    public static final int STATE_SUBMENU = 4;
+    public static final int STATE_ORGA = 4;
+    public static final int STATE_MAILBOX = 1;
+    public static final int STATE_NOTIFICATIONS = 2;
+    public static final int STATE_SUBMENU = 3;
 
     private int                     state;
     private ArrayList<ImageButton>  buttons;
@@ -55,7 +55,7 @@ public class MyBottomBar {
         // Init Buttons
         buttons = new ArrayList<>();
         buttons.add((ImageButton) activity.findViewById(R.id.bottom_bar_btn_home));
-        buttons.add((ImageButton) activity.findViewById(R.id.bottom_bar_btn_organisations));
+//        buttons.add((ImageButton) activity.findViewById(R.id.bottom_bar_btn_organisations));
         buttons.add((ImageButton) activity.findViewById(R.id.bottom_bar_btn_mailbox));
         buttons.add((ImageButton) activity.findViewById(R.id.bottom_bar_btn_notifications));
         buttons.add((ImageButton) activity.findViewById(R.id.bottom_bar_btn_submenu));
@@ -63,6 +63,7 @@ public class MyBottomBar {
         // Init Listener & Color Button & Color background Button
         for (ImageButton button : buttons) {
             button.setOnClickListener(activity);
+            button.setOnFocusChangeListener(activity);
             button.setColorFilter(Color.LTGRAY);
             button.setBackgroundColor(Color.TRANSPARENT);
         }
@@ -81,13 +82,13 @@ public class MyBottomBar {
                 // Page Change
                 activity.replaceView(homeView, Animation.FADE_IN_OUT);
                 break;
-            case R.id.bottom_bar_btn_organisations:
-                // Set Button view
-                selectButton(STATE_ORGA);
-
-                // Page Change
-                activity.replaceView(organisationSearchView, Animation.FADE_IN_OUT);
-                break;
+//            case R.id.bottom_bar_btn_organisations:
+//                // Set Button view
+//                selectButton(STATE_ORGA);
+//
+//                // Page Change
+//                activity.replaceView(organisationSearchView, Animation.FADE_IN_OUT);
+//                break;
             case R.id.bottom_bar_btn_mailbox:
                 // Set Button view
                 selectButton(STATE_MAILBOX);

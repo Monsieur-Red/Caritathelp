@@ -3,6 +3,7 @@ package com.eip.red.caritathelp.Views.Organisation.Events;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -12,13 +13,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
+import com.eip.red.caritathelp.Activities.Main.MySearchBar;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Event;
+import com.eip.red.caritathelp.MyWidgets.DividerItemDecoration;
 import com.eip.red.caritathelp.Presenters.Organisation.Events.OrganisationEventsPresenter;
 import com.eip.red.caritathelp.R;
+import com.eip.red.caritathelp.Views.SubMenu.MyEvents.MyEventsRVAdapter;
 
 import java.util.List;
 import java.util.Locale;
@@ -32,7 +37,6 @@ public class OrganisationEventsView extends Fragment implements IOrganisationEve
     private OrganisationEventsPresenter presenter;
 
     private RecyclerView    recyclerView;
-    private EditText        searchBar;
     private ProgressBar     progressBar;
     private AlertDialog     dialog;
 
@@ -71,22 +75,16 @@ public class OrganisationEventsView extends Fragment implements IOrganisationEve
         View    view = inflater.inflate(R.layout.fragment_organisation_events, container, false);
 
         // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Événements", true, false);
+        ((MainActivity) getActivity()).getToolBar().update("Événements", true);
+
+        // Init SearchBar
+        initSearchBar();
 
         // Init UI Element
-        searchBar = (EditText) view.findViewById(R.id.search_text);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
 
-        // Init RecyclerView & Listener & Adapter
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(new OrganisationEventsRVAdapter(presenter));
-
-        // Init LayoutManager
-        LinearLayoutManager llayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        recyclerView.setLayoutManager(llayoutManager);
-
-        // Init Filter
-        initSearchBarListener();
+        // Init RecyclerView
+        initRecyclerView(view);
 
         // Init Events Model
         presenter.getEvents();
@@ -94,8 +92,16 @@ public class OrganisationEventsView extends Fragment implements IOrganisationEve
         return (view);
     }
 
-    private void initSearchBarListener() {
-        searchBar.addTextChangedListener(new TextWatcher() {
+    private void initSearchBar() {
+        MySearchBar searchBar = ((MainActivity) getActivity()).getToolBar().getSearchBar();
+        final EditText    searchText = searchBar.getSearchText();
+        final ImageButton cancelBtn = searchBar.getCancelBtn();
+
+        // Show the SearchBar
+        searchBar.show(R.string.search_bar_event);
+
+        //Init SearchText listener & filter
+        searchText.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void afterTextChanged(Editable arg0) {
@@ -109,14 +115,36 @@ public class OrganisationEventsView extends Fragment implements IOrganisationEve
 
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                if (TextUtils.isEmpty(arg0))
+                if (TextUtils.isEmpty(arg0)) {
+                    // Hide Cancel Btn
+                    cancelBtn.setVisibility(View.GONE);
+
+                    // Flush Filter
                     ((OrganisationEventsRVAdapter) recyclerView.getAdapter()).flushFilter();
+                }
                 else {
-                    String text = searchBar.getText().toString().toLowerCase(Locale.getDefault());
+                    // Show Cancel Btn
+                    cancelBtn.setVisibility(View.VISIBLE);
+
+                    // Filter text
+                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
                     ((OrganisationEventsRVAdapter) recyclerView.getAdapter()).filter(text);
                 }
             }
         });
+    }
+
+    private void initRecyclerView(View view) {
+        // Init RecyclerView
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        recyclerView.setAdapter(new OrganisationEventsRVAdapter(presenter));
+
+        // Init LayoutManager
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+
+        // Init Divider (between items)
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this.getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL);
+        recyclerView.addItemDecoration(itemDecoration);
     }
 
 

@@ -18,6 +18,7 @@ public class Organisation implements Serializable {
     private String  city;
     private String  latitude;
     private String  longitude;
+    private String  rights;
 //    private String  created_at;
 //    private String  updated_at;
 
@@ -31,6 +32,7 @@ public class Organisation implements Serializable {
         city = initStr(result, "city");
         latitude = initStr(result, "latitude");
         longitude = initStr(result, "longitude");
+        rights = initStr(result, "rights");
     }
 
     private int initInt(JsonObject jsonObject, String memberName) {
@@ -64,5 +66,9 @@ public class Organisation implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getRights() {
+        return rights;
     }
 }

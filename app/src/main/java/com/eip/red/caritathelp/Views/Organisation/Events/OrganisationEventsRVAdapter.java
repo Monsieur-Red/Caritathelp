@@ -59,7 +59,7 @@ public class OrganisationEventsRVAdapter extends RecyclerView.Adapter<Organisati
 
     @Override
     public EventObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_organisation_events_recycler_view_row, parent, false);
+        View                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_organisation_events_rv_row, parent, false);
         EventObjectHolder   holder = new EventObjectHolder(view);
 
         return (holder);

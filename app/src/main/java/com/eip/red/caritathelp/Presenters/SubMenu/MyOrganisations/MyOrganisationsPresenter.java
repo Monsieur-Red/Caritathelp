@@ -15,36 +15,23 @@ import java.util.List;
 /**
  * Created by pierr on 24/02/2016.
  */
+
 public class MyOrganisationsPresenter implements IMyOrganisationsPresenter, IOnMyOrganisationsFinishedListener {
 
     private MyOrganisationsView         view;
     private MyOrganisationsInteractor   interactor;
-
-    private OrganisationCreationView    organisationCreationView;
-    private OrganisationView            organisationView;
 
     public MyOrganisationsPresenter(MyOrganisationsView view, User user, Network network) {
         this.view = view;
 
         // Init Interactor
         interactor = new MyOrganisationsInteractor(view.getActivity().getBaseContext(), user, network);
-
-        // Init View
-        organisationCreationView = new OrganisationCreationView();
-        organisationView = new OrganisationView();
     }
 
     @Override
     public void onClick(int viewId) {
-        switch (viewId) {
-            case R.id.top_bar_my_organisations_btn_add_orga:
-                // Page Change
-                ((MainActivity) view.getActivity()).replaceView(organisationCreationView, Animation.SLIDE_UP_DOWN);
-                break;
-            case R.id.top_bar_my_organisations_return:
-                ((MainActivity) view.getActivity()).goToPreviousPage();
-                break;
-        }
+        if (viewId == R.id.btn_create)
+            ((MainActivity) view.getActivity()).replaceView(new OrganisationCreationView(), Animation.FLIP_LEFT_RIGHT);
     }
 
     @Override
@@ -66,8 +53,9 @@ public class MyOrganisationsPresenter implements IMyOrganisationsPresenter, IOnM
     }
 
     @Override
-    public void onSuccess(List<Organisation> myOrganisations) {
+    public void onSuccess(List<Organisation> myOrganisationsOwner, List<Organisation> myOrganisationsMember) {
         view.hideProgress();
-        view.updateListView(myOrganisations);
+        view.updateListView(myOrganisationsOwner, myOrganisationsMember);
     }
+
 }

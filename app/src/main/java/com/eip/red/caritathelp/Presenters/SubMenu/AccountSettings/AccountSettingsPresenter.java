@@ -19,7 +19,7 @@ public class AccountSettingsPresenter implements IAccountSettingsPresenter, IOnA
 
     public AccountSettingsPresenter(AccountSettingsView view, User user, Network network) {
         this.view = view;
-        interactor = new AccountSettingsInteractor(view.getContext(), user, network);
+        interactor = new AccountSettingsInteractor(view.getActivity().getApplicationContext(), user, network);
     }
 
     @Override

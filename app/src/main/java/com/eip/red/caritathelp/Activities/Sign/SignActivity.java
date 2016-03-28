@@ -32,7 +32,7 @@ public class SignActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
         // Set View
-        setContentView(R.layout.activity_sign_in_up);
+        setContentView(R.layout.activity_sign);
 
         // Init Tool Bar
         toolBar = new SignActivityToolbar(this);

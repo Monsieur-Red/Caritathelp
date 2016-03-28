@@ -1,14 +1,10 @@
 package com.eip.red.caritathelp.Activities.Main;
 
-
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentStatePagerAdapter;
 
-import com.eip.red.caritathelp.Views.Home.HomeView;
-import com.eip.red.caritathelp.Views.Notifications.NotificationsView;
-import com.eip.red.caritathelp.Views.OrganisationSearch.OrganisationSearchView;
-import com.eip.red.caritathelp.Views.SubMenu.SubMenuView;
+import com.eip.red.caritathelp.Views.SubMenu.MyOrganisations.OrganisationCreation.OrganisationCreationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,19 +15,25 @@ import java.util.List;
 
 public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
-    private static final int NUM_PAGES = 4;
+    private static final int NUM_PAGES = 3;
 
     private List<Fragment>  fragments;
+    private List<String>    tabTitles;
 
     public MyPagerAdapter(FragmentManager fm) {
         super(fm);
 
         // Init Fragment List
         fragments = new ArrayList<>();
-        fragments.add(new HomeView());
-        fragments.add(new OrganisationSearchView());
-        fragments.add(new NotificationsView());
-        fragments.add(new SubMenuView());
+//        fragments.add(new MyOrganisationMemberProfile());
+//        fragments.add(new MyOrganisationOwnerProfile());
+        fragments.add(new OrganisationCreationView());
+
+        // Init Tab Titles
+        tabTitles = new ArrayList<>();
+        tabTitles.add("Membre");
+        tabTitles.add("Propriétaire");
+        tabTitles.add("Créer");
     }
 
     @Override
@@ -51,5 +53,11 @@ public class MyPagerAdapter extends FragmentStatePagerAdapter {
 
     public Fragment getFragment(int id) {
         return (fragments.get(id));
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        // Generate title based on item position
+        return tabTitles.get(position);
     }
 }

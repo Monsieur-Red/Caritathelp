@@ -2,6 +2,7 @@ package com.eip.red.caritathelp.Presenters.Organisation;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Enum.Animation;
+import com.eip.red.caritathelp.Models.Home.News;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.R;
@@ -10,43 +11,43 @@ import com.eip.red.caritathelp.Views.Organisation.Management.OrganisationManagem
 import com.eip.red.caritathelp.Views.Organisation.Members.OrganisationMembersView;
 import com.eip.red.caritathelp.Views.Organisation.OrganisationView;
 
+import java.util.List;
+
 /**
  * Created by pierr on 11/03/2016.
  */
 
-public class OrganisationPresenter implements IOrganisationPresenter {
+public class OrganisationPresenter implements IOrganisationPresenter, IOnOrganisationFinishedListener {
 
     private OrganisationView        view;
     private OrganisationInteractor  interactor;
-
-    private OrganisationManagementView  organisationManagementView;
-    private OrganisationMembersView     organisationMembersView;
-
 
     public OrganisationPresenter(OrganisationView view, Network network, Organisation organisation) {
         this.view = view;
 
         // Init Interactor
         interactor = new OrganisationInteractor(view.getActivity().getApplicationContext(), network, organisation);
-
-        // Init Views
-        organisationManagementView = new OrganisationManagementView();
-        organisationMembersView = new OrganisationMembersView();
     }
 
     @Override
     public void onClick(int viewId) {
         switch (viewId) {
-            case R.id.organisation_btn_management:
+            case R.id.btn_management:
                 ((MainActivity) view.getActivity()).replaceView(OrganisationManagementView.newInstance(interactor.getOrganisationId()), Animation.FLIP_LEFT_RIGHT);
                 break;
-            case R.id.organisation_btn_join:
+            case R.id.btn_join:
                 break;
-            case R.id.organisation_btn_members:
+            case R.id.btn_follow:
+                break;
+            case R.id.btn_post:
+                break;
+            case R.id.btn_members:
                 ((MainActivity) view.getActivity()).replaceView(OrganisationMembersView.newInstance(interactor.getOrganisationId()), Animation.FLIP_LEFT_RIGHT);
                 break;
-            case R.id.organisation_btn_events:
+            case R.id.btn_events:
                 ((MainActivity) view.getActivity()).replaceView(OrganisationEventsView.newInstance(interactor.getOrganisationId()), Animation.FLIP_LEFT_RIGHT);
+                break;
+            case R.id.btn_informations:
                 break;
         }
 
@@ -55,5 +56,35 @@ public class OrganisationPresenter implements IOrganisationPresenter {
     @Override
     public String getOrganisationName() {
         return (interactor.getOrganisationName());
+    }
+
+    @Override
+    public void getOrganisation() {
+        view.showProgress();
+        interactor.getOrganisation(this);
+    }
+
+    @Override
+    public void getNews() {
+        view.showProgress();
+        interactor.getNews(this);
+    }
+
+    @Override
+    public void onDialogError(String title, String msg) {
+        view.hideProgress();
+        view.setDialog(title, msg);
+    }
+
+    @Override
+    public void onOrganisationRequestSuccess(String right) {
+        view.hideProgress();
+        view.initView(right);
+    }
+
+    @Override
+    public void onNewsRequestSuccess(List<News> newsList) {
+        view.hideProgress();
+        view.updateRV(newsList);
     }
 }

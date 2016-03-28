@@ -12,5 +12,5 @@ public interface IOnMyOrganisationsFinishedListener {
 
     void onDialogError(String title, String msg);
 
-    void onSuccess(List<Organisation> myOrganisationsNames);
+    void onSuccess(List<Organisation> myOrganisationsOwner, List<Organisation> myOrganisationsMember);
 }

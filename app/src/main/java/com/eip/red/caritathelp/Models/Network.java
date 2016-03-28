@@ -18,6 +18,7 @@ public class Network implements Serializable {
     static final public  String     API_LOCATION = "http://52.31.151.160:3000/";
     static final public  String     API_REQUEST_LOGIN = "login";
     static final public  String     API_REQUEST_ORGANISATION = "associations";
+    static final public  String     API_REQUEST_ORGANISATION_BY_ID = "associations/";
     static final public  String     API_REQUEST_ORGANISATION_MEMBERS = "/members";
     static final public  String     API_REQUEST_ORGANISATION_EVENTS = "/events";
     static final public  String     API_REQUEST_ORGANISATION_EVENTS_INFORMATIONS = "/events/";

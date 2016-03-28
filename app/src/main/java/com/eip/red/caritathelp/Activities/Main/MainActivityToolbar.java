@@ -11,9 +11,11 @@ import com.eip.red.caritathelp.R;
  * Created by pierr on 17/03/2016.
  */
 
-public class MyToolBar {
+public class MainActivityToolbar {
 
     private MainActivity    activity;
+
+    private MySearchBar     searchBar;
 
     private ImageView   logo;
     private ImageButton returnBtn;
@@ -21,7 +23,7 @@ public class MyToolBar {
     private ImageButton searchBtn;
 
 
-    public MyToolBar(MainActivity activity) {
+    public MainActivityToolbar(MainActivity activity) {
         this.activity = activity;
 
         // Get UI elements
@@ -34,11 +36,11 @@ public class MyToolBar {
         returnBtn.setOnClickListener(activity);
         searchBtn.setOnClickListener(activity);
 
-        // Init ToolBar
-//        update("Actualités", false, false);
+        // Init MySearchBar
+        searchBar = new MySearchBar(activity);
     }
 
-    public void update(String title, boolean displayReturnBtn, boolean displayBtnTopRight) {
+    public void update(String title, boolean displayReturnBtn) {
         // Set Title
         this.title.setText(title);
 
@@ -50,11 +52,6 @@ public class MyToolBar {
             logo.setVisibility(View.VISIBLE);
             returnBtn.setVisibility(View.GONE);
         }
-
-        // Display BtnTopRight
-        if (displayBtnTopRight) {
-        }
-
     }
 
     public void onClick(int id) {
@@ -62,6 +59,16 @@ public class MyToolBar {
             case R.id.toolbar_btn_return:
                 activity.goToPreviousPage();
                 break;
+            case R.id.toolbar_btn_search:
+                if (searchBar.getVisibility() == View.VISIBLE)
+                    searchBar.setVisibility(View.GONE);
+                else
+                    searchBar.setVisibility(View.VISIBLE);
+                break;
         }
+    }
+
+    public MySearchBar getSearchBar() {
+        return searchBar;
     }
 }
