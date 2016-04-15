@@ -1,8 +1,8 @@
 package com.eip.red.caritathelp.Views.SubMenu.AccountSettings;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +38,16 @@ public class AccountSettingsView extends Fragment implements IAccountSettingsVie
 
     private ProgressBar progressBar;
 
+    public static Fragment newInstance() {
+        AccountSettingsView fragment = new AccountSettingsView();
+        Bundle              args = new Bundle();
+
+        args.putInt("page", R.string.view_name_submenu_account_management);
+        fragment.setArguments(args);
+
+        return (fragment);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,11 +65,8 @@ public class AccountSettingsView extends Fragment implements IAccountSettingsVie
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_submenu_account_settings, container, false);
 
-        // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Gestion de profil", true);
-
-        // Init SearchBar
-        ((MainActivity) getActivity()).getToolBar().getSearchBar().setVisibility(View.GONE);
+//        // Init SearchBar
+//        ((MainActivity) getActivity()).getToolBar().getSearchBar().setVisibility(View.GONE);
 
         // Init Edit Text
         EditText firsname = (EditText) view.findViewById(R.id.firstname);
@@ -87,6 +94,15 @@ public class AccountSettingsView extends Fragment implements IAccountSettingsVie
 
         return (view);
     }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Init ToolBar Title
+        getActivity().setTitle(getArguments().getInt("page"));
+    }
+
 
     @Override
     public void onClick(View v) {

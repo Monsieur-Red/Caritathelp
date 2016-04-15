@@ -16,5 +16,5 @@ public interface IMyEventsView {
 
     void setDialogError(String title, String msg);
 
-    void updateRecyclerView(List<Event> events);
+    void updateRecyclerView(List<Event> myEventsOwner, List<Event> myEventsMember);
 }

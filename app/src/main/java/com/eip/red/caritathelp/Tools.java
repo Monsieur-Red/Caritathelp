@@ -2,6 +2,9 @@ package com.eip.red.caritathelp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -10,11 +13,67 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.eip.red.caritathelp.Models.Enum.Animation;
+
 /**
  * Created by pierr on 12/03/2016.
  */
 
 public class Tools {
+
+    static public void replaceView(Fragment currentFragment ,Fragment newFragment, int animation, boolean parent) {
+        FragmentManager     fm;
+        FragmentTransaction ft;
+
+        // Init FM & FT
+        if (parent)
+            fm = currentFragment.getChildFragmentManager();
+        else
+            fm = currentFragment.getParentFragment().getChildFragmentManager();
+
+        ft = fm.beginTransaction();
+
+        // Set Animation
+        switch (animation) {
+            case Animation.SLIDE_LEFT_RIGHT:
+//                ft.setCustomAnimations(R.animator.fade_in, R.animator.fade_out, R.animator.fade_in, R.animator.fade_out);
+                break;
+            case Animation.SLIDE_UP_DOWN:
+//                ft.setCustomAnimations(R.animator.slide_up, R.animator.slide_down, R.animator.slide_up, R.animator.slide_down);
+                break;
+            case Animation.FLIP_LEFT_RIGHT:
+//                ft.setCustomAnimations(R.animator.card_flip_right_in, R.animator.card_flip_right_out, R.animator.fade_in, R.animator.fade_out);//,0 R.animator.card_flip_left_in, R.animator.card_flip_left_out);
+                break;
+            case Animation.FADE_IN_OUT:
+                ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
+                break;
+        }
+
+        // Replace Fragment (Check Tag)
+        String tag = newFragment.getTag();
+
+        if (tag == null) {
+            ft.replace(R.id.fragment_container, newFragment, Integer.toString(fm.getBackStackEntryCount()));
+
+            // Save old fragment in the stack
+            ft.addToBackStack(newFragment.getTag());
+        }
+        else
+            ft.replace(R.id.fragment_container, newFragment, tag);
+
+        // Commit changes
+        ft.commit();
+    }
+
+    static public Fragment getLastFragment(FragmentManager fragmentManager) {
+        int count = fragmentManager.getBackStackEntryCount();
+
+        if (count > 0)
+            return (fragmentManager.findFragmentByTag(Integer.toString(count - 1)));
+
+        return (null);
+    }
+
 
     static public String upperCaseFirstLetter(String value) {
         StringBuilder newValue = new StringBuilder(value.toLowerCase());

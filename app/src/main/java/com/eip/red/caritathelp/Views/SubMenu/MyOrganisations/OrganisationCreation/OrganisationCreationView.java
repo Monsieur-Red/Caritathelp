@@ -1,8 +1,8 @@
 package com.eip.red.caritathelp.Views.SubMenu.MyOrganisations.OrganisationCreation;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +30,16 @@ public class OrganisationCreationView extends Fragment implements IOrganisationC
 
     private AlertDialog dialog;
 
+    public static Fragment newInstance() {
+        OrganisationCreationView    fragment = new OrganisationCreationView();
+        Bundle                      args = new Bundle();
+
+        args.putInt("page", R.string.view_name_submenu_my_organisations_creation);
+        fragment.setArguments(args);
+
+        return (fragment);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,11 +62,8 @@ public class OrganisationCreationView extends Fragment implements IOrganisationC
         // Inflate the layout for this fragment
         View    view = inflater.inflate(R.layout.fragment_organisation_creation, container, false);
 
-        // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Créer une association", true);
-
-        // Init SearchBar
-        ((MainActivity) getActivity()).getToolBar().getSearchBar().setVisibility(View.GONE);
+//        // Init SearchBar
+//        ((MainActivity) getActivity()).getToolBar().getSearchBar().setVisibility(View.GONE);
 
         // Init UI Element
         name = (EditText) view.findViewById(R.id.name);
@@ -70,6 +77,15 @@ public class OrganisationCreationView extends Fragment implements IOrganisationC
 
         return (view);
     }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Init ToolBar Title
+        getActivity().setTitle(getArguments().getInt("page"));
+    }
+
 
     @Override
     public void onClick(View v) {

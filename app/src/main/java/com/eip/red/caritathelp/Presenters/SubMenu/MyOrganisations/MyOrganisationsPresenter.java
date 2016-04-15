@@ -6,6 +6,7 @@ import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.Models.User;
 import com.eip.red.caritathelp.R;
+import com.eip.red.caritathelp.Tools;
 import com.eip.red.caritathelp.Views.Organisation.OrganisationView;
 import com.eip.red.caritathelp.Views.SubMenu.MyOrganisations.MyOrganisationsView;
 import com.eip.red.caritathelp.Views.SubMenu.MyOrganisations.OrganisationCreation.OrganisationCreationView;
@@ -31,19 +32,19 @@ public class MyOrganisationsPresenter implements IMyOrganisationsPresenter, IOnM
     @Override
     public void onClick(int viewId) {
         if (viewId == R.id.btn_create)
-            ((MainActivity) view.getActivity()).replaceView(new OrganisationCreationView(), Animation.FLIP_LEFT_RIGHT);
+            Tools.replaceView(view, OrganisationCreationView.newInstance(), Animation.FADE_IN_OUT, false);
     }
 
     @Override
     public void getMyOrganisations() {
         view.showProgress();
-        interactor.getMyOrganisations(this);
+        interactor.getMyOrganisations(view.getProgressBar(), this);
     }
 
     @Override
     public void goToOrganisationView(Organisation organisation) {
         if (organisation != null)
-            ((MainActivity) view.getActivity()).replaceView(OrganisationView.newInstance(organisation), Animation.FADE_IN_OUT);
+            Tools.replaceView(view, OrganisationView.newInstance(organisation), Animation.FADE_IN_OUT, false);
     }
 
     @Override
@@ -54,8 +55,9 @@ public class MyOrganisationsPresenter implements IMyOrganisationsPresenter, IOnM
 
     @Override
     public void onSuccess(List<Organisation> myOrganisationsOwner, List<Organisation> myOrganisationsMember) {
+        view.initRecyclerViews(view.getView(), myOrganisationsOwner, myOrganisationsMember);
+//        view.updateRecyclerView(myOrganisationsOwner, myOrganisationsMember);
         view.hideProgress();
-        view.updateListView(myOrganisationsOwner, myOrganisationsMember);
     }
 
 }

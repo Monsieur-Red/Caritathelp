@@ -5,6 +5,8 @@ import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.R;
+import com.eip.red.caritathelp.Tools;
+import com.eip.red.caritathelp.Views.Organisation.Events.Event.OrganisationEventView;
 import com.eip.red.caritathelp.Views.Organisation.OrganisationView;
 import com.eip.red.caritathelp.Views.SubMenu.MyOrganisations.OrganisationCreation.OrganisationCreationView;
 
@@ -69,6 +71,6 @@ public class OrganisationCreationPresenter implements IOrganisationCreationPrese
     public void onSuccess(Organisation organisation) {
         view.hideProgress();
         view.navigateToOrganisationView(organisation.getName());
-        ((MainActivity) view.getActivity()).replaceView(OrganisationView.newInstance(organisation), Animation.FADE_IN_OUT);
+        Tools.replaceView(view, OrganisationView.newInstance(organisation), Animation.FADE_IN_OUT, false);
     }
 }

@@ -1,10 +1,37 @@
 <resources>
     <string name="app_name">Caritathelp</string>
 
+    <!-- Views Names -->
+    <string name="view_name_home">@string/app_name</string>
+
+    <string name="view_name_mailbox">@string/app_name</string>
+
+    <string name="view_name_notifications">@string/app_name</string>
+
+    <string name="view_name_submenu">@string/app_name</string>
+    <string name="view_name_submenu_my_organisations">Mes associations</string>
+    <string name="view_name_submenu_my_organisations_creation">Créer une association</string>
+    <string name="view_name_submenu_my_events">Mes événements</string>
+    <string name="view_name_submenu_my_events_creation">Créer un événement</string>
+    <string name="view_name_submenu_account_management">Gestion de compte</string>
+
+    <string name="view_name_organisation_post">Poster</string>
+    <string name="view_name_organisation_members">Membres</string>
+    <string name="view_name_organisation_events">Événement</string>
+    <string name="view_name_organisation_informations">Informations</string>
+    <string name="view_name_organisation_management">Gestion de l\'association</string>
+
+    <string name="view_name_organisation_event_guests">Participants</string>
+    <string name="view_name_organisation_event_management">Gestion de l\'événement</string>
+
     <!-- Search Bar -->
-    <string name="search_bar_organisation">Rechercher une association</string>
-    <string name="search_bar_event">Rechercher un événement</string>
-    <string name="search_bar_member">Rechercher un membre</string>
+    <string name="search_bar_btn_search">Search</string>
+
+    <!-- Bottom Navigation Bar -->
+    <string name="bottom_navigation_bar_news">Actualités</string>
+    <string name="bottom_navigation_bar_mailbox">Messages</string>
+    <string name="bottom_navigation_bar_notifications">Notifications</string>
+    <string name="bottom_navigation_bar_profile">Mon profil</string>
 
     <!-- Connection View -->
     <string name="connectionview_title">Connexion</string>
@@ -70,6 +97,15 @@
     <!-- MyOrganisations View -->
     <string name="my_organisations_title">Mes associations</string>
 
+    <!-- MyEvents View -->
+    <!-- Spinner -->
+    <string-array name="my_events_spinner">
+        <item>Membre</item>
+        <item>Organisateur</item>
+        <item>A venir</item>
+        <item>Passé</item>
+    </string-array>
+
     <!-- OrganisationCreation View -->
     <string name="organisation_creation_bar_title">Créer une association</string>
 
@@ -94,6 +130,19 @@
     <string name="organisation_management_settings">Modifier les paramètres</string>
     <string name="organisation_management_emergency_system">Système d\'urgence</string>
     <string name="organisation_management_delete">Supprimer l\'association</string>
+
+    <!-- OrganisationManagement Event Creation View -->
+    <string name="organisation_management_event_title">Titre de l\'événement</string>
+    <string name="organisation_management_event_begin">Début de l\'événement</string>
+    <string name="organisation_management_event_end">Fin de l\'événement</string>
+    <string name="organisation_management_event_date">Date</string>
+    <string name="organisation_management_event_time">Heure</string>
+    <string name="organisation_management_event_location">Lieu</string>
+    <string name="organisation_management_event_description">Description</string>
+    <string name="organisation_management_event_create">Créer</string>
+
+    <!-- EventManagement Event Creation View -->
+    <string name="organisation_event_management_save">Sauvegarder les changements</string>
 
     <!-- Account Settings View -->
     <string name="account_settings_toolbar_title">Gestion de compte</string>

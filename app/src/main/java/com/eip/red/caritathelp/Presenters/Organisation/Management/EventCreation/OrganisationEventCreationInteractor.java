@@ -4,8 +4,8 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.eip.red.caritathelp.Models.Network;
+import com.eip.red.caritathelp.Models.Organisation.Event;
 import com.eip.red.caritathelp.Models.Organisation.EventInformations;
-import com.eip.red.caritathelp.Models.Organisation.EventsInformations;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
@@ -68,17 +68,17 @@ public class OrganisationEventCreationInteractor {
         Ion.with(context)
                 .load("POST", Network.API_LOCATION + Network.API_REQUEST_ORGANISATION_EVENTS)
                 .setJsonObjectBody(json)
-                .as(new TypeToken<EventsInformations>(){})
-                .setCallback(new FutureCallback<EventsInformations>() {
+                .as(new TypeToken<EventInformations>(){})
+                .setCallback(new FutureCallback<EventInformations>() {
                     @Override
-                    public void onCompleted(Exception error, EventsInformations result) {
+                    public void onCompleted(Exception error, EventInformations result) {
                         if (error == null) {
                             // Status == 400 == error
                             if (result.getStatus() == Network.API_STATUS_ERROR)
                                 listener.onDialogError("Statut 400", result.getMessage());
                             else {
-                                EventInformations eventInformations = result.getResponse();
-                                listener.onSuccess(eventInformations.getId(), eventInformations.getTitle());
+                                Event event = result.getResponse();
+                                listener.onSuccess(event.getId(), event.getTitle());
                             }
                         }
                         else

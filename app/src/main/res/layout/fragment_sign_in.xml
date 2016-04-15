@@ -24,7 +24,7 @@
                 android:paddingLeft="@dimen/_20sdp"
                 android:paddingRight="@dimen/_60sdp"
 
-                android:text="test@test.com"
+                android:text="pierre@root.com"
 
                 android:background="@android:color/transparent"
                 android:hint="E-mail"
@@ -46,7 +46,7 @@
                 android:paddingLeft="@dimen/_20sdp"
                 android:paddingRight="@dimen/_60sdp"
 
-                android:text="test"
+                android:text="root"
 
                 android:background="@android:color/transparent"
                 android:hint="Password"

@@ -3,8 +3,7 @@ package com.eip.red.caritathelp.Presenters.Organisation.Events.Event.Information
 import android.content.Context;
 
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.Organisation.Events;
-import com.eip.red.caritathelp.Models.Organisation.EventsInformations;
+import com.eip.red.caritathelp.Models.Organisation.EventInformations;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
@@ -34,10 +33,10 @@ public class OrganisationEventInformationsInteractor {
         Ion.with(context)
                 .load("GET", Network.API_LOCATION + Network.API_REQUEST_ORGANISATION_EVENTS_INFORMATIONS + eventId)
                 .setJsonObjectBody(json)
-                .as(new TypeToken<EventsInformations>(){})
-                .setCallback(new FutureCallback<EventsInformations>() {
+                .as(new TypeToken<EventInformations>(){})
+                .setCallback(new FutureCallback<EventInformations>() {
                     @Override
-                    public void onCompleted(Exception error, EventsInformations result) {
+                    public void onCompleted(Exception error, EventInformations result) {
                         if (error == null) {
                             // Status == 400 == error
                             if (result.getStatus() == Network.API_STATUS_ERROR)

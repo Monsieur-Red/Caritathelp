@@ -1,9 +1,9 @@
 package com.eip.red.caritathelp.Views.SubMenu;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +13,7 @@ import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.User;
 import com.eip.red.caritathelp.R;
+import com.eip.red.caritathelp.Tools;
 import com.eip.red.caritathelp.Views.Sign.In.SignInView;
 import com.eip.red.caritathelp.Views.SubMenu.MyEvents.MyEventsView;
 import com.eip.red.caritathelp.Views.SubMenu.MyOrganisations.MyOrganisationsView;
@@ -30,6 +31,16 @@ public class SubMenuView extends Fragment implements View.OnClickListener {
     private User        user;
     private Network     network;
 
+    public static Fragment newInstance() {
+        SubMenuView     fragment = new SubMenuView();
+        Bundle          args = new Bundle();
+
+        args.putInt("page", R.string.view_name_submenu);
+        fragment.setArguments(args);
+
+        return (fragment);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +55,6 @@ public class SubMenuView extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_submenu, container, false);
 
-        // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Autres", false);
-
-        // Init SearchBar
-        ((MainActivity) getActivity()).getToolBar().getSearchBar().setVisibility(View.GONE);
-
         // Init Listener
         view.findViewById(R.id.submenu_my_organisations).setOnClickListener(this);
         view.findViewById(R.id.submenu_my_events).setOnClickListener(this);
@@ -61,19 +66,24 @@ public class SubMenuView extends Fragment implements View.OnClickListener {
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Init ToolBar Title
+        getActivity().setTitle(getArguments().getInt("page"));
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.submenu_my_organisations:
-                // Page Change
-                ((MainActivity) getActivity()).replaceView(new MyOrganisationsView(), Animation.FADE_IN_OUT);
+                Tools.replaceView(this, MyOrganisationsView.newInstance(), Animation.FADE_IN_OUT, false);
                 break;
             case R.id.submenu_my_events:
-                // Page Change
-                ((MainActivity) getActivity()).replaceView(MyEventsView.newInstance(user.getId()), Animation.FADE_IN_OUT);
+                Tools.replaceView(this, MyEventsView.newInstance(user.getId()), Animation.FADE_IN_OUT, false);
                 break;
             case R.id.submenu_account_settings:
-                // Page Change
-                ((MainActivity) getActivity()).replaceView(new AccountSettingsView(), Animation.FADE_IN_OUT);
+                Tools.replaceView(this, AccountSettingsView.newInstance(), Animation.FADE_IN_OUT, false);
                 break;
             case R.id.submenu_logout:
                 ((MainActivity) getActivity()).logout();

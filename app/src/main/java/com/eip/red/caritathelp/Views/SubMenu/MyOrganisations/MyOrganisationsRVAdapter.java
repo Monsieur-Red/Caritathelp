@@ -1,6 +1,7 @@
 package com.eip.red.caritathelp.Views.SubMenu.MyOrganisations;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,34 +10,46 @@ import android.widget.TextView;
 import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations.MyOrganisationsPresenter;
 import com.eip.red.caritathelp.R;
+import com.eip.red.caritathelp.Tools;
+import com.pkmmte.view.CircularImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by pierr on 28/03/2016.
+ * Created by pierr on 05/04/2016.
  */
 
 public class MyOrganisationsRVAdapter extends RecyclerView.Adapter<MyOrganisationsRVAdapter.DataObjectHolder> {
 
-    private MyOrganisationsPresenter    presenter;
+    private MyOrganisationsPresenter presenter;
 
-    private List<Organisation>  visibleObjects;
+    private List<Organisation> visibleObjects;
     private List<Organisation>  allObjects;
 
-    public MyOrganisationsRVAdapter(MyOrganisationsPresenter presenter) {
+    public MyOrganisationsRVAdapter(MyOrganisationsPresenter presenter, List<Organisation> objects) {
         this.presenter = presenter;
+
         visibleObjects = new ArrayList<>();
+        visibleObjects.addAll(objects);
+
         allObjects = new ArrayList<>();
+        allObjects.addAll(objects);
     }
 
     public class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView name;
+        CircularImageView   logo;
+        TextView            name;
+        TextView            location;
+        TextView            friends;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.my_organisations_name);
+            logo = (CircularImageView) itemView.findViewById(R.id.logo);
+            name = (TextView) itemView.findViewById(R.id.name);
+            location = (TextView) itemView.findViewById(R.id.location);
+            friends = (TextView) itemView.findViewById(R.id.friends);
             itemView.setOnClickListener(this);
         }
 
@@ -59,7 +72,30 @@ public class MyOrganisationsRVAdapter extends RecyclerView.Adapter<MyOrganisatio
 
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
-        holder.name.setText(visibleObjects.get(position).getName());
+        String  name = visibleObjects.get(position).getName();
+        String  location = visibleObjects.get(position).getCity();
+        String  friends = visibleObjects.get(position).getNb_friends_members();
+
+//        holder.logo.setImageDrawable();
+
+        // Set Name
+        holder.name.setText(Tools.upperCaseFirstLetter(name));
+
+        // Set Location
+        if (location != null && !TextUtils.isEmpty(location))
+            holder.location.setText(location);
+        else
+            holder.location.setVisibility(View.GONE);
+
+        // Set Friends
+        if (friends != null && !TextUtils.isEmpty(friends) && !friends.equals("0")) {
+            if (friends.equals("1"))
+                holder.friends.setText(new StringBuilder(friends).append(" ami"));
+            else
+                holder.friends.setText(new StringBuilder(friends).append(" amis"));
+        }
+        else
+            holder.friends.setVisibility(View.GONE);
     }
 
     @Override
@@ -92,4 +128,7 @@ public class MyOrganisationsRVAdapter extends RecyclerView.Adapter<MyOrganisatio
         }
         notifyDataSetChanged();
     }
+
+
+
 }

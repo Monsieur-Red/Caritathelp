@@ -6,6 +6,7 @@ import com.eip.red.caritathelp.Models.Home.News;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.R;
+import com.eip.red.caritathelp.Tools;
 import com.eip.red.caritathelp.Views.Organisation.Events.OrganisationEventsView;
 import com.eip.red.caritathelp.Views.Organisation.Management.OrganisationManagementView;
 import com.eip.red.caritathelp.Views.Organisation.Members.OrganisationMembersView;
@@ -33,7 +34,7 @@ public class OrganisationPresenter implements IOrganisationPresenter, IOnOrganis
     public void onClick(int viewId) {
         switch (viewId) {
             case R.id.btn_management:
-                ((MainActivity) view.getActivity()).replaceView(OrganisationManagementView.newInstance(interactor.getOrganisationId()), Animation.FLIP_LEFT_RIGHT);
+                Tools.replaceView(view, OrganisationManagementView.newInstance(interactor.getOrganisationId()), Animation.FADE_IN_OUT, false);
                 break;
             case R.id.btn_join:
                 break;
@@ -42,10 +43,10 @@ public class OrganisationPresenter implements IOrganisationPresenter, IOnOrganis
             case R.id.btn_post:
                 break;
             case R.id.btn_members:
-                ((MainActivity) view.getActivity()).replaceView(OrganisationMembersView.newInstance(interactor.getOrganisationId()), Animation.FLIP_LEFT_RIGHT);
+                Tools.replaceView(view, OrganisationMembersView.newInstance(interactor.getOrganisationId()), Animation.FADE_IN_OUT, false);
                 break;
             case R.id.btn_events:
-                ((MainActivity) view.getActivity()).replaceView(OrganisationEventsView.newInstance(interactor.getOrganisationId()), Animation.FLIP_LEFT_RIGHT);
+                Tools.replaceView(view, OrganisationEventsView.newInstance(interactor.getOrganisationId()), Animation.FADE_IN_OUT, false);
                 break;
             case R.id.btn_informations:
                 break;

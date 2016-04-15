@@ -7,5 +7,7 @@ public interface IOrganisationEventPresenter {
 
     void onClick(int viewId);
 
+    void getEvent();
+
     void getNews();
 }

@@ -1,45 +1,48 @@
 package com.eip.red.caritathelp.Views.SubMenu.MyOrganisations;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
-import com.eip.red.caritathelp.Activities.Main.MySearchBar;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.Models.User;
-import com.eip.red.caritathelp.MyWidgets.DividerItemDecoration;
+import com.eip.red.caritathelp.MyWidgets.GridSpacingItemDecoration;
 import com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations.MyOrganisationsPresenter;
 import com.eip.red.caritathelp.R;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by pierr on 16/11/2015.
  */
 public class MyOrganisationsView extends Fragment implements IMyOrganisationsView, View.OnClickListener{
 
-    private MyOrganisationsPresenter    presenter;
+    private MyOrganisationsPresenter        presenter;
 
-    private RecyclerView                recyclerViewOwner;
-    private RecyclerView                recyclerViewMember;
-    private MyOrganisationsRVAdapter    adapterOwner;
-    private MyOrganisationsRVAdapter    adapterMember;
-    private ProgressBar                 progressBar;
-    private AlertDialog                 dialog;
+    private RecyclerView                    recyclerViewOwner;
+    private RecyclerView                    recyclerViewMember;
+    private MyOrganisationsRVAdapter        adapterOwner;
+    private MyOrganisationsRVAdapter        adapterMember;
+    private ProgressBar                     progressBar;
+    private AlertDialog                     dialog;
+
+    public static Fragment newInstance() {
+        MyOrganisationsView     fragment = new MyOrganisationsView();
+        Bundle                  args = new Bundle();
+
+        args.putInt("page", R.string.view_name_submenu_my_organisations);
+        fragment.setArguments(args);
+
+        return (fragment);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,27 +67,31 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
         // Inflate the layout for this fragment
         View    view = inflater.inflate(R.layout.fragment_submenu_my_organisations, container, false);
 
-        // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Mes associations", true);
-
-        // Init SearchBar
-        initSearchBar();
+//        // Init SearchBar
+//        initSearchBar();
 
         // Init UI Element
         progressBar = (ProgressBar)  view.findViewById(R.id.progress_bar);
 
-        // Init RecyclerView
-        initRecyclerViews(view);
-
         // Init Button Listener
         view.findViewById(R.id.btn_create).setOnClickListener(this);
-
-        // Init MyOrganisation Model by requesting the api
-        presenter.getMyOrganisations();
 
         return (view);
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Init ToolBar Title
+        getActivity().setTitle(getArguments().getInt("page"));
+
+        // Init MyOrganisation Model by requesting the api
+        presenter.getMyOrganisations();
+    }
+
+
+/*
     private void initSearchBar() {
         MySearchBar searchBar = ((MainActivity) getActivity()).getToolBar().getSearchBar();
         final EditText    searchText = searchBar.getSearchText();
@@ -131,23 +138,24 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
             }
         });
     }
+*/
 
-    private void initRecyclerViews(View view) {
+    public void initRecyclerViews(View view, List<Organisation> myOrganisationsOwner, List<Organisation> myOrganisationsMember) {
         // Init Recycler Views
         recyclerViewOwner = (RecyclerView) view.findViewById(R.id.my_organisations_owner_profile_recycler_view);
         recyclerViewMember = (RecyclerView) view.findViewById(R.id.my_organisations_member_profile_recycler_view);
 
         // Init Adapter
-        adapterOwner = new MyOrganisationsRVAdapter(presenter);
-        adapterMember = new MyOrganisationsRVAdapter(presenter);
+        adapterOwner = new MyOrganisationsRVAdapter(presenter, myOrganisationsOwner);
+        adapterMember = new MyOrganisationsRVAdapter(presenter, myOrganisationsMember);
 
         // Set Adapter
         recyclerViewOwner.setAdapter(adapterOwner);
         recyclerViewMember.setAdapter(adapterMember);
 
         // Init LayoutManager
-        recyclerViewOwner.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-        recyclerViewMember.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        recyclerViewOwner.setLayoutManager(new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false));
+        recyclerViewMember.setLayoutManager(new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false));
 
         // Set Options to enable toolbar display/hide
         recyclerViewOwner.setNestedScrollingEnabled(false);
@@ -156,9 +164,19 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
         recyclerViewMember.setHasFixedSize(false);
 
         // Init Divider (between items)
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this.getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL);
-        recyclerViewOwner.addItemDecoration(itemDecoration);
-        recyclerViewMember.addItemDecoration(itemDecoration);
+        // Convert dp to px
+//        int spacing = Math.round(2 * getResources().getDisplayMetrics().density);
+//        RecyclerView.ItemDecoration itemDecoration = new GridSpacingItemDecoration(3, spacing, true);
+//        recyclerViewOwner.addItemDecoration(itemDecoration);
+//        recyclerViewMember.addItemDecoration(itemDecoration);
+
+        // Set Error RV Owner Message Visibility
+        if (myOrganisationsOwner.size() == 0)
+            view.findViewById(R.id.tv_no_owner_organisations).setVisibility(View.VISIBLE);
+
+        // Set Error RV Member Message Visibility
+        if (myOrganisationsMember.size() == 0)
+            view.findViewById(R.id.tv_no_members_organisations).setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -184,8 +202,12 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
     }
 
     @Override
-    public void updateListView(List<Organisation> myOrganisationsOwner, List<Organisation> myOrganisationsMember) {
+    public void updateRecyclerView(List<Organisation> myOrganisationsOwner, List<Organisation> myOrganisationsMember) {
         adapterOwner.update(myOrganisationsOwner);
         adapterMember.update(myOrganisationsMember);
+    }
+
+    public ProgressBar getProgressBar() {
+        return progressBar;
     }
 }

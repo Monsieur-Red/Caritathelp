@@ -1,6 +1,7 @@
 package com.eip.red.caritathelp.Presenters.SubMenu.MyEvents;
 
 import com.eip.red.caritathelp.Models.Organisation.Event;
+import com.eip.red.caritathelp.Models.Organisation.Organisation;
 
 import java.util.List;
 
@@ -10,7 +11,9 @@ import java.util.List;
 
 public interface IOnMyEventsFinishedListener {
 
-    void onDialogError(String title, String msg);
+    void onDialog(String title, String msg);
 
-    void onSuccess(List<Event> events);
+    void onSuccessGetMyEvents(List<Event> myEventsOwner, List<Event> myEventsMember);
+
+    void onSuccessGetMyOrganisations();
 }

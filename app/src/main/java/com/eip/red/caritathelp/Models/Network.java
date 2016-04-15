@@ -21,7 +21,10 @@ public class Network implements Serializable {
     static final public  String     API_REQUEST_ORGANISATION_BY_ID = "associations/";
     static final public  String     API_REQUEST_ORGANISATION_MEMBERS = "/members";
     static final public  String     API_REQUEST_ORGANISATION_EVENTS = "/events";
+    static final public  String     API_REQUEST_ORGANISATION_EVENT = "/events/";
+    static final public  String     API_REQUEST_ORGANISATION_EVENTS_GUESTS = "/guests";
     static final public  String     API_REQUEST_ORGANISATION_EVENTS_INFORMATIONS = "/events/";
+    static final public  String     API_REQUEST_ORGANISATION_EVENT_MANAGEMENT = "/events/";
     static final public  String     API_REQUEST_VOLUNTEERS = "volunteers/";
 
     static final public  String     API_REQUEST_GET_MY_ORGANISATIONS = "/associations";
@@ -68,5 +71,7 @@ public class Network implements Serializable {
     public void setToken(String token) {
         this.token = token;
     }
+
+
 
 }

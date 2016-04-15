@@ -19,6 +19,7 @@ public class Organisation implements Serializable {
     private String  latitude;
     private String  longitude;
     private String  rights;
+    private String  nb_friends_members;
 //    private String  created_at;
 //    private String  updated_at;
 
@@ -56,19 +57,35 @@ public class Organisation implements Serializable {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getDescription() {
+        return description;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
     }
 
     public String getRights() {
         return rights;
+    }
+
+    public String getNb_friends_members() {
+        return nb_friends_members;
     }
 }

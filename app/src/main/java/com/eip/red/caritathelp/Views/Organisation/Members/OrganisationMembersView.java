@@ -1,7 +1,7 @@
 package com.eip.red.caritathelp.Views.Organisation.Members;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -21,6 +21,7 @@ import com.eip.red.caritathelp.Models.Organisation.Member;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Presenters.Organisation.Members.OrganisationMembersPresenter;
 import com.eip.red.caritathelp.R;
+import com.eip.red.caritathelp.Tools;
 import com.eip.red.caritathelp.Views.Organisation.Events.OrganisationEventsRVAdapter;
 
 import java.util.List;
@@ -42,6 +43,7 @@ public class OrganisationMembersView extends Fragment implements IOrganisationMe
         OrganisationMembersView    myFragment = new OrganisationMembersView();
 
         Bundle args = new Bundle();
+        args.putInt("page", R.string.view_name_organisation_members);
         args.putInt("organisation id", idOrganisation);
         myFragment.setArguments(args);
 
@@ -72,10 +74,10 @@ public class OrganisationMembersView extends Fragment implements IOrganisationMe
         View    view = inflater.inflate(R.layout.fragment_organisation_members, container, false);
 
         // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Membres", true);
+//        ((MainActivity) getActivity()).getToolBar().update("Membres", true);
 
         // Init SearchBar
-        initSearchBar();
+//        initSearchBar();
 
         // Init UI Element
         progressBar = (ProgressBar) view.findViewById(R.id.organisation_members_progress_bar);
@@ -85,12 +87,21 @@ public class OrganisationMembersView extends Fragment implements IOrganisationMe
         listView.setAdapter(new OrganisationMembersListViewAdapter(this));
         initListViewListener();
 
-        // Init Members Model
-        presenter.getMembers();
-
         return (view);
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Init ToolBar Title
+        getActivity().setTitle(getArguments().getInt("page"));
+
+        // Init Members Model
+        presenter.getMembers();
+    }
+
+/*
     private void initSearchBar() {
         MySearchBar searchBar = ((MainActivity) getActivity()).getToolBar().getSearchBar();
         final EditText    searchText = searchBar.getSearchText();
@@ -135,6 +146,7 @@ public class OrganisationMembersView extends Fragment implements IOrganisationMe
             }
         });
     }
+*/
 
     private void initListViewListener() {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

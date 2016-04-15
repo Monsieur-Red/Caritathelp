@@ -1,29 +1,21 @@
 package com.eip.red.caritathelp.Views.OrganisationSearch;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
-import com.eip.red.caritathelp.Activities.Main.MySearchBar;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.Presenters.OrganisationSearch.OrganisationSearchPresenter;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
-import com.eip.red.caritathelp.Views.SubMenu.MyEvents.MyEventsRVAdapter;
 
 import java.util.List;
 import java.util.Locale;
@@ -62,11 +54,8 @@ public class OrganisationSearchView extends Fragment implements IOrganisationSea
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_organisation_search, container, false);
 
-        // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Associations", false);
-
         // Init SearchBar
-        initSearchBar();
+//        initSearchBar();
 
         // Init UI Element
         progressBar = (ProgressBar) view.findViewById(R.id.organisation_search_progress_bar);
@@ -77,10 +66,15 @@ public class OrganisationSearchView extends Fragment implements IOrganisationSea
         Tools.setListViewHeightBasedOnChildren(listView);
         initListViewListener();
 
+        return (view);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         // Get All Organisations
         presenter.getAllOrganisations();
-
-        return (view);
     }
 
     private void initListViewListener() {
@@ -98,10 +92,11 @@ public class OrganisationSearchView extends Fragment implements IOrganisationSea
         });
     }
 
+/*
     private void initSearchBar() {
-        MySearchBar searchBar = ((MainActivity) getActivity()).getToolBar().getSearchBar();
-        final EditText    searchText = searchBar.getSearchText();
-        final ImageButton cancelBtn = searchBar.getCancelBtn();
+        MySearchBar         searchBar = ((MainActivity) getActivity()).getMySearchBar();
+        final EditText      searchText = searchBar.getSearchText();
+        final ImageButton   cancelBtn = searchBar.getCancelBtn();
 
         // Show SearchBar
         searchBar.setVisibility(View.VISIBLE);
@@ -142,6 +137,7 @@ public class OrganisationSearchView extends Fragment implements IOrganisationSea
             }
         });
     }
+*/
 
     @Override
     public void showProgress() {

@@ -3,6 +3,7 @@ package com.eip.red.caritathelp.Models.Organisation;
 /**
  * Created by pierr on 11/03/2016.
  */
+
 public class Member {
 
     private int     id;

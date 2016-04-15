@@ -1,9 +1,8 @@
 package com.eip.red.caritathelp.Views.Organisation.Events;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -45,6 +44,7 @@ public class OrganisationEventsView extends Fragment implements IOrganisationEve
         OrganisationEventsView    myFragment = new OrganisationEventsView();
 
         Bundle args = new Bundle();
+        args.putInt("page", R.string.view_name_organisation_events);
         args.putInt("organisation id", idOrganisation);
         myFragment.setArguments(args);
 
@@ -63,7 +63,7 @@ public class OrganisationEventsView extends Fragment implements IOrganisationEve
         presenter = new OrganisationEventsPresenter(this, network, organisationId);
 
         // Init Dialog
-        dialog = new AlertDialog.Builder(getActivity())
+        dialog = new AlertDialog.Builder(getContext())
                 .setCancelable(true)
                 .create();
     }
@@ -74,11 +74,8 @@ public class OrganisationEventsView extends Fragment implements IOrganisationEve
         // Inflate the layout for this fragment
         View    view = inflater.inflate(R.layout.fragment_organisation_events, container, false);
 
-        // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Événements", true);
-
         // Init SearchBar
-        initSearchBar();
+//        initSearchBar();
 
         // Init UI Element
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
@@ -86,12 +83,22 @@ public class OrganisationEventsView extends Fragment implements IOrganisationEve
         // Init RecyclerView
         initRecyclerView(view);
 
-        // Init Events Model
-        presenter.getEvents();
-
         return (view);
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Init ToolBar Title
+        getActivity().setTitle(getArguments().getInt("page"));
+
+        // Init Events Model
+        presenter.getEvents();
+    }
+
+
+/*
     private void initSearchBar() {
         MySearchBar searchBar = ((MainActivity) getActivity()).getToolBar().getSearchBar();
         final EditText    searchText = searchBar.getSearchText();
@@ -133,6 +140,7 @@ public class OrganisationEventsView extends Fragment implements IOrganisationEve
             }
         });
     }
+*/
 
     private void initRecyclerView(View view) {
         // Init RecyclerView
@@ -140,10 +148,14 @@ public class OrganisationEventsView extends Fragment implements IOrganisationEve
         recyclerView.setAdapter(new OrganisationEventsRVAdapter(presenter));
 
         // Init LayoutManager
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        // Set Options to enable toolbar display/hide
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setHasFixedSize(false);
 
         // Init Divider (between items)
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this.getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL);
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this.getContext(), LinearLayoutManager.VERTICAL);
         recyclerView.addItemDecoration(itemDecoration);
     }
 
@@ -159,7 +171,7 @@ public class OrganisationEventsView extends Fragment implements IOrganisationEve
     }
 
     @Override
-    public void setDialogError(String title, String msg) {
+    public void setDialog(String title, String msg) {
         dialog.setTitle(title);
         dialog.setMessage(msg);
         dialog.show();

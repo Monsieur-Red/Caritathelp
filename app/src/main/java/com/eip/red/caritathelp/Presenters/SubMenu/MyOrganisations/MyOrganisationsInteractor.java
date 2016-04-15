@@ -1,6 +1,7 @@
 package com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations;
 
 import android.content.Context;
+import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Organisation;
@@ -30,13 +31,14 @@ public class MyOrganisationsInteractor {
         this.network = network;
     }
 
-    public void getMyOrganisations(final IOnMyOrganisationsFinishedListener listener) {
+    public void getMyOrganisations(ProgressBar progressBar, final IOnMyOrganisationsFinishedListener listener) {
         JsonObject json = new JsonObject();
 
         json.addProperty("token", network.getToken());
 
         Ion.with(context)
                 .load("GET", Network.API_LOCATION + Network.API_REQUEST_VOLUNTEERS + user.getId() + Network.API_REQUEST_GET_MY_ORGANISATIONS)
+                .progressBar(progressBar)
                 .setJsonObjectBody(json)
                 .as(new TypeToken<Organisations>() {
                 })

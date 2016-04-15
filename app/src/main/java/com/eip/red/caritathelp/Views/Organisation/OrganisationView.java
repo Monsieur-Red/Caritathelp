@@ -1,9 +1,9 @@
 package com.eip.red.caritathelp.Views.Organisation;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.graphics.LightingColorFilter;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -47,6 +47,7 @@ public class OrganisationView extends Fragment implements IOrganisationView, Vie
 
         Bundle args = new Bundle();
 
+        args.putString("page", organisation.getName());
         args.putSerializable("organisation", organisation);
         myFragment.setArguments(args);
 
@@ -66,7 +67,7 @@ public class OrganisationView extends Fragment implements IOrganisationView, Vie
         presenter = new OrganisationPresenter(this, network, organisation);
 
         // Init Dialog
-        dialog = new AlertDialog.Builder(getActivity())
+        dialog = new AlertDialog.Builder(getContext())
                 .setCancelable(true)
                 .create();
     }
@@ -75,15 +76,6 @@ public class OrganisationView extends Fragment implements IOrganisationView, Vie
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_organisation, container, false);
-
-        // Get Organisation Name
-        String organisation = presenter.getOrganisationName();
-
-        // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update(organisation, true);
-
-        // Init SearchBar
-        ((MainActivity) getActivity()).getToolBar().getSearchBar().setVisibility(View.GONE);
 
         // Init UI Element
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
@@ -100,37 +92,18 @@ public class OrganisationView extends Fragment implements IOrganisationView, Vie
         view.findViewById(R.id.btn_events).setOnClickListener(this);
         view.findViewById(R.id.btn_informations).setOnClickListener(this);
 
+        return (view);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Init ToolBar Title
+        getActivity().setTitle(Tools.upperCaseFirstLetter(getArguments().getString("page")));
+
         // Get Organisation Model
         presenter.getOrganisation();
-
-        // Init News Model
-//        presenter.getEvents();
-
-
-/*
-        // Init TextView Organisation Name
-        TextView textView = (TextView) view.findViewById(R.id.organisation_name);
-        textView.setText(organisation);
-
-        // Init Image Filter (Darken the image)
-        ImageView               imageView = (ImageView) view.findViewById(R.id.organisation_image);
-        LightingColorFilter     lcf = new LightingColorFilter(0xFF888888, 0x00222222);
-        imageView.setColorFilter(lcf);
-
-        // Init ListView & Listener & Adapter
-        listView = (ListView) view.findViewById(R.id.organisation_list_view);
-        listView.setAdapter(new OrganisationListViewAdapter(this));
-        Tools.setListViewHeightBasedOnChildren(listView);
-        initListener();
-
-        // Init Listener
-        view.findViewById(R.id.organisation_btn_join).setOnClickListener(this);
-        view.findViewById(R.id.organisation_btn_management).setOnClickListener(this);
-        view.findViewById(R.id.organisation_btn_members).setOnClickListener(this);
-        view.findViewById(R.id.organisation_btn_events).setOnClickListener(this);
-*/
-
-        return (view);
     }
 
     private void initRecyclerView() {
@@ -139,7 +112,7 @@ public class OrganisationView extends Fragment implements IOrganisationView, Vie
         recyclerView.setAdapter(new OrganisationRVAdapter(presenter));
 
         // Init LayoutManager
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Set Options to enable toolbar display/hide
         recyclerView.setNestedScrollingEnabled(false);
