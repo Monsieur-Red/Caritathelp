@@ -41,7 +41,6 @@ public class OrganisationEventInteractor {
                     @Override
                     public void onCompleted(Exception error, EventInformations result) {
                         if (error == null) {
-                            // Status == 400 == error
                             if (result.getStatus() == Network.API_STATUS_ERROR)
                                 listener.onDialog("Statut 400", result.getMessage());
                             else {

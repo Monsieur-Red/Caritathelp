@@ -57,7 +57,7 @@ public class MyEventsView extends Fragment implements IMyEventsView, View.OnClic
         MyEventsView    myFragment = new MyEventsView();
 
         Bundle args = new Bundle();
-        args.putInt("page", R.string.submenu_my_events);
+        args.putInt("page", R.string.view_name_submenu_my_events);
         args.putInt("user id", userId);
         myFragment.setArguments(args);
 

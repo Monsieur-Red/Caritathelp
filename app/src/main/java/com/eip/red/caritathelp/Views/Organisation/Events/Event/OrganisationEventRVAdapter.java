@@ -19,9 +19,7 @@ public class OrganisationEventRVAdapter extends RecyclerView.Adapter<Organisatio
 
 //    private List<Event> visibleObjects;
 //    private List<Event> allObjects;
-
-//    private static MyClickListener myClickListener;
-
+    
     public OrganisationEventRVAdapter() {
 //        visibleObjects = new ArrayList<>();
 //        allObjects = new ArrayList<>();

@@ -5,9 +5,9 @@
 
     <item
         android:id="@+id/action_search"
-        android:orderInCategory="5"
         android:title="@string/search_bar_btn_search"
         android:icon="@android:drawable/ic_menu_search"
+        android:iconifiedByDefault="true"
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView" />
 

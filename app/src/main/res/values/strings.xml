@@ -14,6 +14,8 @@
     <string name="view_name_submenu_my_events">Mes événements</string>
     <string name="view_name_submenu_my_events_creation">Créer un événement</string>
     <string name="view_name_submenu_account_management">Gestion de compte</string>
+    <string name="view_name_submenu_friends">Amis</string>
+    <string name="view_name_submenu_friends_add">Rechercher des amis</string>
 
     <string name="view_name_organisation_post">Poster</string>
     <string name="view_name_organisation_members">Membres</string>
@@ -104,6 +106,15 @@
         <item>Organisateur</item>
         <item>A venir</item>
         <item>Passé</item>
+    </string-array>
+
+    <!-- MyFriends View -->
+    <string name="submenu_friends_btn_add">Ajouter</string>
+    <!-- Spinner -->
+    <string-array name="my_friends_spinner">
+        <item>Mes Amis</item>
+        <item>Invitations</item>
+        <item>Envoyées</item>
     </string-array>
 
     <!-- OrganisationCreation View -->

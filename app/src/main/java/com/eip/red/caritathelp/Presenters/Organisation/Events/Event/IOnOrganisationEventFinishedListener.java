@@ -16,5 +16,4 @@ public interface IOnOrganisationEventFinishedListener {
     void onSuccessGetEvent(String title, String rights);
 
     void onSuccessGetNews(List<News> newsList);
-
 }

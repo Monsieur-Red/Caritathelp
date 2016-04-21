@@ -25,10 +25,12 @@ import java.util.List;
 public class OrganisationEventPresenter implements IOrganisationEventPresenter, IOnOrganisationEventFinishedListener {
 
     private OrganisationEventView           view;
-    private OrganisationEventInteractor    interactor;
+    private OrganisationEventInteractor     interactor;
 
     public OrganisationEventPresenter(OrganisationEventView view, Network network, int eventId) {
         this.view = view;
+
+        // Init Interactor
         interactor = new OrganisationEventInteractor(view.getActivity().getApplicationContext(), network, eventId);
     }
 

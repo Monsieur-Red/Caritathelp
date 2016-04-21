@@ -15,6 +15,7 @@ import com.eip.red.caritathelp.Models.User;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
 import com.eip.red.caritathelp.Views.Sign.In.SignInView;
+import com.eip.red.caritathelp.Views.SubMenu.Friends.FriendsView;
 import com.eip.red.caritathelp.Views.SubMenu.MyEvents.MyEventsView;
 import com.eip.red.caritathelp.Views.SubMenu.MyOrganisations.MyOrganisationsView;
 import com.eip.red.caritathelp.Views.SubMenu.AccountSettings.AccountSettingsView;
@@ -58,6 +59,7 @@ public class SubMenuView extends Fragment implements View.OnClickListener {
         // Init Listener
         view.findViewById(R.id.submenu_my_organisations).setOnClickListener(this);
         view.findViewById(R.id.submenu_my_events).setOnClickListener(this);
+        view.findViewById(R.id.submenu_friends).setOnClickListener(this);
         view.findViewById(R.id.submenu_account_settings).setOnClickListener(this);
         view.findViewById(R.id.submenu_logout).setOnClickListener(this);
         view.findViewById(R.id.submenu_delete_account).setOnClickListener(this);
@@ -81,6 +83,9 @@ public class SubMenuView extends Fragment implements View.OnClickListener {
                 break;
             case R.id.submenu_my_events:
                 Tools.replaceView(this, MyEventsView.newInstance(user.getId()), Animation.FADE_IN_OUT, false);
+                break;
+            case R.id.submenu_friends:
+                Tools.replaceView(this, FriendsView.newInstance(), Animation.FADE_IN_OUT, false);
                 break;
             case R.id.submenu_account_settings:
                 Tools.replaceView(this, AccountSettingsView.newInstance(), Animation.FADE_IN_OUT, false);

@@ -25,10 +25,10 @@ public class MySearchBar {
 
     public MySearchBar(MainActivity activity) {
         // Get UI elements
-        searchBar = (CardView) activity.findViewById(R.id.my_search_bar);
+//        searchBar = (CardView) activity.findViewById(R.id.my_search_bar);
 //        searchBarContent = (LinearLayout) activity.findViewById(R.id.search_bar_content);
-        searchText = (EditText) activity.findViewById(R.id.ed_search);
-        cancelBtn = (ImageButton) activity.findViewById(R.id.btn_clear_edit_text);
+//        searchText = (EditText) activity.findViewById(R.id.ed_search);
+//        cancelBtn = (ImageButton) activity.findViewById(R.id.btn_clear_edit_text);
 
         // Init Listener
         initListener();
