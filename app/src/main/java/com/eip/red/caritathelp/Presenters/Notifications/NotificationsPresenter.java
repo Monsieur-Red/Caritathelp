@@ -3,10 +3,14 @@ package com.eip.red.caritathelp.Presenters.Notifications;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
+import com.eip.red.caritathelp.Activities.Main.MainActivity;
+import com.eip.red.caritathelp.Activities.Main.MyNavigationBottomBar;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Notifications.Notification;
 import com.eip.red.caritathelp.Models.User;
+import com.eip.red.caritathelp.Views.Notifications.NotificationsRVAdapter;
 import com.eip.red.caritathelp.Views.Notifications.NotificationsView;
+import com.eip.red.caritathelp.Views.SubMenu.Friends.MyFriendsRVAdpater;
 
 import java.util.List;
 
@@ -68,7 +72,12 @@ public class NotificationsPresenter implements INotificationsPresenter, IOnNotif
     @Override
     public void onSuccessGetNotification(List<Notification> notifications) {
         // Set RecyclerView
-        view.getRvAdapter().update(notifications);
+        NotificationsRVAdapter adpater = view.getRvAdapter();
+        adpater.update(notifications);
+
+        // Set Notification Number Bottom Navigation Bar
+        int number = adpater.getItemCount();
+        ((MainActivity) view.getActivity()).getMyNavigationBottomBar().setNotifications(number, MyNavigationBottomBar.NOTIFICATIONS);
 
         // Set ProgressBar Visibility
         view.hideProgress();

@@ -219,4 +219,8 @@ public class MainActivity extends AppCompatActivity {
     public MySearchView getMySearchView() {
         return mySearchView;
     }
+
+    public MyNavigationBottomBar getMyNavigationBottomBar() {
+        return myNavigationBottomBar;
+    }
 }

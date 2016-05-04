@@ -34,10 +34,11 @@ public class MyEventsInteractor {
         this.userId = userId;
     }
 
-    public void getMyEvents(final IOnMyEventsFinishedListener listener) {
+    public void getMyEvents(final IOnMyEventsFinishedListener listener, final boolean init, String range, final boolean isSwipeRefresh) {
         JsonObject json = new JsonObject();
 
         json.addProperty("token", network.getToken());
+        json.addProperty("range", range);
 
         Ion.with(context)
                 .load("GET", Network.API_LOCATION + Network.API_REQUEST_MY_EVENTS + userId + Network.API_REQUEST_ORGANISATION_EVENTS)
@@ -50,8 +51,12 @@ public class MyEventsInteractor {
                             // Status == 400 == error
                             if (result.getStatus() == Network.API_STATUS_ERROR)
                                 listener.onDialog("Statut 400", result.getMessage());
-                            else
-                                listener.onSuccessGetMyEvents(getEventsByProfile(result.getResponse(), "host"), getEventsByProfile(result.getResponse(), "member"));
+                            else {
+                                if (isSwipeRefresh)
+                                    listener.onSuccessGetMyEventsSR(result.getResponse());
+                                else
+                                    listener.onSuccessGetMyEvents(init, result.getResponse());
+                            }
                         }
                         else
                             listener.onDialog("Problème de connection", "Vérifiez votre connexion Internet");

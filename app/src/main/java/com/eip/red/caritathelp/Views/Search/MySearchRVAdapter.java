@@ -32,7 +32,7 @@ public class MySearchRVAdapter extends RecyclerView.Adapter<MySearchRVAdapter.Da
     public class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView   image;
         TextView    name;
-        ImageButton addBtn;
+        ImageButton add;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
@@ -40,31 +40,25 @@ public class MySearchRVAdapter extends RecyclerView.Adapter<MySearchRVAdapter.Da
             // Init UI Element
             image = (ImageView) itemView.findViewById(R.id.image);
             name = (TextView) itemView.findViewById(R.id.name);
-            addBtn = (ImageButton) itemView.findViewById(R.id.btn_add_friend);
+            add = (ImageButton) itemView.findViewById(R.id.btn_add_friend);
 
             // Init Listener
             itemView.setOnClickListener(this);
             image.setOnClickListener(this);
             name.setOnClickListener(this);
-            addBtn.setOnClickListener(this);
+            add.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            System.out.println("CLICKKKKKKKKKKKK");
-
             switch (v.getId()) {
                 case R.id.image:
                     // Redirect Volunteer Profile Page
-                    System.out.println("PRESS IMAGE");
                     break;
                 case R.id.name:
                     // Redirect Volunteer Profile Page
-                    System.out.println("PRESS NAME");
                     break;
                 case R.id.btn_add_friend:
-                    System.out.println("PRESS ADD FRIEND");
-
                     // Add Friend Request
                     Volunteer   volunteer = searchDataList.get(getAdapterPosition());
                     String      name = volunteer.getFirstname() + " " + volunteer.getLastname();
@@ -72,10 +66,6 @@ public class MySearchRVAdapter extends RecyclerView.Adapter<MySearchRVAdapter.Da
                     presenter.addFriend(volunteer.getId(), name);
                     break;
             }
-//            Organisation organisation = visibleObjects.get(getAdapterPosition());
-//
-//            if (organisation != null)
-//                presenter.goToOrganisationView(organisation);
         }
     }
 
@@ -93,6 +83,11 @@ public class MySearchRVAdapter extends RecyclerView.Adapter<MySearchRVAdapter.Da
         String      name = volunteer.getFirstname() + " " + volunteer.getLastname();
 
         holder.name.setText(name);
+
+        if (presenter.isUser(volunteer.getId()))
+            holder.add.setVisibility(View.INVISIBLE);
+        else
+            holder.add.setVisibility(View.VISIBLE);
     }
 
     @Override

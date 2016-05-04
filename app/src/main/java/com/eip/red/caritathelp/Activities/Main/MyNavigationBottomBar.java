@@ -15,6 +15,11 @@ import com.eip.red.caritathelp.R;
 
 public class MyNavigationBottomBar {
 
+    static final public  int    HOME = 0;
+    static final public  int    CHAT = 1;
+    static final public  int    NOTIFICATIONS = 2;
+    static final public  int    MY_PROFILE = 3;
+
     private AHBottomNavigation  bottomNavigation;
 
     public MyNavigationBottomBar(MainActivity activity, final ViewPager viewPager) {
@@ -60,9 +65,6 @@ public class MyNavigationBottomBar {
         // Customize notification (title, background, typeface)
         bottomNavigation.setNotificationBackgroundColor(Color.parseColor("#F63D2B"));
 
-        // Add or remove notification for each item
-        bottomNavigation.setNotification(4, 2);
-
         // Set listener
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
@@ -73,6 +75,10 @@ public class MyNavigationBottomBar {
             }
         });
 
+    }
+
+    public void setNotifications(int number, int tab) {
+        bottomNavigation.setNotification(number, tab);
     }
 
     public AHBottomNavigation getBar() {

@@ -42,9 +42,25 @@ public class MyEventsPresenter implements IMyEventPresenter, IOnMyEventsFinished
     }
 
     @Override
-    public void getMyEvents() {
-        view.showProgress();
-        interactor.getMyEvents(this);
+    public void getMyEvents(boolean init, String range, boolean isSwipeRefresh) {
+        // Display ProgressBar if it's not a SwipRefresh gesture
+        if (!isSwipeRefresh)
+            view.showProgress();
+
+        switch (range) {
+            case "En ce moment":
+                interactor.getMyEvents(this, init, "current", isSwipeRefresh);
+                break;
+            case "A venir":
+                interactor.getMyEvents(this, init, "futur", isSwipeRefresh);
+                break;
+            case "Passé":
+                interactor.getMyEvents(this, init, "past", isSwipeRefresh);
+                break;
+            case "Organisateur":
+                interactor.getMyEvents(this, init, "", isSwipeRefresh);
+                break;
+        }
     }
 
     @Override
@@ -61,14 +77,33 @@ public class MyEventsPresenter implements IMyEventPresenter, IOnMyEventsFinished
 
     @Override
     public void onDialog(String title, String msg) {
+        // Hide ProgressBar & SwipeRefreshLayout
         view.hideProgress();
+        view.getSwipeRefreshLayout().setRefreshing(false);
+
+        // Set Dialog
         view.setDialogError(title, msg);
     }
 
     @Override
-    public void onSuccessGetMyEvents(List<Event> myEventsOwner, List<Event> myEventsMember) {
-        checkRequestEnd();
-        view.updateRecyclerView(myEventsOwner, myEventsMember);
+    public void onSuccessGetMyEvents(boolean init, List<Event> events) {
+        // Update Recycler View
+        view.getAdapter().update(events);
+
+        // Set ProgressBar Visibility
+        if (init)
+            checkRequestEnd();
+        else
+            view.hideProgress();
+    }
+
+    @Override
+    public void onSuccessGetMyEventsSR(List<Event> events) {
+        // Update Recycler View
+        view.getAdapter().update(events);
+
+        // Set SwipeRefreshLayout refreshing
+        view.getSwipeRefreshLayout().setRefreshing(false);
     }
 
     @Override
@@ -80,7 +115,7 @@ public class MyEventsPresenter implements IMyEventPresenter, IOnMyEventsFinished
         check++;
         if (check == 2) {
             check = 0;
-            if (interactor.getMyOrganisationsOwner().size() > 0)
+            if (interactor.getMyOrganisationsOwner() != null)// && interactor.getMyOrganisationsOwner().size() > 0)
                 view.setVisibilityCreationPart(View.VISIBLE);
 
             view.hideProgress();

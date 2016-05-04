@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Search.Volunteer;
+import com.eip.red.caritathelp.Models.User;
 import com.eip.red.caritathelp.Views.Search.MySearchView;
 
 import java.util.List;
@@ -17,9 +18,9 @@ public class MySearchPresenter implements IMySearchPresenter, IOnMySearchFinishe
     private MySearchView        view;
     private MySearchInteractor  interactor;
 
-    public MySearchPresenter(Context context, MySearchView view, Network network) {
+    public MySearchPresenter(Context context, MySearchView view, Network network, User user) {
         this.view = view;
-        interactor = new MySearchInteractor(context, network);
+        interactor = new MySearchInteractor(context, network, user);
     }
 
     @Override
@@ -37,6 +38,11 @@ public class MySearchPresenter implements IMySearchPresenter, IOnMySearchFinishe
     public void addFriend(int volunteerId, String name) {
         view.showProgress();
         interactor.addFriend(volunteerId, name, view.getProgressBar(), this);
+    }
+
+    @Override
+    public boolean isUser(int volunteerId) {
+        return (volunteerId == interactor.getUserId());
     }
 
     @Override

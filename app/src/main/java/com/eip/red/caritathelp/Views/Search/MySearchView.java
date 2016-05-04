@@ -38,6 +38,9 @@ public class MySearchView implements IMySearchView {
     public MySearchView(MainActivity activity, Menu menu) {
         this.activity = activity;
 
+        // Init Presenter
+        presenter = new MySearchPresenter(activity, this, activity.getModelManager().getNetwork(), activity.getModelManager().getUser());
+
         // Init UI
         progressBar = (ProgressBar) activity.findViewById(R.id.progress_bar);
 
@@ -45,9 +48,6 @@ public class MySearchView implements IMySearchView {
         dialog = new AlertDialog.Builder(activity)
                 .setCancelable(true)
                 .create();
-
-        // Init Presenter
-        presenter = new MySearchPresenter(activity, this, activity.getModelManager().getNetwork());
 
         // Init Menu & Listener
         initMenu(menu);

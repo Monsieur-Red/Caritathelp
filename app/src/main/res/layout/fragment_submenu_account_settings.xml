@@ -143,8 +143,7 @@
                 android:layout_marginLeft="@dimen/_60sdp"
                 android:layout_marginRight="@dimen/_60sdp"
 
-                android:alpha="0.8"
-                android:background="@color/primary_dark"
+                android:background="@color/primary"
                 android:text="Modifier"
                 android:textSize="@dimen/_22sdp"
                 android:textColor="@color/icons"

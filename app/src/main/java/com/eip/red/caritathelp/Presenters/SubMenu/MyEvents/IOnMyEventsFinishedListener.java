@@ -13,7 +13,9 @@ public interface IOnMyEventsFinishedListener {
 
     void onDialog(String title, String msg);
 
-    void onSuccessGetMyEvents(List<Event> myEventsOwner, List<Event> myEventsMember);
+    void onSuccessGetMyEvents(boolean init, List<Event> events);
+
+    void onSuccessGetMyEventsSR(List<Event> events);
 
     void onSuccessGetMyOrganisations();
 }

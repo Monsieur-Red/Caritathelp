@@ -10,7 +10,7 @@ public interface IMyEventPresenter {
 
     void onClick(int viewId);
 
-    void getMyEvents();
+    void getMyEvents(boolean init, String range, boolean isSwipeRefresh);
 
     void getMyOrganisations();
 

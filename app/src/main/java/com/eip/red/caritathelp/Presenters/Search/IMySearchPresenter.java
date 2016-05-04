@@ -12,4 +12,6 @@ public interface IMySearchPresenter {
 
     void addFriend(int volunteerId, String name);
 
+    boolean isUser(int volunteerId);
+
 }

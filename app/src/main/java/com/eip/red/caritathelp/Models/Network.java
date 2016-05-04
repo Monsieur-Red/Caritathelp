@@ -35,7 +35,10 @@ public class Network implements Serializable {
     static final public  String     API_REQUEST_VOLUNTEER_DELETE_ACCOUNT = "volunteers/";
 
     /* FRIENDSHIP */
+    static final public  String     API_REQUEST_FRIENDSHIP = "/friends";
+    static final public  String     API_REQUEST_FRIENDSHIP_VOLUNTEER = "/volunteers/";
     static final public  String     API_REQUEST_FRIENDSHIP_ADD = "/friendship/add";
+    static final public  String     API_REQUEST_FRIENDSHIP_REMOVE = "/friendship/remove";
     static final public  String     API_REQUEST_FRIENDSHIP_REPLY = "/friendship/reply";
 
     /* API PARAMETERS */

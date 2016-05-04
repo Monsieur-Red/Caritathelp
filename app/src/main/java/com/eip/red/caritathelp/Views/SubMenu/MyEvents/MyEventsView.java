@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,6 +53,9 @@ public class MyEventsView extends Fragment implements IMyEventsView, View.OnClic
     private MyEventsRVAdapter   adapter;
     private View                dividerV;
     private Button              createBtn;
+
+    private SwipeRefreshLayout  swipeRefreshLayout;
+    private Spinner             spinner;
     private ProgressBar         progressBar;
     private AlertDialog         dialog;
 
@@ -88,9 +94,13 @@ public class MyEventsView extends Fragment implements IMyEventsView, View.OnClic
         View    view = inflater.inflate(R.layout.fragment_submenu_my_events, container, false);
 
         // Init UI Element
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
-        dividerV = (View) view.findViewById(R.id.divider_vertical);
+        dividerV = view.findViewById(R.id.divider_vertical);
         createBtn = (Button) view.findViewById(R.id.btn_create);
+
+        // Init RefreshLayout
+        initSwipeRefreshLayout();
 
         // Init Spinner
         initSpinner(view);
@@ -112,85 +122,43 @@ public class MyEventsView extends Fragment implements IMyEventsView, View.OnClic
         getActivity().setTitle(getArguments().getInt("page"));
 
         // Init Events Model
-        presenter.getMyEvents();
+        presenter.getMyEvents(true, "En ce moment", false);
 
         // Init Organisations Model
         presenter.getMyOrganisations();
     }
 
-//    private void initSearchBar() {
-//        MySearchBar searchBar = ((MainActivity) getActivity()).getToolBar().getSearchBar();
-//        final EditText    searchText = searchBar.getSearchText();
-//        final ImageButton cancelBtn = searchBar.getCancelBtn();
-//
-//        // Show SearchBar
-//        searchBar.setVisibility(View.VISIBLE);
-//
-//        // Show the SearchBar
-//        searchBar.show(R.string.search_bar_event);
-//
-//        //Init SearchText listener & filter
-//        searchText.addTextChangedListener(new TextWatcher() {
-//
-//            @Override
-//            public void afterTextChanged(Editable arg0) {
-//                // TODO Auto-generated method stub
-//            }
-//
-//            @Override
-//            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-//                // TODO Auto-generated method stub
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-//                if (TextUtils.isEmpty(arg0)) {
-//                    // Hide Cancel Btn
-//                    cancelBtn.setVisibility(View.GONE);
-//
-//                    // Flush Filter
-//                    ((MyEventsRVAdapter) recyclerView.getAdapter()).flushFilter();
-//                }
-//                else {
-//                    // Show Cancel Btn
-//                    cancelBtn.setVisibility(View.VISIBLE);
-//
-//                    // Filter text
-//                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-//                    ((MyEventsRVAdapter) recyclerView.getAdapter()).filter(text);
-//                }
-//            }
-//        });
-//    }
+    private void initSwipeRefreshLayout() {
+        // Configure the refreshing colors
+        swipeRefreshLayout.setColorSchemeResources(R.color.icons);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.primary);
+
+        // Init Refresh Listener
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Set Events Model
+                presenter.getMyEvents(false, (String) spinner.getSelectedItem(), true);
+            }
+        });
+    }
 
     private void initSpinner(View view) {
-/*
-        Spinner spinner = new Spinner(getContext());//(Spinner) view.findViewById(R.id.spinner);
-
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.my_events_spinner, android.R.layout.simple_spinner_item);
-
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
-*/
+        // Init Spinner
+        spinner = (Spinner) view.findViewById(R.id.spinner);
 
         // Init Listener
-/*        public class SpinnerActivity extends Activity implements OnItemSelectedListener {
-            ...
-
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int pos, long id) {
-                // An item was selected. You can retrieve the selected item using
-                // parent.getItemAtPosition(pos)
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                presenter.getMyEvents(false, (String) parent.getItemAtPosition(position), false);
             }
 
+            @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // Another interface callback
+
             }
-        }*/
+        });
     }
 
     private void initRecyclerView(View view) {
@@ -212,13 +180,7 @@ public class MyEventsView extends Fragment implements IMyEventsView, View.OnClic
 
         // Init Divider (between items)
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST);
-
         recyclerView.addItemDecoration(itemDecoration);
-        // Convert dp to px
-//        int spacing = Math.round(10 * getResources().getDisplayMetrics().density);
-//        RecyclerView.ItemDecoration itemDecoration = new GridSpacingItemDecoration(3, spacing, true);
-//        recyclerViewOwner.addItemDecoration(itemDecoration);
-//        recyclerViewMember.addItemDecoration(itemDecoration);
     }
 
     @Override
@@ -243,13 +205,16 @@ public class MyEventsView extends Fragment implements IMyEventsView, View.OnClic
         dialog.show();
     }
 
-    @Override
-    public void updateRecyclerView(List<Event> myEventsOwner, List<Event> myEventsMember) {
-        adapter.update(myEventsOwner);
-    }
-
     public void setVisibilityCreationPart(int visibility) {
         dividerV.setVisibility(visibility);
         createBtn.setVisibility(visibility);
+    }
+
+    public SwipeRefreshLayout getSwipeRefreshLayout() {
+        return swipeRefreshLayout;
+    }
+
+    public MyEventsRVAdapter getAdapter() {
+        return adapter;
     }
 }

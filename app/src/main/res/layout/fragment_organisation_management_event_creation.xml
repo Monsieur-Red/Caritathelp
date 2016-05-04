@@ -216,7 +216,6 @@
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="60dp"
 
-                android:alpha="0.8"
                 android:background="@color/primary"
                 android:text="@string/organisation_management_event_create"
                 android:textSize="22sp"

@@ -6,7 +6,7 @@
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -22,7 +22,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:padding="4dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/tab_volunteer"
@@ -62,7 +63,8 @@
                 <View
                     android:id="@+id/divider"
                     android:layout_gravity="center"
-                    style="@style/Divider"/>
+                    style="@style/Divider"
+                    android:visibility="gone" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view_volunteer"

@@ -8,6 +8,7 @@ import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Organisations;
 import com.eip.red.caritathelp.Models.Search.Volunteer;
 import com.eip.red.caritathelp.Models.Search.Volunteers;
+import com.eip.red.caritathelp.Models.User;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
@@ -21,10 +22,12 @@ public class MySearchInteractor {
 
     private Context context;
     private Network network;
+    private User    user;
 
-    public MySearchInteractor(Context context, Network network) {
+    public MySearchInteractor(Context context, Network network, User user) {
         this.context = context;
         this.network = network;
+        this.user = user;
     }
 
     public void getQueryTextSubmit(String query) {
@@ -82,5 +85,9 @@ public class MySearchInteractor {
                             listener.onDialog("Problème de connection", "Vérifiez votre connexion Internet");
                     }
                 });
+    }
+
+    public int getUserId() {
+        return (user.getId());
     }
 }
