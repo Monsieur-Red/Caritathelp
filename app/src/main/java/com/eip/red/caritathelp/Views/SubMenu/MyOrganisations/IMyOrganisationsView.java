@@ -14,7 +14,7 @@ public interface IMyOrganisationsView {
 
     void hideProgress();
 
-    void setDialogError(String title, String msg);
+    void setDialog(String title, String msg);
 
     void updateRecyclerView(List<Organisation> myOrganisationsOwner, List<Organisation> myOrganisationsMember);
 

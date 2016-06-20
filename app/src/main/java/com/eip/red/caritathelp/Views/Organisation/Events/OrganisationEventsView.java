@@ -19,6 +19,7 @@ import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Activities.Main.MySearchBar;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Event;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.MyWidgets.DividerItemDecoration;
 import com.eip.red.caritathelp.Presenters.Organisation.Events.OrganisationEventsPresenter;
 import com.eip.red.caritathelp.R;
@@ -35,10 +36,10 @@ public class OrganisationEventsView extends Fragment implements IOrganisationEve
 
     private OrganisationEventsPresenter presenter;
 
-    private RecyclerView    recyclerView;
-    private ProgressBar     progressBar;
-    private AlertDialog     dialog;
-
+    private RecyclerView                recyclerView;
+    private OrganisationEventsRVAdapter adapter;
+    private ProgressBar                 progressBar;
+    private AlertDialog                 dialog;
 
     public static OrganisationEventsView newInstance(int idOrganisation) {
         OrganisationEventsView    myFragment = new OrganisationEventsView();
@@ -55,12 +56,12 @@ public class OrganisationEventsView extends Fragment implements IOrganisationEve
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get Network Model & Id Organisation
-        Network network = ((MainActivity) getActivity()).getModelManager().getNetwork();
+        // Get User Model & Id Organisation
+        User    user = ((MainActivity) getActivity()).getModelManager().getUser();
         int     organisationId = getArguments().getInt("organisation id");
 
         // Init Presenter
-        presenter = new OrganisationEventsPresenter(this, network, organisationId);
+        presenter = new OrganisationEventsPresenter(this, user.getToken(), organisationId);
 
         // Init Dialog
         dialog = new AlertDialog.Builder(getContext())
@@ -73,9 +74,6 @@ public class OrganisationEventsView extends Fragment implements IOrganisationEve
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View    view = inflater.inflate(R.layout.fragment_organisation_events, container, false);
-
-        // Init SearchBar
-//        initSearchBar();
 
         // Init UI Element
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
@@ -97,55 +95,13 @@ public class OrganisationEventsView extends Fragment implements IOrganisationEve
         presenter.getEvents();
     }
 
-
-/*
-    private void initSearchBar() {
-        MySearchBar searchBar = ((MainActivity) getActivity()).getToolBar().getSearchBar();
-        final EditText    searchText = searchBar.getSearchText();
-        final ImageButton cancelBtn = searchBar.getCancelBtn();
-
-        // Show the SearchBar
-        searchBar.show(R.string.search_bar_event);
-
-        //Init SearchText listener & filter
-        searchText.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void afterTextChanged(Editable arg0) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                if (TextUtils.isEmpty(arg0)) {
-                    // Hide Cancel Btn
-                    cancelBtn.setVisibility(View.GONE);
-
-                    // Flush Filter
-                    ((OrganisationEventsRVAdapter) recyclerView.getAdapter()).flushFilter();
-                }
-                else {
-                    // Show Cancel Btn
-                    cancelBtn.setVisibility(View.VISIBLE);
-
-                    // Filter text
-                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-                    ((OrganisationEventsRVAdapter) recyclerView.getAdapter()).filter(text);
-                }
-            }
-        });
-    }
-*/
-
     private void initRecyclerView(View view) {
         // Init RecyclerView
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(new OrganisationEventsRVAdapter(presenter));
+
+        // Init Adapter
+        adapter = new OrganisationEventsRVAdapter(presenter);
+        recyclerView.setAdapter(adapter);
 
         // Init LayoutManager
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -177,8 +133,7 @@ public class OrganisationEventsView extends Fragment implements IOrganisationEve
         dialog.show();
     }
 
-    @Override
-    public void updateRecyclerView(List<Event> events) {
-        ((OrganisationEventsRVAdapter) recyclerView.getAdapter()).update(events);
+    public OrganisationEventsRVAdapter getAdapter() {
+        return adapter;
     }
 }

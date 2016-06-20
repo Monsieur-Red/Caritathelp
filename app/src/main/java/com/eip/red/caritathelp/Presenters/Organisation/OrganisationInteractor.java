@@ -18,22 +18,22 @@ import com.koushikdutta.ion.Ion;
 public class OrganisationInteractor {
 
     private Context         context;
-    private Network         network;
-    private Organisation    organisation;
+    private String          token;
+    private int             id;
 
-    public OrganisationInteractor(Context context, Network network, Organisation organisation) {
+    public OrganisationInteractor(Context context, String token, int id) {
         this.context = context;
-        this.network = network;
-        this.organisation = organisation;
+        this.token = token;
+        this.id = id;
     }
 
     public void getOrganisation(final IOnOrganisationFinishedListener listener) {
         JsonObject json = new JsonObject();
 
-        json.addProperty("token", network.getToken());
+        json.addProperty("token", token);
 
         Ion.with(context)
-                .load("GET", Network.API_LOCATION + Network.API_REQUEST_ORGANISATION_BY_ID + organisation.getId())
+                .load("GET", Network.API_LOCATION + Network.API_REQUEST_ORGANISATION_BY_ID + id)
                 .setJsonObjectBody(json)
                 .as(new TypeToken<OrganisationJson>(){})
                 .setCallback(new FutureCallback<OrganisationJson>() {
@@ -43,10 +43,8 @@ public class OrganisationInteractor {
                             // Status == 400 == error
                             if (result.getStatus() == Network.API_STATUS_ERROR)
                                 listener.onDialogError("Statut 400", result.getMessage());
-                            else {
-                                organisation = result.getResponse();
-                                listener.onOrganisationRequestSuccess(organisation.getRights());
-                            }
+                            else
+                                listener.onOrganisationRequestSuccess(result.getResponse().getRights());
                         }
                         else
                             listener.onDialogError("Problème de connection", "Vérifiez votre connexion Internet");
@@ -58,18 +56,8 @@ public class OrganisationInteractor {
 
     }
 
-    public String getOrganisationName() {
-        return (organisation.getName());
-    }
-
     public int getOrganisationId() {
-        return (organisation.getId());
-    }
-
-    public boolean isOwner() {
-        if (organisation.getRights().equals("owner"))
-            return (true);
-        return (false);
+        return (id);
     }
 
 }

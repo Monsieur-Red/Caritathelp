@@ -2,11 +2,14 @@ package com.eip.red.caritathelp.Activities.Main;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.eip.red.caritathelp.Activities.Main.ViewPager.MyPagerAdapter;
 import com.eip.red.caritathelp.R;
 
 /**
@@ -22,7 +25,7 @@ public class MyNavigationBottomBar {
 
     private AHBottomNavigation  bottomNavigation;
 
-    public MyNavigationBottomBar(MainActivity activity, final ViewPager viewPager) {
+    public MyNavigationBottomBar(final MainActivity activity, final ViewPager viewPager) {
         bottomNavigation = (AHBottomNavigation) activity.findViewById(R.id.bottom_navigation);
         Context context = activity.getApplicationContext();
 
@@ -69,12 +72,23 @@ public class MyNavigationBottomBar {
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position, boolean wasSelected) {
-
                 if (!wasSelected)
                     viewPager.setCurrentItem(position);
+                else
+                    backToFirstPage(viewPager);
             }
         });
 
+    }
+
+    private void backToFirstPage(ViewPager viewPager) {
+        int             currentPos = viewPager.getCurrentItem();
+        FragmentManager childFm = ((MyPagerAdapter)viewPager.getAdapter()).getItem(currentPos).getChildFragmentManager();
+        int             count = childFm.getBackStackEntryCount();
+
+        for (int i = 1; i < count; i++) {
+            childFm.popBackStack();
+        }
     }
 
     public void setNotifications(int number, int tab) {

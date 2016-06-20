@@ -8,6 +8,7 @@ import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
 import com.eip.red.caritathelp.Views.Organisation.Events.OrganisationEventsView;
+import com.eip.red.caritathelp.Views.Organisation.Informations.OrganisationInformationsView;
 import com.eip.red.caritathelp.Views.Organisation.Management.OrganisationManagementView;
 import com.eip.red.caritathelp.Views.Organisation.Members.OrganisationMembersView;
 import com.eip.red.caritathelp.Views.Organisation.OrganisationView;
@@ -23,11 +24,11 @@ public class OrganisationPresenter implements IOrganisationPresenter, IOnOrganis
     private OrganisationView        view;
     private OrganisationInteractor  interactor;
 
-    public OrganisationPresenter(OrganisationView view, Network network, Organisation organisation) {
+    public OrganisationPresenter(OrganisationView view, String token, int id) {
         this.view = view;
 
         // Init Interactor
-        interactor = new OrganisationInteractor(view.getActivity().getApplicationContext(), network, organisation);
+        interactor = new OrganisationInteractor(view.getActivity().getApplicationContext(), token, id);
     }
 
     @Override
@@ -49,14 +50,10 @@ public class OrganisationPresenter implements IOrganisationPresenter, IOnOrganis
                 Tools.replaceView(view, OrganisationEventsView.newInstance(interactor.getOrganisationId()), Animation.FADE_IN_OUT, false);
                 break;
             case R.id.btn_informations:
+                Tools.replaceView(view, OrganisationInformationsView.newInstance(interactor.getOrganisationId()), Animation.FADE_IN_OUT, false);
                 break;
         }
 
-    }
-
-    @Override
-    public String getOrganisationName() {
-        return (interactor.getOrganisationName());
     }
 
     @Override
@@ -79,7 +76,10 @@ public class OrganisationPresenter implements IOrganisationPresenter, IOnOrganis
 
     @Override
     public void onOrganisationRequestSuccess(String right) {
+        // Set Progress Bar Visibility
         view.hideProgress();
+
+        // Set Management Button Visibility
         view.initView(right);
     }
 

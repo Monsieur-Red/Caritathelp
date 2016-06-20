@@ -10,6 +10,44 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/submenu_my_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="horizontal"
+            android:background="@color/icons">
+
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+
+                android:src="@drawable/profile_example"
+                android:scaleType="centerInside" />
+
+            <TextView
+                android:id="@+id/profile_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:layout_weight="1"
+
+                android:layout_gravity="center"
+                android:text="@string/submenu_my_profile"
+                android:textColor="@color/primary_text"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <!-- DIVIDER -->
+        <View style="@style/Divider" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:background="@color/background" />
+        <View style="@style/Divider" />
+
+        <LinearLayout
             android:id="@+id/submenu_my_organisations"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -18,8 +56,8 @@
             android:background="@color/icons">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
 
                 android:src="@drawable/my_organisations"
                 android:scaleType="centerInside" />
@@ -33,7 +71,7 @@
                 android:layout_gravity="center"
                 android:text="@string/submenu_my_organisations"
                 android:textColor="@color/primary_text"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -49,8 +87,8 @@
             android:background="@color/icons">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
 
                 android:src="@drawable/my_events" />
 
@@ -63,7 +101,7 @@
                 android:layout_gravity="center"
                 android:text="@string/submenu_my_events"
                 android:textColor="@color/primary_text"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -79,8 +117,8 @@
             android:background="@color/icons">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
 
                 android:src="@drawable/friends_3" />
 
@@ -93,7 +131,7 @@
                 android:layout_gravity="center"
                 android:text="@string/submenu_friends"
                 android:textColor="@color/primary_text"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -101,7 +139,7 @@
         <View style="@style/Divider" />
         <View
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="28dp"
             android:background="@color/background" />
         <View style="@style/Divider" />
 
@@ -114,8 +152,8 @@
             android:background="@color/icons">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
 
                 android:src="@drawable/settings" />
 
@@ -128,7 +166,7 @@
                 android:layout_gravity="center"
                 android:text="@string/submenu_account_settings"
                 android:textColor="@color/primary_text"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -144,8 +182,8 @@
             android:background="@color/icons">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
 
                 android:src="@drawable/help" />
 
@@ -158,7 +196,7 @@
                 android:layout_gravity="center"
                 android:text="Aide et assistance"
                 android:textColor="@color/primary_text"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -174,8 +212,8 @@
             android:background="@color/icons">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
 
                 android:src="@drawable/about" />
 
@@ -188,7 +226,7 @@
                 android:layout_gravity="center"
                 android:text="A propos de Caritathelp"
                 android:textColor="@color/primary_text"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -197,14 +235,14 @@
         <View style="@style/Divider" />
         <View
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="28dp"
             android:background="@color/background" />
         <View style="@style/Divider" />
 
         <TextView
             android:id="@+id/submenu_logout"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="36dp"
             android:padding="5dp"
             android:background="@color/icons"
 
@@ -212,19 +250,19 @@
             android:gravity="center"
             android:text="@string/submenu_logout"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <!-- DIVIDER -->
         <View style="@style/Divider" />
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_height="28dp"
             android:background="@color/background" />
 
         <TextView
             android:id="@+id/submenu_delete_account"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="36dp"
             android:padding="5dp"
             android:background="@color/icons"
 
@@ -232,13 +270,13 @@
             android:gravity="center"
             android:text="@string/submenu_delete_account"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <!-- DIVIDER -->
         <View style="@style/Divider" />
         <View
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="28dp"
             android:background="@color/background" />
 
     </LinearLayout>

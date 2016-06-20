@@ -18,10 +18,10 @@ public class OrganisationEventCreationPresenter implements IOrganisationEventCre
     private OrganisationEventCreationView       view;
     private OrganisationEventCreationInteractor interactor;
 
-    public OrganisationEventCreationPresenter(OrganisationEventCreationView view, Network network, int organisationId) {
+    public OrganisationEventCreationPresenter(OrganisationEventCreationView view, String token, int organisationId) {
         this.view = view;
 
-        interactor = new OrganisationEventCreationInteractor(view.getActivity().getApplicationContext(), network, organisationId);
+        interactor = new OrganisationEventCreationInteractor(view.getActivity().getApplicationContext(), token, organisationId);
     }
 
 

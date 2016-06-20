@@ -3,7 +3,7 @@ package com.eip.red.caritathelp.Presenters.SubMenu.AccountSettings;
 import android.widget.EditText;
 
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.User;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.Views.SubMenu.AccountSettings.AccountSettingsView;
 
 import java.util.HashMap;
@@ -17,9 +17,9 @@ public class AccountSettingsPresenter implements IAccountSettingsPresenter, IOnA
     private AccountSettingsView         view;
     private AccountSettingsInteractor   interactor;
 
-    public AccountSettingsPresenter(AccountSettingsView view, User user, Network network) {
+    public AccountSettingsPresenter(AccountSettingsView view, User user) {
         this.view = view;
-        interactor = new AccountSettingsInteractor(view.getActivity().getApplicationContext(), user, network);
+        interactor = new AccountSettingsInteractor(view.getContext(), user);
     }
 
     @Override

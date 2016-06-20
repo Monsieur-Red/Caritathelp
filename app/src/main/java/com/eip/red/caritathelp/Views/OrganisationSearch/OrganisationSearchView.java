@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Organisation;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.Presenters.OrganisationSearch.OrganisationSearchPresenter;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
@@ -37,11 +38,11 @@ public class OrganisationSearchView extends Fragment implements IOrganisationSea
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get Model
-        Network network = ((MainActivity) getActivity()).getModelManager().getNetwork();
+        // Get User Model
+        User user = ((MainActivity) getActivity()).getModelManager().getUser();
 
         // Init Presenter
-        presenter = new OrganisationSearchPresenter(this, network);
+        presenter = new OrganisationSearchPresenter(this, user.getToken());
 
         // Init Dialog
         dialog = new AlertDialog.Builder(getActivity())

@@ -20,6 +20,7 @@ import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Home.News;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Organisation;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.MyWidgets.DividerItemDecoration;
 import com.eip.red.caritathelp.Presenters.Organisation.OrganisationPresenter;
 import com.eip.red.caritathelp.R;
@@ -42,13 +43,13 @@ public class OrganisationView extends Fragment implements IOrganisationView, Vie
     private ProgressBar     progressBar;
     private AlertDialog     dialog;
 
-    public static OrganisationView newInstance(Organisation organisation) {
+    public static OrganisationView newInstance(int id, String name) {
         OrganisationView    myFragment = new OrganisationView();
 
         Bundle args = new Bundle();
 
-        args.putString("page", organisation.getName());
-        args.putSerializable("organisation", organisation);
+        args.putString("page", name);
+        args.putInt("id", id);
         myFragment.setArguments(args);
 
         return (myFragment);
@@ -58,13 +59,12 @@ public class OrganisationView extends Fragment implements IOrganisationView, Vie
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get Network & Organisation Model
-//        Network         network = ((SecondContainer) getActivity()).getModelManager().getNetwork();
-        Network         network = ((MainActivity) getActivity()).getModelManager().getNetwork();
-        Organisation    organisation = (Organisation) getArguments().getSerializable("organisation");
+        // Get User & Organisation Model
+        User    user = ((MainActivity) getActivity()).getModelManager().getUser();
+        int     id = getArguments().getInt("id");
 
         // Init Presenter
-        presenter = new OrganisationPresenter(this, network, organisation);
+        presenter = new OrganisationPresenter(this, user.getToken(), id);
 
         // Init Dialog
         dialog = new AlertDialog.Builder(getContext())

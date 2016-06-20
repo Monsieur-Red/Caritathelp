@@ -1,13 +1,12 @@
 package com.eip.red.caritathelp.Presenters.Notifications;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Models.Friendship;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Notifications.JsonNotifications;
-import com.eip.red.caritathelp.Models.User;
+import com.eip.red.caritathelp.Models.User.User;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
@@ -19,20 +18,17 @@ import com.koushikdutta.ion.Ion;
 
 public class NotificationsInteractor {
 
-    private Context context;
-    private Network network;
-    private User    user;
+    private Context context;private User    user;
 
-    public NotificationsInteractor(Context context, Network network, User user) {
+    public NotificationsInteractor(Context context, User user) {
         this.context = context;
-        this.network = network;
         this.user = user;
     }
 
     public void getNotifications(ProgressBar progressBar, final IOnNotificationsFinishedListener listener) {
         JsonObject json = new JsonObject();
 
-        json.addProperty("token", network.getToken());
+        json.addProperty("token", user.getToken());
 
         Ion.with(context)
                 .load("GET", Network.API_LOCATION + "/volunteers/" +  user.getId() + "/notifications")
@@ -58,7 +54,7 @@ public class NotificationsInteractor {
     public void friendshipReply(int notifId, final String name, final String acceptance, ProgressBar progressBar, final IOnNotificationsFinishedListener listener) {
         JsonObject json = new JsonObject();
 
-        json.addProperty("token", network.getToken());
+        json.addProperty("token", user.getToken());
         json.addProperty("notif_id", String.valueOf(notifId));
         json.addProperty("acceptance", acceptance);
 

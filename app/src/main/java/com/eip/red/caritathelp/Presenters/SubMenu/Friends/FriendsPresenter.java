@@ -4,11 +4,14 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
+import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.Friends.Friend;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.User;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.R;
+import com.eip.red.caritathelp.Tools;
 import com.eip.red.caritathelp.Views.SubMenu.Friends.FriendsView;
+import com.eip.red.caritathelp.Views.SubMenu.Profile.ProfileView;
 
 import java.util.List;
 
@@ -21,9 +24,9 @@ public class FriendsPresenter implements IFriendsPresenter, IOnFriendsFinishedLi
     private FriendsView         view;
     private FriendsInteractor   interactor;
 
-    public FriendsPresenter(FriendsView view, Network network, User user) {
+    public FriendsPresenter(FriendsView view, User mainUser, int userId) {
         this.view = view;
-        interactor = new FriendsInteractor(view.getContext(),network, user);
+        interactor = new FriendsInteractor(view.getContext(), mainUser, userId);
     }
 
     @Override
@@ -51,8 +54,8 @@ public class FriendsPresenter implements IFriendsPresenter, IOnFriendsFinishedLi
     }
 
     @Override
-    public void navigateToFriendView(int friendId) {
-
+    public void navigateToFriendProfile(int friendId) {
+        Tools.replaceView(view, ProfileView.newInstance(friendId), Animation.FADE_IN_OUT, false);
     }
 
     @Override
@@ -96,7 +99,7 @@ public class FriendsPresenter implements IFriendsPresenter, IOnFriendsFinishedLi
     @Override
     public void onSuccessGetMyFriends(List<Friend> friends) {
         // Set RecyclerView
-        view.getMyFriendsRVAdpater().update(friends);
+        view.getAdapter().update(friends);
 
         // Set ProgressBar Visibility
         view.hideProgress();

@@ -16,7 +16,7 @@ public interface IFriendsPresenter {
 
     void getSent();
 
-    void navigateToFriendView(int friendId);
+    void navigateToFriendProfile(int friendId);
 
     void blockFriend(int friendId);
 

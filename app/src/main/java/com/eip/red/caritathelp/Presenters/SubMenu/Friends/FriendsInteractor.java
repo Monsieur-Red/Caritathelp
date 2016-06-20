@@ -6,7 +6,7 @@ import android.widget.ProgressBar;
 import com.eip.red.caritathelp.Models.Friends.Friends;
 import com.eip.red.caritathelp.Models.Friendship;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.User;
+import com.eip.red.caritathelp.Models.User.User;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
@@ -19,22 +19,22 @@ import com.koushikdutta.ion.Ion;
 public class FriendsInteractor {
 
     private Context context;
-    private Network network;
-    private User    user;
+    private User    mainUser;
+    private int     userId;
 
-    public FriendsInteractor(Context context, Network network, User user) {
+    public FriendsInteractor(Context context, User mainUser, int userId) {
         this.context = context;
-        this.network = network;
-        this.user = user;
+        this.mainUser = mainUser;
+        this.userId = userId;
     }
 
     public void getMyFriends(ProgressBar progressBar, final IOnFriendsFinishedListener listener) {
         JsonObject json = new JsonObject();
 
-        json.addProperty("token", network.getToken());
+        json.addProperty("token", mainUser.getToken());
 
         Ion.with(context)
-                .load("GET", Network.API_LOCATION + Network.API_REQUEST_FRIENDSHIP_VOLUNTEER + user.getId() + Network.API_REQUEST_FRIENDSHIP)
+                .load("GET", Network.API_LOCATION + Network.API_REQUEST_FRIENDSHIP_VOLUNTEER + userId + Network.API_REQUEST_FRIENDSHIP)
                 .progressBar(progressBar)
                 .setJsonObjectBody(json)
                 .as(new TypeToken<Friends>(){})
@@ -69,7 +69,7 @@ public class FriendsInteractor {
     public void removeFriend(int unfriendId, ProgressBar progressBar, final IOnFriendsFinishedListener listener) {
         JsonObject json = new JsonObject();
 
-        json.addProperty("token", network.getToken());
+        json.addProperty("token", mainUser.getToken());
         json.addProperty("id", unfriendId);
 
         Ion.with(context)
@@ -91,6 +91,14 @@ public class FriendsInteractor {
                             listener.onDialog("Problème de connection", "Vérifiez votre connexion Internet");
                     }
                 });
+    }
+
+    public int getMainUserId() {
+        return mainUser.getId();
+    }
+
+    public int getUserId() {
+        return userId;
     }
 
 }

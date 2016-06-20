@@ -28,14 +28,11 @@ public class MyOrganisationsRVAdapter extends RecyclerView.Adapter<MyOrganisatio
     private List<Organisation> visibleObjects;
     private List<Organisation>  allObjects;
 
-    public MyOrganisationsRVAdapter(MyOrganisationsPresenter presenter, List<Organisation> objects) {
+    public MyOrganisationsRVAdapter(MyOrganisationsPresenter presenter) {
         this.presenter = presenter;
 
         visibleObjects = new ArrayList<>();
-        visibleObjects.addAll(objects);
-
         allObjects = new ArrayList<>();
-        allObjects.addAll(objects);
     }
 
     public class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

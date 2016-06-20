@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import android.widget.EditText;
 
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.User;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.Views.SubMenu.AccountSettings.AccountSettingsView;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
@@ -20,12 +20,10 @@ public class AccountSettingsInteractor {
 
     private Context     context;
     private User        user;
-    private Network     network;
 
-    public AccountSettingsInteractor(Context context, User user, Network network) {
+    public AccountSettingsInteractor(Context context, User user) {
         this.context = context;
         this.user = user;
-        this.network = network;
     }
 
     public void saveModification(final HashMap<Integer, EditText> modification, final IOnAccountSettingsFinishedListener listener) {
@@ -44,10 +42,10 @@ public class AccountSettingsInteractor {
         if (!TextUtils.isEmpty(mail) && !mail.equals(user.getMail()))
             number++;
 
-        if (!TextUtils.isEmpty(firstname) && !firstname.equals(user.getFirstName()))
+        if (!TextUtils.isEmpty(firstname) && !firstname.equals(user.getFirstname()))
             number++;
 
-        if (!TextUtils.isEmpty(lastname) && !lastname.equals(user.getLastName()))
+        if (!TextUtils.isEmpty(lastname) && !lastname.equals(user.getLastname()))
             number++;
 
         if (!TextUtils.isEmpty(password))
@@ -76,15 +74,15 @@ public class AccountSettingsInteractor {
         final String        mail = modification.get(AccountSettingsView.MAIL).getText().toString();
         final String        password = modification.get(AccountSettingsView.PASSWORD_NEW).getText().toString();
 
-        json.addProperty("token", network.getToken());
+        json.addProperty("token", user.getToken());
 
         if (!TextUtils.isEmpty(mail) && !mail.equals(user.getMail()))
             json.addProperty("mail", mail);
 
-        if (!TextUtils.isEmpty(firstname) && !firstname.equals(user.getFirstName()))
+        if (!TextUtils.isEmpty(firstname) && !firstname.equals(user.getFirstname()))
             json.addProperty("firstname", firstname);
 
-        if (!TextUtils.isEmpty(lastname) && !lastname.equals(user.getLastName()))
+        if (!TextUtils.isEmpty(lastname) && !lastname.equals(user.getLastname()))
             json.addProperty("lastname", lastname);
 
         if (!TextUtils.isEmpty(password))
@@ -105,11 +103,11 @@ public class AccountSettingsInteractor {
                                 if (!TextUtils.isEmpty(mail) && !mail.equals(user.getMail()))
                                     user.setMail(mail);
 
-                                if (!TextUtils.isEmpty(firstname) && !firstname.equals(user.getFirstName()))
-                                    user.setFirstName(firstname);
+                                if (!TextUtils.isEmpty(firstname) && !firstname.equals(user.getFirstname()))
+                                    user.setFirstname(firstname);
 
-                                if (!TextUtils.isEmpty(lastname) && !lastname.equals(user.getLastName()))
-                                    user.setLastName(lastname);
+                                if (!TextUtils.isEmpty(lastname) && !lastname.equals(user.getLastname()))
+                                    user.setLastname(lastname);
 
                                 listener.onSuccess();
                             }

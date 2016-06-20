@@ -6,6 +6,7 @@ import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Guests;
+import com.eip.red.caritathelp.Models.User.User;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
@@ -18,19 +19,19 @@ import com.koushikdutta.ion.Ion;
 public class OrganisationEventGuestsInteractor {
 
     private Context context;
-    private Network network;
+    private String  token;
     private int     eventId;
 
-    public OrganisationEventGuestsInteractor(Context context, Network network, int eventId) {
+    public OrganisationEventGuestsInteractor(Context context, String token, int eventId) {
         this.context = context;
-        this.network = network;
+        this.token = token;
         this.eventId = eventId;
     }
 
     public void getGuests(final IOnOrganisationEventGuestsFinishedListener listener, ProgressBar progressBar) {
         JsonObject json = new JsonObject();
 
-        json.addProperty("token", network.getToken());
+        json.addProperty("token", token);
 
         Ion.with(context)
                 .load("GET", Network.API_LOCATION + Network.API_REQUEST_ORGANISATION_EVENT + eventId + Network.API_REQUEST_ORGANISATION_EVENTS_GUESTS)

@@ -16,20 +16,20 @@ import com.koushikdutta.ion.Ion;
 public class OrganisationMembersInteractor {
 
     private Context context;
-    private Network network;
 //    private Members members;
+    private String token;
     private int     organisationId;
 
-    public OrganisationMembersInteractor(Context context, Network network, int organisationId) {
+    public OrganisationMembersInteractor(Context context, String token, int organisationId) {
         this.context = context;
-        this.network = network;
+        this.token = token;
         this.organisationId = organisationId;
     }
 
     public void getMembers(final IOnOrganisationMembersFinishedListener listener) {
         JsonObject json = new JsonObject();
 
-        json.addProperty("token", network.getToken());
+        json.addProperty("token", token);
 
         Ion.with(context)
                 .load("GET", Network.API_LOCATION + Network.API_REQUEST_ORGANISATION + "/" + organisationId + Network.API_REQUEST_ORGANISATION_MEMBERS)

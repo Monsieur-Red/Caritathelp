@@ -7,10 +7,9 @@ import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Activities.Main.MyNavigationBottomBar;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Notifications.Notification;
-import com.eip.red.caritathelp.Models.User;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.Views.Notifications.NotificationsRVAdapter;
 import com.eip.red.caritathelp.Views.Notifications.NotificationsView;
-import com.eip.red.caritathelp.Views.SubMenu.Friends.MyFriendsRVAdpater;
 
 import java.util.List;
 
@@ -24,9 +23,9 @@ public class NotificationsPresenter implements INotificationsPresenter, IOnNotif
     private NotificationsInteractor interactor;
 
 
-    public NotificationsPresenter(NotificationsView view, Network network, User user) {
+    public NotificationsPresenter(NotificationsView view, User user) {
         this.view = view;
-        interactor = new NotificationsInteractor(view.getContext(), network, user);
+        interactor = new NotificationsInteractor(view.getContext(), user);
     }
 
 

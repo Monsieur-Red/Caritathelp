@@ -3,43 +3,23 @@ package com.eip.red.caritathelp.Views.SubMenu.MyEvents;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.text.method.TextKeyListener;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
-import com.eip.red.caritathelp.Activities.Main.MySearchBar;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.Organisation.Event;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.MyWidgets.DividerItemDecoration;
-import com.eip.red.caritathelp.MyWidgets.GridSpacingItemDecoration;
-import com.eip.red.caritathelp.MyWidgets.MyEditText;
 import com.eip.red.caritathelp.Presenters.SubMenu.MyEvents.MyEventsPresenter;
 import com.eip.red.caritathelp.R;
-
-import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by pierr on 18/03/2016.
@@ -59,11 +39,17 @@ public class MyEventsView extends Fragment implements IMyEventsView, View.OnClic
     private ProgressBar         progressBar;
     private AlertDialog         dialog;
 
-    public static MyEventsView newInstance(int userId) {
+    public static MyEventsView newInstance(int userId, boolean mainUser) {
         MyEventsView    myFragment = new MyEventsView();
 
         Bundle args = new Bundle();
-        args.putInt("page", R.string.view_name_submenu_my_events);
+
+        // Check if the user is the MAIN user (in order to change the title "My Events" by "Events").
+        if (mainUser)
+            args.putInt("page", R.string.view_name_submenu_my_events);
+        else
+            args.putInt("page", R.string.view_name_organisation_events);
+
         args.putInt("user id", userId);
         myFragment.setArguments(args);
 
@@ -74,12 +60,12 @@ public class MyEventsView extends Fragment implements IMyEventsView, View.OnClic
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get Network Model & Id Organisation
-        Network network = ((MainActivity) getActivity()).getModelManager().getNetwork();
+        // Get User Model & Id Organisation
+        User    mainUser = ((MainActivity) getActivity()).getModelManager().getUser();
         int     userId = getArguments().getInt("user id");
 
         // Init Presenter
-        presenter = new MyEventsPresenter(this, network, userId);
+        presenter = new MyEventsPresenter(this, mainUser, userId);
 
         // Init Dialog
         dialog = new AlertDialog.Builder(getActivity())
@@ -98,6 +84,10 @@ public class MyEventsView extends Fragment implements IMyEventsView, View.OnClic
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
         dividerV = view.findViewById(R.id.divider_vertical);
         createBtn = (Button) view.findViewById(R.id.btn_create);
+
+        // Set Create Button Visisbility
+        if (presenter.isMainUser())
+            setVisibilityCreationPart(View.VISIBLE);
 
         // Init RefreshLayout
         initSwipeRefreshLayout();
@@ -123,9 +113,6 @@ public class MyEventsView extends Fragment implements IMyEventsView, View.OnClic
 
         // Init Events Model
         presenter.getMyEvents(true, "En ce moment", false);
-
-        // Init Organisations Model
-        presenter.getMyOrganisations();
     }
 
     private void initSwipeRefreshLayout() {

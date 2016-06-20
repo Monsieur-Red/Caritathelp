@@ -27,11 +27,11 @@ public class OrganisationEventPresenter implements IOrganisationEventPresenter, 
     private OrganisationEventView           view;
     private OrganisationEventInteractor     interactor;
 
-    public OrganisationEventPresenter(OrganisationEventView view, Network network, int eventId) {
+    public OrganisationEventPresenter(OrganisationEventView view, String token, int eventId) {
         this.view = view;
 
         // Init Interactor
-        interactor = new OrganisationEventInteractor(view.getActivity().getApplicationContext(), network, eventId);
+        interactor = new OrganisationEventInteractor(view.getContext(), token, eventId);
     }
 
     @Override

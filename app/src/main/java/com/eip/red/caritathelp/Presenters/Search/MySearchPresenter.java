@@ -3,10 +3,14 @@ package com.eip.red.caritathelp.Presenters.Search;
 import android.app.AlertDialog;
 import android.content.Context;
 
+import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Search.Volunteer;
-import com.eip.red.caritathelp.Models.User;
+import com.eip.red.caritathelp.Models.User.User;
+import com.eip.red.caritathelp.R;
+import com.eip.red.caritathelp.Tools;
 import com.eip.red.caritathelp.Views.Search.MySearchView;
+import com.eip.red.caritathelp.Views.SubMenu.Profile.ProfileView;
 
 import java.util.List;
 
@@ -18,9 +22,33 @@ public class MySearchPresenter implements IMySearchPresenter, IOnMySearchFinishe
     private MySearchView        view;
     private MySearchInteractor  interactor;
 
-    public MySearchPresenter(Context context, MySearchView view, Network network, User user) {
+    public MySearchPresenter(Context context, MySearchView view, User user) {
         this.view = view;
-        interactor = new MySearchInteractor(context, network, user);
+        interactor = new MySearchInteractor(context, user);
+    }
+
+    @Override
+    public void onClick(int viewId, Volunteer volunteer) {
+        switch (viewId) {
+            case R.id.image:
+                // Redirect Volunteer Profile Page
+                view.getActivity().onBackPressed();
+                Tools.replaceView(view.getActivity().getCurrentFragment(), ProfileView.newInstance(volunteer.getId()), Animation.FADE_IN_OUT, false);
+                break;
+            case R.id.name:
+                // Redirect Volunteer Profile Page
+                view.getActivity().onBackPressed();
+                Tools.replaceView(view.getActivity().getCurrentFragment(), ProfileView.newInstance(volunteer.getId()), Animation.FADE_IN_OUT, false);
+                break;
+            case R.id.btn_add_friend:
+                // Set ProgressBar Visibility
+                view.showProgress();
+
+                // Add Friend Request
+                String name = volunteer.getFirstname() + " " + volunteer.getLastname();
+                interactor.addFriend(volunteer.getId(), name, view.getProgressBar(), this);
+                break;
+        }
     }
 
     @Override
@@ -32,12 +60,6 @@ public class MySearchPresenter implements IMySearchPresenter, IOnMySearchFinishe
     public void getQueryTextChange(String query) {
         view.showProgress();
         interactor.getQueryTextChange(query, view.getProgressBar(), this);
-    }
-
-    @Override
-    public void addFriend(int volunteerId, String name) {
-        view.showProgress();
-        interactor.addFriend(volunteerId, name, view.getProgressBar(), this);
     }
 
     @Override
@@ -70,8 +92,6 @@ public class MySearchPresenter implements IMySearchPresenter, IOnMySearchFinishe
     public void onSuccessAddFriend(String name) {
         // Set ProgressBar Visibility
         view.hideProgress();
-
-        System.out.println("SUCCESS");
 
         // Display Dialog Success Message
         new AlertDialog.Builder(view.getActivity())

@@ -24,19 +24,19 @@ public class OrganisationEventManagementInteractor {
     static final private String     ERROR_MANDATORY = "Ce champ est obligatoire";
 
     private Context context;
-    private Network network;
+    private String  token;
     private int     eventId;
 
-    public OrganisationEventManagementInteractor(Context context, Network network, int eventId) {
+    public OrganisationEventManagementInteractor(Context context, String token, int eventId) {
         this.context = context;
-        this.network = network;
+        this.token = token;
         this.eventId = eventId;
     }
 
     public void getEvent(ProgressBar progressBar, final IOnOrganisationEventManagementFinishedListener listener) {
         JsonObject json = new JsonObject();
 
-        json.addProperty("token", network.getToken());
+        json.addProperty("token", token);
 
         Ion.with(context)
                 .load("GET", Network.API_LOCATION + Network.API_REQUEST_ORGANISATION_EVENTS_INFORMATIONS + eventId)
@@ -62,7 +62,7 @@ public class OrganisationEventManagementInteractor {
     public void saveEventModifications(final IOnOrganisationEventManagementFinishedListener listener, ProgressBar progressBar, HashMap<String, String> data) {
         JsonObject json = new JsonObject();
 
-        json.addProperty("token", network.getToken());
+        json.addProperty("token", token);
         json.addProperty("title", data.get("title"));
         json.addProperty("description", data.get("description"));
         json.addProperty("place", data.get("location"));

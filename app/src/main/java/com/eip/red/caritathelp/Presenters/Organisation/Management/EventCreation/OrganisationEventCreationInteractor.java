@@ -21,12 +21,12 @@ public class OrganisationEventCreationInteractor {
     static final private String     ERROR_MANDATORY = "Ce champ est obligatoire";
 
     private Context context;
-    private Network network;
+    private String  token;
     private int     organisationId;
 
-    public OrganisationEventCreationInteractor(Context context, Network network, int organisationId) {
+    public OrganisationEventCreationInteractor(Context context, String token, int organisationId) {
         this.context = context;
-        this.network = network;
+        this.token = token;
         this.organisationId = organisationId;
     }
 
@@ -57,7 +57,7 @@ public class OrganisationEventCreationInteractor {
     private void requestAPI(final IOnOrganisationEventCreationFinishedListener listener, HashMap<String, String> data) {
         JsonObject json = new JsonObject();
 
-        json.addProperty("token", network.getToken());
+        json.addProperty("token", token);
         json.addProperty("assoc_id", organisationId);
         json.addProperty("title", data.get("title"));
         json.addProperty("description", data.get("description"));

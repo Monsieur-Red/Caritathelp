@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.Presenters.Organisation.Events.Event.Informations.OrganisationEventInformationsPresenter;
 import com.eip.red.caritathelp.R;
 
@@ -45,12 +46,12 @@ public class OrganisationEventInformationsView extends Fragment implements IOrga
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get Network Model & Id Organisation
-        Network network = ((MainActivity) getActivity()).getModelManager().getNetwork();
+        // Get User Model & Id Organisation
+        User    user = ((MainActivity) getActivity()).getModelManager().getUser();
         int     eventId = getArguments().getInt("event id");
 
         // Init Presenter
-        presenter = new OrganisationEventInformationsPresenter(this, network, eventId);
+        presenter = new OrganisationEventInformationsPresenter(this, user.getToken(), eventId);
 
         // Init Dialog
         dialog = new AlertDialog.Builder(getActivity())

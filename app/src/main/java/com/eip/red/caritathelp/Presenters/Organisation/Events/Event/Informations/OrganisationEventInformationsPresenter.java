@@ -24,14 +24,15 @@ public class OrganisationEventInformationsPresenter implements IOrganisationEven
     private DateTimeFormatter formatter;
     private DateTimeFormatter   newFormatter;
 
-    public OrganisationEventInformationsPresenter(OrganisationEventInformationsView view, Network network, int eventId) {
+    public OrganisationEventInformationsPresenter(OrganisationEventInformationsView view, String token, int eventId) {
         this.view = view;
 
         // Init Interactor
-        interactor = new OrganisationEventInformationsInteractor(view.getActivity().getApplicationContext(), network, eventId);
+        interactor = new OrganisationEventInformationsInteractor(view.getActivity().getApplicationContext(), token, eventId);
 
         // Init DateTimeFormatter
-        formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.sss'Z'");
+//        "yyyy-MM-dd'T'HH:mm:ss.sss'Z'"
+        formatter = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.sss'+01:00'");
         newFormatter = DateTimeFormat.forPattern("'Le' E dd MMMM Y 'à' HH:mm");
     }
 

@@ -51,21 +51,9 @@ public class MySearchRVAdapter extends RecyclerView.Adapter<MySearchRVAdapter.Da
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.image:
-                    // Redirect Volunteer Profile Page
-                    break;
-                case R.id.name:
-                    // Redirect Volunteer Profile Page
-                    break;
-                case R.id.btn_add_friend:
-                    // Add Friend Request
-                    Volunteer   volunteer = searchDataList.get(getAdapterPosition());
-                    String      name = volunteer.getFirstname() + " " + volunteer.getLastname();
+            Volunteer   volunteer = searchDataList.get(getAdapterPosition());
 
-                    presenter.addFriend(volunteer.getId(), name);
-                    break;
-            }
+            presenter.onClick(v.getId(), volunteer);
         }
     }
 

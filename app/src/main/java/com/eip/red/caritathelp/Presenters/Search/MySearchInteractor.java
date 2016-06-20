@@ -5,10 +5,8 @@ import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Models.Friendship;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.Organisation.Organisations;
-import com.eip.red.caritathelp.Models.Search.Volunteer;
 import com.eip.red.caritathelp.Models.Search.Volunteers;
-import com.eip.red.caritathelp.Models.User;
+import com.eip.red.caritathelp.Models.User.User;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
@@ -21,12 +19,10 @@ import com.koushikdutta.ion.Ion;
 public class MySearchInteractor {
 
     private Context context;
-    private Network network;
     private User    user;
 
-    public MySearchInteractor(Context context, Network network, User user) {
+    public MySearchInteractor(Context context, User user) {
         this.context = context;
-        this.network = network;
         this.user = user;
     }
 
@@ -37,7 +33,7 @@ public class MySearchInteractor {
     public void getQueryTextChange(String query, ProgressBar progressBar, final IOnMySearchFinishedListener listener) {
         JsonObject json = new JsonObject();
 
-        json.addProperty("token", network.getToken());
+        json.addProperty("token", user.getToken());
         json.addProperty("research", query);
 
         Ion.with(context)
@@ -64,7 +60,7 @@ public class MySearchInteractor {
     public void addFriend(int volunteerId, final String name, ProgressBar progressBar, final IOnMySearchFinishedListener listener) {
         JsonObject json = new JsonObject();
 
-        json.addProperty("token", network.getToken());
+        json.addProperty("token", user.getToken());
         json.addProperty("volunteer_id", String.valueOf(volunteerId));
 
         Ion.with(context)

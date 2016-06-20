@@ -28,6 +28,7 @@ public class MySearchView implements IMySearchView {
 
     private MainActivity        activity;
     private MySearchPresenter   presenter;
+    private SearchView          searchView;
     private MenuItem            item;
 
     private RecyclerView        recyclerView;
@@ -39,7 +40,7 @@ public class MySearchView implements IMySearchView {
         this.activity = activity;
 
         // Init Presenter
-        presenter = new MySearchPresenter(activity, this, activity.getModelManager().getNetwork(), activity.getModelManager().getUser());
+        presenter = new MySearchPresenter(activity, this, activity.getModelManager().getUser());
 
         // Init UI
         progressBar = (ProgressBar) activity.findViewById(R.id.progress_bar);
@@ -60,7 +61,7 @@ public class MySearchView implements IMySearchView {
         item = menu.findItem(R.id.action_search);
 
         // Init Search View
-        final SearchView  searchView = (SearchView) MenuItemCompat.getActionView(item);
+        searchView = (SearchView) MenuItemCompat.getActionView(item);
 
         // Init Listener
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -142,6 +143,17 @@ public class MySearchView implements IMySearchView {
         dialog.setTitle(title);
         dialog.setMessage(msg);
         dialog.show();
+    }
+
+    @Override
+    public boolean isIconified() {
+        return searchView.isIconified();
+    }
+
+    @Override
+    public void setIconified(boolean iconify) {
+        searchView.setIconified(iconify);
+        MenuItemCompat.collapseActionView(item);
     }
 
     public MySearchRVAdapter getRvAdapter() {

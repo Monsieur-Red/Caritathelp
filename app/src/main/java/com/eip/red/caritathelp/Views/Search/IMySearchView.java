@@ -18,4 +18,8 @@ public interface IMySearchView {
     void hideProgress();
 
     void setDialog(String title, String msg);
+
+    boolean isIconified();
+
+    void setIconified(boolean iconify);
 }

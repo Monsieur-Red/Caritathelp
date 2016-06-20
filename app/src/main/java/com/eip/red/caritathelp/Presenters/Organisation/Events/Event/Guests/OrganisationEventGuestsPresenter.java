@@ -2,6 +2,7 @@ package com.eip.red.caritathelp.Presenters.Organisation.Events.Event.Guests;
 
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Guest;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.Views.Organisation.Events.Event.Guests.OrganisationEventGuestsView;
 
 import java.util.List;
@@ -15,10 +16,10 @@ public class OrganisationEventGuestsPresenter implements IOrganisationEventGuest
     private OrganisationEventGuestsView         view;
     private OrganisationEventGuestsInteractor   interactor;
 
-    public OrganisationEventGuestsPresenter(OrganisationEventGuestsView view, Network network, int eventId) {
+    public OrganisationEventGuestsPresenter(OrganisationEventGuestsView view, String token, int eventId) {
         this.view = view;
 
-        interactor = new OrganisationEventGuestsInteractor(view.getContext(), network, eventId);
+        interactor = new OrganisationEventGuestsInteractor(view.getContext(), token, eventId);
     }
 
     @Override

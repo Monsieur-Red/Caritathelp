@@ -4,19 +4,17 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
-import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Event;
 import com.eip.red.caritathelp.Models.Organisation.Organisation;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
 import com.eip.red.caritathelp.Views.Organisation.Events.Event.OrganisationEventView;
 import com.eip.red.caritathelp.Views.Organisation.Management.OrganisationEventCreation.OrganisationEventCreationView;
-import com.eip.red.caritathelp.Views.Organisation.OrganisationView;
 import com.eip.red.caritathelp.Views.SubMenu.MyEvents.MyEventsView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,46 +25,45 @@ public class MyEventsPresenter implements IMyEventPresenter, IOnMyEventsFinished
     private MyEventsView        view;
     private MyEventsInteractor  interactor;
 
-    int     check = 0;
-
-    public MyEventsPresenter(MyEventsView view, Network network, int userId) {
+    public MyEventsPresenter(MyEventsView view, User mainUser, int userId) {
         this.view = view;
 
-        interactor = new MyEventsInteractor(view.getActivity().getApplicationContext(), network, userId);
+        interactor = new MyEventsInteractor(view.getActivity().getApplicationContext(), mainUser, userId);
+    }
+
+    @Override
+    public boolean isMainUser() {
+        return (interactor.getMainUserId() == interactor.getUserId());
     }
 
     @Override
     public void onClick(int viewId) {
-        if (viewId == R.id.btn_create)
-            showDialog(interactor.getMyOrganisationsOwner());
-    }
-
-    @Override
-    public void getMyEvents(boolean init, String range, boolean isSwipeRefresh) {
-        // Display ProgressBar if it's not a SwipRefresh gesture
-        if (!isSwipeRefresh)
+        if (viewId == R.id.btn_create) {
             view.showProgress();
-
-        switch (range) {
-            case "En ce moment":
-                interactor.getMyEvents(this, init, "current", isSwipeRefresh);
-                break;
-            case "A venir":
-                interactor.getMyEvents(this, init, "futur", isSwipeRefresh);
-                break;
-            case "Passé":
-                interactor.getMyEvents(this, init, "past", isSwipeRefresh);
-                break;
-            case "Organisateur":
-                interactor.getMyEvents(this, init, "", isSwipeRefresh);
-                break;
+            interactor.getMyOrganisations(this);
         }
     }
 
     @Override
-    public void getMyOrganisations() {
-        view.showProgress();
-        interactor.getMyOrganisations(this);
+    public void getMyEvents(boolean init, String range, boolean swipeRefresh) {
+        // Display the ProgressBar if it's not a SwipRefresh gesture
+        if (!swipeRefresh)
+            view.showProgress();
+
+        switch (range) {
+            case "En ce moment":
+                interactor.getMyEvents(this, init, "current", swipeRefresh);
+                break;
+            case "A venir":
+                interactor.getMyEvents(this, init, "futur", swipeRefresh);
+                break;
+            case "Passé":
+                interactor.getMyEvents(this, init, "past", swipeRefresh);
+                break;
+            case "Organisateur":
+                interactor.getMyEvents(this, init, "", swipeRefresh);
+                break;
+        }
     }
 
     @Override
@@ -76,50 +73,46 @@ public class MyEventsPresenter implements IMyEventPresenter, IOnMyEventsFinished
     }
 
     @Override
-    public void onDialog(String title, String msg) {
-        // Hide ProgressBar & SwipeRefreshLayout
-        view.hideProgress();
-        view.getSwipeRefreshLayout().setRefreshing(false);
+    public void onDialog(String title, String msg, boolean swipeRefresh) {
+        // Set SwipeRefreshLayout or ProgressBar Visibility
+        if (swipeRefresh)
+            view.getSwipeRefreshLayout().setRefreshing(false);
+        else
+            view.hideProgress();
 
         // Set Dialog
         view.setDialogError(title, msg);
     }
 
     @Override
-    public void onSuccessGetMyEvents(boolean init, List<Event> events) {
+    public void onSuccessGetMyEventsInit(List<Event> events, boolean owner) {
+        // Set Create Btn Visibility
+        if (owner)
+            view.setVisibilityCreationPart(View.VISIBLE);
+
+        // Update Recycler View Data
+        view.getAdapter().update(events);
+
+        // Set ProgressBar Visiblity
+        view.hideProgress();
+    }
+
+    @Override
+    public void onSuccessGetMyEvents(List<Event> events, boolean swipeRefresh) {
         // Update Recycler View
         view.getAdapter().update(events);
 
-        // Set ProgressBar Visibility
-        if (init)
-            checkRequestEnd();
+        // Set ProgressBar Visiblity || SwipeRefreshLayout refreshing
+        if (swipeRefresh)
+            view.getSwipeRefreshLayout().setRefreshing(false);
         else
             view.hideProgress();
     }
 
     @Override
-    public void onSuccessGetMyEventsSR(List<Event> events) {
-        // Update Recycler View
-        view.getAdapter().update(events);
-
-        // Set SwipeRefreshLayout refreshing
-        view.getSwipeRefreshLayout().setRefreshing(false);
-    }
-
-    @Override
-    public void onSuccessGetMyOrganisations() {
-        checkRequestEnd();
-    }
-
-    private void checkRequestEnd() {
-        check++;
-        if (check == 2) {
-            check = 0;
-            if (interactor.getMyOrganisationsOwner() != null)// && interactor.getMyOrganisationsOwner().size() > 0)
-                view.setVisibilityCreationPart(View.VISIBLE);
-
-            view.hideProgress();
-        }
+    public void onSuccessGetMyOrganisations(List<Organisation> organisations) {
+        view.hideProgress();
+        showDialog(organisations);
     }
 
     private void showDialog(final List<Organisation> myOrganisationsOwner) {

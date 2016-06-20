@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations.OrganisationCreation.OrganisationCreationPresenter;
 import com.eip.red.caritathelp.R;
 
@@ -44,11 +45,11 @@ public class OrganisationCreationView extends Fragment implements IOrganisationC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get Network Model
-        Network network = ((MainActivity) getActivity()).getModelManager().getNetwork();
+        // Get User Model
+        User user = ((MainActivity) getActivity()).getModelManager().getUser();
 
         // Init Presenter
-        presenter = new OrganisationCreationPresenter(this, network);
+        presenter = new OrganisationCreationPresenter(this, user.getToken());
 
         // Init Dialog
         dialog = new AlertDialog.Builder(getActivity())

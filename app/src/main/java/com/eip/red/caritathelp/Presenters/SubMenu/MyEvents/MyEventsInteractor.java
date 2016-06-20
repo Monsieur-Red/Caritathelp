@@ -7,7 +7,7 @@ import com.eip.red.caritathelp.Models.Organisation.Event;
 import com.eip.red.caritathelp.Models.Organisation.Events;
 import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.Models.Organisation.Organisations;
-import com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations.IOnMyOrganisationsFinishedListener;
+import com.eip.red.caritathelp.Models.User.User;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
@@ -23,21 +23,21 @@ import java.util.List;
 public class MyEventsInteractor {
 
     private Context context;
-    private Network network;
+    private User    mainUser;
     private int     userId;
 
     List<Organisation> myOrganisationsOwner;
 
-    public MyEventsInteractor(Context context, Network network, int userId) {
+    public MyEventsInteractor(Context context, User mainUser, int userId) {
         this.context = context;
-        this.network = network;
+        this.mainUser = mainUser;
         this.userId = userId;
     }
 
-    public void getMyEvents(final IOnMyEventsFinishedListener listener, final boolean init, String range, final boolean isSwipeRefresh) {
+    public void getMyEvents(final IOnMyEventsFinishedListener listener, final boolean init, String range, final boolean swipeRefresh) {
         JsonObject json = new JsonObject();
 
-        json.addProperty("token", network.getToken());
+        json.addProperty("token", mainUser.getToken());
         json.addProperty("range", range);
 
         Ion.with(context)
@@ -50,25 +50,29 @@ public class MyEventsInteractor {
                         if (error == null) {
                             // Status == 400 == error
                             if (result.getStatus() == Network.API_STATUS_ERROR)
-                                listener.onDialog("Statut 400", result.getMessage());
+                                listener.onDialog("Statut 400", result.getMessage(), swipeRefresh);
                             else {
-                                if (isSwipeRefresh)
-                                    listener.onSuccessGetMyEventsSR(result.getResponse());
+                                if (init) {
+                                    if (mainUser.getId() == userId)
+                                        getMyOrganisations(listener, result.getResponse());
+                                    else
+                                        listener.onSuccessGetMyEventsInit(result.getResponse(), false);
+                                }
                                 else
-                                    listener.onSuccessGetMyEvents(init, result.getResponse());
+                                    listener.onSuccessGetMyEvents(result.getResponse(), swipeRefresh);
                             }
                         }
                         else
-                            listener.onDialog("Problème de connection", "Vérifiez votre connexion Internet");
+                            listener.onDialog("Problème de connection", "Vérifiez votre connexion Internet", swipeRefresh);
                     }
                 });
     }
+
 
     private List<Event> getEventsByProfile(List<Event> events, String profile) {
         List<Event>  newList = new ArrayList<>();
 
         for (Event event : events) {
-//            System.out.println("PROFILE : " + event.getRights());
             if (event.getRights().equals(profile))
                 newList.add(event);
         }
@@ -76,10 +80,10 @@ public class MyEventsInteractor {
         return (newList);
     }
 
-    public void getMyOrganisations(final IOnMyEventsFinishedListener listener) {
+    public void getMyOrganisations(final IOnMyEventsFinishedListener listener, final List<Event> events) {
         JsonObject json = new JsonObject();
 
-        json.addProperty("token", network.getToken());
+        json.addProperty("token", mainUser.getToken());
 
         Ion.with(context)
                 .load("GET", Network.API_LOCATION + Network.API_REQUEST_VOLUNTEERS + userId + Network.API_REQUEST_GET_MY_ORGANISATIONS)
@@ -92,14 +96,40 @@ public class MyEventsInteractor {
                         if (error == null) {
                             // Status == 400 == error
                             if (result.getStatus() == Network.API_STATUS_ERROR)
-                                listener.onDialog("Statut 400", result.getMessage());
+                                listener.onDialog("Statut 400", result.getMessage(), false);
                             else {
-                                myOrganisationsOwner = getOrganisationsByProfile(result.getResponse(), "owner");
-                                listener.onSuccessGetMyOrganisations();
+                                List<Organisation> myOrganisationsOwner = getOrganisationsByProfile(result.getResponse(), "owner");
+                                listener.onSuccessGetMyEventsInit(events, myOrganisationsOwner.size() > 0);
                             }
                         }
                         else
-                            listener.onDialog("Problème de connection", "Vérifiez votre connexion Internet");
+                            listener.onDialog("Problème de connection", "Vérifiez votre connexion Internet", false);
+                    }
+                });
+    }
+
+    public void getMyOrganisations(final IOnMyEventsFinishedListener listener) {
+        JsonObject json = new JsonObject();
+
+        json.addProperty("token", mainUser.getToken());
+
+        Ion.with(context)
+                .load("GET", Network.API_LOCATION + Network.API_REQUEST_VOLUNTEERS + userId + Network.API_REQUEST_GET_MY_ORGANISATIONS)
+                .setJsonObjectBody(json)
+                .as(new TypeToken<Organisations>() {
+                })
+                .setCallback(new FutureCallback<Organisations>() {
+                    @Override
+                    public void onCompleted(Exception error, Organisations result) {
+                        if (error == null) {
+                            // Status == 400 == error
+                            if (result.getStatus() == Network.API_STATUS_ERROR)
+                                listener.onDialog("Statut 400", result.getMessage(), false);
+                            else
+                                listener.onSuccessGetMyOrganisations(getOrganisationsByProfile(result.getResponse(), "owner"));
+                        }
+                        else
+                            listener.onDialog("Problème de connection", "Vérifiez votre connexion Internet", false);
                     }
                 });
     }
@@ -112,10 +142,14 @@ public class MyEventsInteractor {
                 newList.add(organisation);
         }
 
-        return (newList);
+        return newList;
     }
 
-    public List<Organisation> getMyOrganisationsOwner() {
-        return myOrganisationsOwner;
+    public int getMainUserId() {
+        return mainUser.getId();
+    }
+
+    public int getUserId() {
+        return userId;
     }
 }

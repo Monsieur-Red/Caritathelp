@@ -9,6 +9,7 @@
     <string name="view_name_notifications">@string/app_name</string>
 
     <string name="view_name_submenu">@string/app_name</string>
+    <string name="view_name_submenu_profile">Profil</string>
     <string name="view_name_submenu_my_organisations">Mes associations</string>
     <string name="view_name_submenu_my_organisations_creation">Créer une association</string>
     <string name="view_name_submenu_my_events">Mes événements</string>
@@ -17,6 +18,7 @@
     <string name="view_name_submenu_friends">Amis</string>
     <string name="view_name_submenu_friends_add">Rechercher des amis</string>
 
+    <string name="view_name_organisation">Association</string>
     <string name="view_name_organisation_post">Poster</string>
     <string name="view_name_organisation_members">Membres</string>
     <string name="view_name_organisation_events">Événement</string>
@@ -87,14 +89,20 @@
     <string name="notifications_toolbar_title">Notifications</string>
 
     <!-- SubMenu View -->
-    <string name="submenu_my_events">Mes événements</string>
+    <string name="submenu_my_profile">Mon profil</string>
     <string name="submenu_my_organisations">Mes associations</string>
+    <string name="submenu_my_events">Mes événements</string>
     <string name="submenu_friends">Amis</string>
     <string name="submenu_account_settings">Gestion de compte</string>
     <string name="submenu_security">Confidentialités</string>
     <string name="submenu_help">Aide</string>
     <string name="submenu_logout">Déconnexion</string>
     <string name="submenu_delete_account">Supprimer mon compte</string>
+
+    <!-- Profile View -->
+    <string name="profile_friends">Amis</string>
+    <string name="profile_organisations">Associations</string>
+    <string name="profile_events">Événements</string>
 
     <!-- MyOrganisations View -->
     <string name="my_organisations_title">Mes associations</string>

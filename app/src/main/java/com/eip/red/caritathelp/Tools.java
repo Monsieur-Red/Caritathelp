@@ -2,9 +2,12 @@ package com.eip.red.caritathelp;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -15,11 +18,39 @@ import android.widget.ListView;
 
 import com.eip.red.caritathelp.Models.Enum.Animation;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by pierr on 12/03/2016.
  */
 
 public class Tools {
+
+    static public Uri getOutputMediaFileUri(){
+        return Uri.fromFile(getOutputMediaFile());
+    }
+
+    static public File getOutputMediaFile() {
+//        File myFilesDir = new File(Environment.getExternalStorageDirectory(), "Caritathelp");
+
+        File myFilesDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Caritathelp");
+//        File myFilesDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/caritathelp/files");
+
+        // Create the storage directory if it does not exist
+        if (!myFilesDir.exists()) {
+            if (!myFilesDir.mkdirs()){
+                Log.d("Pics Files directory", "failed to create directory");
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date());
+
+        return new File(myFilesDir.getPath(), "IMG_"+ timeStamp + ".jpg");
+    }
 
     static public void replaceView(Fragment currentFragment ,Fragment newFragment, int animation, boolean parent) {
         FragmentManager     fm;

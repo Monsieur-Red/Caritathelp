@@ -3,7 +3,6 @@ package com.eip.red.caritathelp.Views.SubMenu.Friends;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +13,7 @@ import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.User;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.MyWidgets.DividerItemDecoration;
 import com.eip.red.caritathelp.Presenters.SubMenu.Friends.FriendsPresenter;
 import com.eip.red.caritathelp.R;
@@ -27,20 +26,19 @@ public class FriendsView extends Fragment implements IFriendView, View.OnClickLi
 
     private FriendsPresenter    presenter;
 
-    private RecyclerView        myFriendsRV;
-    private RecyclerView        invitationsRV;
-    private RecyclerView        sentRV;
-    private MyFriendsRVAdpater  myFriendsRVAdpater;
+    private RecyclerView        recyclerView;
+    private MyFriendsRVAdapter  adapter;
 
     private SwipeRefreshLayout  swipeRefreshLayout;
     private ProgressBar         progressBar;
     private AlertDialog         dialog;
 
-    public static FriendsView newInstance() {
+    public static FriendsView newInstance(int userId) {
         FriendsView    myFragment = new FriendsView();
 
         Bundle args = new Bundle();
         args.putInt("page", R.string.view_name_submenu_friends);
+        args.putInt("user id", userId);
         myFragment.setArguments(args);
 
         return (myFragment);
@@ -50,12 +48,12 @@ public class FriendsView extends Fragment implements IFriendView, View.OnClickLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get Network Model
-        User    user = ((MainActivity) getActivity()).getModelManager().getUser();
-        Network network = ((MainActivity) getActivity()).getModelManager().getNetwork();
+        // Get User Model
+        User    mainUser = ((MainActivity) getActivity()).getModelManager().getUser();
+        int     userId = getArguments().getInt("user id");
 
         // Init Presenter
-        presenter = new FriendsPresenter(this, network, user);
+        presenter = new FriendsPresenter(this, mainUser, userId);
 
         // Init Dialog
         dialog = new AlertDialog.Builder(getContext())
@@ -112,40 +110,25 @@ public class FriendsView extends Fragment implements IFriendView, View.OnClickLi
 
     private void initRecyclerView(View view) {
         // Init Recycler Views
-        myFriendsRV = (RecyclerView) view.findViewById(R.id.recycler_view_my_friends);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_my_friends);
 
         // Init Adapter
-        myFriendsRVAdpater = new MyFriendsRVAdpater(presenter);
+        adapter = new MyFriendsRVAdapter(presenter);
 
         // Set Adapter
-        myFriendsRV.setAdapter(myFriendsRVAdpater);
+        recyclerView.setAdapter(adapter);
 
         // Init LayoutManager
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        myFriendsRV.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
 
         // Set Options to enable toolbar display/hide
-        myFriendsRV.setNestedScrollingEnabled(false);
-        myFriendsRV.setHasFixedSize(false);
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setHasFixedSize(false);
 
         // Init Divider (between items)
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST);
-        myFriendsRV.addItemDecoration(itemDecoration);
-
-//        myFriendsRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//
-//                if (layoutManager.findViewByPosition(layoutManager.findFirstVisibleItemPosition()).getTop()== 0 &&
-//                        layoutManager.findFirstCompletelyVisibleItemPosition() == 0)
-//                        swipeRefreshLayout.setVisibility(View.VISIBLE);
-////                    mWaveSwipeRefreshLayout.setVisibility(View.VISIBLE);
-//                else
-//                    swipeRefreshLayout.setVisibility(View.GONE);
-////                    mWaveSwipeRefreshLayout.setVisibility(View.GONE);
-//            }
-//        });
+        recyclerView.addItemDecoration(itemDecoration);
     }
 
 
@@ -171,8 +154,8 @@ public class FriendsView extends Fragment implements IFriendView, View.OnClickLi
         dialog.show();
     }
 
-    public MyFriendsRVAdpater getMyFriendsRVAdpater() {
-        return myFriendsRVAdpater;
+    public MyFriendsRVAdapter getAdapter() {
+        return adapter;
     }
 
     public ProgressBar getProgressBar() {

@@ -18,9 +18,9 @@ public class OrganisationEventsPresenter implements IOrganisationEventsPresenter
     private OrganisationEventsView          view;
     private OrganisationEventsInteractor    interactor;
 
-    public OrganisationEventsPresenter(OrganisationEventsView view, Network network, int organisationId) {
+    public OrganisationEventsPresenter(OrganisationEventsView view, String token, int organisationId) {
         this.view = view;
-        interactor = new OrganisationEventsInteractor(view.getActivity().getApplicationContext(), network, organisationId);
+        interactor = new OrganisationEventsInteractor(view.getContext(), token, organisationId);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class OrganisationEventsPresenter implements IOrganisationEventsPresenter
 
     @Override
     public void onSuccess(List<Event> events) {
-        view.updateRecyclerView(events);
+        view.getAdapter().update(events);
         view.hideProgress();
     }
 }

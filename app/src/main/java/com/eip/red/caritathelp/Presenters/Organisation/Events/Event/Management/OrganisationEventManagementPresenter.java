@@ -18,10 +18,10 @@ public class OrganisationEventManagementPresenter implements IOrganisationEventM
     private OrganisationEventManagementView         view;
     private OrganisationEventManagementInteractor   interactor;
 
-    public OrganisationEventManagementPresenter(OrganisationEventManagementView view, Network network, int eventId) {
+    public OrganisationEventManagementPresenter(OrganisationEventManagementView view, String token, int eventId) {
         this.view = view;
 
-        interactor = new OrganisationEventManagementInteractor(view.getContext(), network, eventId);
+        interactor = new OrganisationEventManagementInteractor(view.getContext(), token, eventId);
     }
 
 

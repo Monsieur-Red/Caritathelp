@@ -19,6 +19,7 @@ import android.widget.TimePicker;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.Presenters.Organisation.Management.EventCreation.OrganisationEventCreationPresenter;
 import com.eip.red.caritathelp.R;
 
@@ -67,12 +68,12 @@ public class OrganisationEventCreationView extends Fragment implements IOrganisa
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get Network Model & Id Organisation
-        Network network = ((MainActivity) getActivity()).getModelManager().getNetwork();
+        // Get User Model & Id Organisation
+        User    user = ((MainActivity) getActivity()).getModelManager().getUser();
         int     organisationId = getArguments().getInt("organisation id");
 
         // Init Presenter
-        presenter = new OrganisationEventCreationPresenter(this, network, organisationId);
+        presenter = new OrganisationEventCreationPresenter(this, user.getToken(), organisationId);
 
         // Init Dialog
         dialog = new AlertDialog.Builder(getActivity())

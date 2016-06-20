@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Guest;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.MyWidgets.DividerItemDecoration;
 import com.eip.red.caritathelp.Presenters.Organisation.Events.Event.Guests.OrganisationEventGuestsPresenter;
 import com.eip.red.caritathelp.R;
@@ -47,12 +48,12 @@ public class OrganisationEventGuestsView extends Fragment implements IOrganisati
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get Network Model & Id Organisation
-        Network network = ((MainActivity) getActivity()).getModelManager().getNetwork();
+        // Get User Model & Id Organisation
+        User    user = ((MainActivity) getActivity()).getModelManager().getUser();
         int     eventId = getArguments().getInt("event id");
 
         // Init Presenter
-        presenter = new OrganisationEventGuestsPresenter(this, network, eventId);
+        presenter = new OrganisationEventGuestsPresenter(this, user.getToken(), eventId);
 
         // Init Dialog
         dialog = new AlertDialog.Builder(getContext())

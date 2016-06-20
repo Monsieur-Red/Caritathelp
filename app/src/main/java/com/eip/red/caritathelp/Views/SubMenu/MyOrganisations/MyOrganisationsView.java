@@ -3,18 +3,19 @@ package com.eip.red.caritathelp.Views.SubMenu.MyOrganisations;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Organisation;
-import com.eip.red.caritathelp.Models.User;
-import com.eip.red.caritathelp.MyWidgets.GridSpacingItemDecoration;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations.MyOrganisationsPresenter;
 import com.eip.red.caritathelp.R;
 
@@ -31,14 +32,24 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
     private RecyclerView                    recyclerViewMember;
     private MyOrganisationsRVAdapter        adapterOwner;
     private MyOrganisationsRVAdapter        adapterMember;
-    private ProgressBar                     progressBar;
-    private AlertDialog                     dialog;
 
-    public static Fragment newInstance() {
+    private TextView            noOwnerOrgaTv;
+    private TextView            noMemberOrgaTv;
+    private SwipeRefreshLayout  swipeRefreshLayout;
+    private ProgressBar         progressBar;
+    private AlertDialog         dialog;
+
+    public static Fragment newInstance(int userId, boolean mainUser) {
         MyOrganisationsView     fragment = new MyOrganisationsView();
         Bundle                  args = new Bundle();
 
-        args.putInt("page", R.string.view_name_submenu_my_organisations);
+        // Check if the user is the MAIN user (in order to change the title "My Organisations" by "Organisations").
+        if (mainUser)
+            args.putInt("page", R.string.view_name_submenu_my_organisations);
+        else
+            args.putInt("page", R.string.view_name_organisation);
+
+        args.putInt("user id", userId);
         fragment.setArguments(args);
 
         return (fragment);
@@ -50,10 +61,10 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
 
         // Get Model
         User    user = ((MainActivity) getActivity()).getModelManager().getUser();
-        Network network = ((MainActivity) getActivity()).getModelManager().getNetwork();
+        int     userId = getArguments().getInt("user id");
 
         // Init Presenter
-        presenter = new MyOrganisationsPresenter(this, user, network);
+        presenter = new MyOrganisationsPresenter(this, user, userId);
 
         // Init Dialog
         dialog = new AlertDialog.Builder(getActivity())
@@ -67,11 +78,23 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
         // Inflate the layout for this fragment
         View    view = inflater.inflate(R.layout.fragment_submenu_my_organisations, container, false);
 
-//        // Init SearchBar
-//        initSearchBar();
-
         // Init UI Element
+        noOwnerOrgaTv = (TextView) view.findViewById(R.id.tv_no_owner_organisations);
+        noMemberOrgaTv = (TextView) view.findViewById(R.id.tv_no_members_organisations);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
         progressBar = (ProgressBar)  view.findViewById(R.id.progress_bar);
+
+        // Set Create Button Visisbility
+        if (!presenter.isMainUser()) {
+            view.findViewById(R.id.btn_create).setVisibility(View.INVISIBLE);
+            view.findViewById(R.id.divider).setVisibility(View.INVISIBLE);
+        }
+
+        // Init RefreshLayout
+        initSwipeRefreshLayout();
+
+        // Init RV
+        initRecyclerViews(view);
 
         // Init Button Listener
         view.findViewById(R.id.btn_create).setOnClickListener(this);
@@ -87,67 +110,32 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
         getActivity().setTitle(getArguments().getInt("page"));
 
         // Init MyOrganisation Model by requesting the api
-        presenter.getMyOrganisations();
+        presenter.getMyOrganisations(false);
     }
 
+    private void initSwipeRefreshLayout() {
+        // Configure the refreshing colors
+        swipeRefreshLayout.setColorSchemeResources(R.color.icons);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.primary);
 
-/*
-    private void initSearchBar() {
-        MySearchBar searchBar = ((MainActivity) getActivity()).getToolBar().getSearchBar();
-        final EditText    searchText = searchBar.getSearchText();
-        final ImageButton cancelBtn = searchBar.getCancelBtn();
-
-        // Show SearchBar
-        searchBar.setVisibility(View.VISIBLE);
-
-        // Show the SearchBar
-        searchBar.show(R.string.search_bar_organisation);
-
-        //Init SearchText listener & filter
-        searchText.addTextChangedListener(new TextWatcher() {
-
+        // Init Refresh Listener
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void afterTextChanged(Editable arg0) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                if (TextUtils.isEmpty(arg0)) {
-                    // Hide Cancel Btn
-                    cancelBtn.setVisibility(View.GONE);
-
-                    // Flush Filter
-                    adapterOwner.flushFilter();
-                    adapterMember.flushFilter();
-                }
-                else {
-                    // Show Cancel Btn
-                    cancelBtn.setVisibility(View.VISIBLE);
-
-                    // Filter text
-                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
-                    adapterOwner.filter(text);
-                    adapterMember.filter(text);
-                }
+            public void onRefresh() {
+                // Set MyOrganisations Model
+                presenter.getMyOrganisations(true);
             }
         });
     }
-*/
 
-    public void initRecyclerViews(View view, List<Organisation> myOrganisationsOwner, List<Organisation> myOrganisationsMember) {
+    public void initRecyclerViews(View view) {
         // Init Recycler Views
         recyclerViewOwner = (RecyclerView) view.findViewById(R.id.my_organisations_owner_profile_recycler_view);
         recyclerViewMember = (RecyclerView) view.findViewById(R.id.my_organisations_member_profile_recycler_view);
 
         // Init Adapter
-        adapterOwner = new MyOrganisationsRVAdapter(presenter, myOrganisationsOwner);
-        adapterMember = new MyOrganisationsRVAdapter(presenter, myOrganisationsMember);
+        adapterOwner = new MyOrganisationsRVAdapter(presenter);
+        adapterMember = new MyOrganisationsRVAdapter(presenter);
 
         // Set Adapter
         recyclerViewOwner.setAdapter(adapterOwner);
@@ -169,14 +157,6 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
 //        RecyclerView.ItemDecoration itemDecoration = new GridSpacingItemDecoration(3, spacing, true);
 //        recyclerViewOwner.addItemDecoration(itemDecoration);
 //        recyclerViewMember.addItemDecoration(itemDecoration);
-
-        // Set Error RV Owner Message Visibility
-        if (myOrganisationsOwner.size() == 0)
-            view.findViewById(R.id.tv_no_owner_organisations).setVisibility(View.VISIBLE);
-
-        // Set Error RV Member Message Visibility
-        if (myOrganisationsMember.size() == 0)
-            view.findViewById(R.id.tv_no_members_organisations).setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -195,7 +175,7 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
     }
 
     @Override
-    public void setDialogError(String title, String msg) {
+    public void setDialog(String title, String msg) {
         dialog.setTitle(title);
         dialog.setMessage(msg);
         dialog.show();
@@ -205,6 +185,26 @@ public class MyOrganisationsView extends Fragment implements IMyOrganisationsVie
     public void updateRecyclerView(List<Organisation> myOrganisationsOwner, List<Organisation> myOrganisationsMember) {
         adapterOwner.update(myOrganisationsOwner);
         adapterMember.update(myOrganisationsMember);
+    }
+
+    public MyOrganisationsRVAdapter getAdapterOwner() {
+        return adapterOwner;
+    }
+
+    public MyOrganisationsRVAdapter getAdapterMember() {
+        return adapterMember;
+    }
+
+    public TextView getNoOwnerOrgaTv() {
+        return noOwnerOrgaTv;
+    }
+
+    public TextView getNoMemberOrgaTv() {
+        return noMemberOrgaTv;
+    }
+
+    public SwipeRefreshLayout getSwipeRefreshLayout() {
+        return swipeRefreshLayout;
     }
 
     public ProgressBar getProgressBar() {

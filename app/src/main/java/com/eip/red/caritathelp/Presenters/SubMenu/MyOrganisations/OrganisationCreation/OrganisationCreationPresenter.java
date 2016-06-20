@@ -19,9 +19,9 @@ public class OrganisationCreationPresenter implements IOrganisationCreationPrese
     private OrganisationCreationView        view;
     private OrganisationCreationInteractor  interactor;
 
-    public OrganisationCreationPresenter(OrganisationCreationView view, Network network) {
+    public OrganisationCreationPresenter(OrganisationCreationView view, String token) {
         this.view = view;
-        interactor = new OrganisationCreationInteractor(view.getActivity().getApplicationContext(), network);
+        interactor = new OrganisationCreationInteractor(view.getContext(), token);
     }
 
     @Override
@@ -71,6 +71,6 @@ public class OrganisationCreationPresenter implements IOrganisationCreationPrese
     public void onSuccess(Organisation organisation) {
         view.hideProgress();
         view.navigateToOrganisationView(organisation.getName());
-        Tools.replaceView(view, OrganisationView.newInstance(organisation), Animation.FADE_IN_OUT, false);
+        Tools.replaceView(view, OrganisationView.newInstance(organisation.getId(), organisation.getName()), Animation.FADE_IN_OUT, false);
     }
 }

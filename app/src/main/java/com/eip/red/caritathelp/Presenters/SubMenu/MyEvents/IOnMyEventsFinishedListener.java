@@ -11,11 +11,11 @@ import java.util.List;
 
 public interface IOnMyEventsFinishedListener {
 
-    void onDialog(String title, String msg);
+    void onDialog(String title, String msg, boolean isSwipeRefresh);
 
-    void onSuccessGetMyEvents(boolean init, List<Event> events);
+    void onSuccessGetMyEventsInit(List<Event> events, boolean owner);
 
-    void onSuccessGetMyEventsSR(List<Event> events);
+    void onSuccessGetMyEvents(List<Event> events, boolean swipeRefresh);
 
-    void onSuccessGetMyOrganisations();
+    void onSuccessGetMyOrganisations(List<Organisation> organisations);
 }

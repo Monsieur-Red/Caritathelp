@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,6 +24,9 @@ import com.eip.red.caritathelp.Models.ModelManager;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
 import com.eip.red.caritathelp.Views.Search.MySearchView;
+import com.koushikdutta.ion.Ion;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // ION DEBUG
+//        Ion.getDefault(getApplicationContext()).configure().setLogging("MyLogs", Log.DEBUG);
 
         // Set View
         setContentView(R.layout.activity_main);
@@ -60,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         // Init ViewPager Listener
         initViewPagerListener();
 
+        // Init ToolBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -79,7 +87,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 // Set Navigation Bottom bar Position
-                myNavigationBottomBar.getBar().setCurrentItem(viewPager.getCurrentItem());
+                if (myNavigationBottomBar.getBar().getCurrentItem() != viewPager.getCurrentItem())
+                    myNavigationBottomBar.getBar().setCurrentItem(viewPager.getCurrentItem());
 
                 // Set ToolBar Title
                 Fragment    fragment = Tools.getLastFragment(myPagerAdapter.getFragment(position).getChildFragmentManager());
@@ -93,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
                     else
                         setTitle(bundle.getString("page"));
                 }
-
             }
 
             @Override
@@ -116,19 +124,29 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // if there is a fragment and the back stack of this fragment is not empty,
-        // then emulate 'onBackPressed' behaviour, because in default, it is not working
         FragmentManager fm = getSupportFragmentManager();
-        for (Fragment frag : fm.getFragments()) {
-            if (frag != null && frag.isVisible()) {
-                FragmentManager childFm = frag.getChildFragmentManager();
-                if (childFm.getBackStackEntryCount() > 1) {
-                    childFm.popBackStack();
-                    return;
+
+        if (mySearchView.isIconified()) {
+            for (Fragment frag : fm.getFragments()) {
+                if (frag != null && frag.isVisible()) {
+                    FragmentManager childFm = frag.getChildFragmentManager();
+                    if (childFm.getBackStackEntryCount() > 1) {
+                        childFm.popBackStack();
+                        return;
+                    }
                 }
             }
+            super.onBackPressed();
         }
-        super.onBackPressed();
+        else
+            mySearchView.setIconified(true);
+    }
+
+    public Fragment getCurrentFragment() {
+        int             currentPos = viewPager.getCurrentItem();
+        FragmentManager childFm = myPagerAdapter.getItem(currentPos).getChildFragmentManager();
+
+        return (childFm.getFragments().get(childFm.getBackStackEntryCount() - 1));
     }
 
     public void replaceView(Fragment newFragment) {

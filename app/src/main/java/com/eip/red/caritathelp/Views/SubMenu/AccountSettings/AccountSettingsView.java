@@ -11,7 +11,7 @@ import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.User;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.Presenters.SubMenu.AccountSettings.AccountSettingsPresenter;
 import com.eip.red.caritathelp.R;
 
@@ -52,12 +52,11 @@ public class AccountSettingsView extends Fragment implements IAccountSettingsVie
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get User & Network Model
-        Network network = ((MainActivity) getActivity()).getModelManager().getNetwork();
+        // Get User  Model
         user = ((MainActivity) getActivity()).getModelManager().getUser();
 
         // Init Presenter
-        presenter = new AccountSettingsPresenter(this, user, network);
+        presenter = new AccountSettingsPresenter(this, user);
     }
 
     @Override
@@ -73,8 +72,8 @@ public class AccountSettingsView extends Fragment implements IAccountSettingsVie
         EditText lastname = (EditText) view.findViewById(R.id.lastname);
         EditText mail = (EditText) view.findViewById(R.id.mail);
 
-        firsname.setHint("Prénom : " +  user.getFirstName());
-        lastname.setHint("Nom : " + user.getLastName());
+        firsname.setHint("Prénom : " +  user.getFirstname());
+        lastname.setHint("Nom : " + user.getLastname());
         mail.setHint("E-mail : " + user.getMail());
 
         // Init HashMap Texts
@@ -172,8 +171,8 @@ public class AccountSettingsView extends Fragment implements IAccountSettingsVie
         newP.getText().clear();
         newCP.getText().clear();
 
-        firsname.setHint("Prénom : " + user.getFirstName());
-        lastname.setHint("Nom : " + user.getLastName());
+        firsname.setHint("Prénom : " + user.getFirstname());
+        lastname.setHint("Nom : " + user.getLastname());
         mail.setHint("E-mail : " + user.getMail());
         currentP.setHint("Mot de passe actuel");
         newP.setHint("Nouveau mot de passe");

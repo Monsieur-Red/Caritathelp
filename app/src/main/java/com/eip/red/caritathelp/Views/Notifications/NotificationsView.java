@@ -1,7 +1,6 @@
 package com.eip.red.caritathelp.Views.Notifications;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,7 +12,7 @@ import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.User;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.MyWidgets.DividerItemDecoration;
 import com.eip.red.caritathelp.Presenters.Notifications.NotificationsPresenter;
 import com.eip.red.caritathelp.R;
@@ -46,12 +45,11 @@ public class NotificationsView extends Fragment implements INotificationsView {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get Model
-        Network network = ((MainActivity) getActivity()).getModelManager().getNetwork();
+        // Get User Model
         User    user = ((MainActivity) getActivity()).getModelManager().getUser();
 
         // Init Presenter
-        presenter = new NotificationsPresenter(this, network, user);
+        presenter = new NotificationsPresenter(this, user);
 
         // Init Dialog
         dialog = new AlertDialog.Builder(getActivity())
@@ -81,7 +79,7 @@ public class NotificationsView extends Fragment implements INotificationsView {
         getActivity().setTitle(getArguments().getInt("page"));
 
         // Init Notifications Model
-        presenter.getNotifications();
+//        presenter.getNotifications();
     }
 
     private void initRecyclerView(View view) {

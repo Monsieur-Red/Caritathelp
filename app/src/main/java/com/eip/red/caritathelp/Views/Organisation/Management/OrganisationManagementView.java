@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.Network;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
 import com.eip.red.caritathelp.Views.Organisation.Events.Event.OrganisationEventView;
@@ -36,8 +37,8 @@ public class OrganisationManagementView extends Fragment implements View.OnClick
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get Network Model & Id Organisation
-        Network network = ((MainActivity) getActivity()).getModelManager().getNetwork();
+        // Get User Model & Id Organisation
+        User    user = ((MainActivity) getActivity()).getModelManager().getUser();
         int     organisationId = getArguments().getInt("organisation id");
 
         this.organisationId = organisationId;

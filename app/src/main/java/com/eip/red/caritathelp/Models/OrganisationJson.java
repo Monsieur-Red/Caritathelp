@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 public class OrganisationJson {
 
-    public int                      status;
-    public String                   message;
-    public Organisation             response;
+    private int                      status;
+    private String                   message;
+    private Organisation             response;
 
     public int getStatus() {
         return status;

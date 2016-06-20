@@ -6,11 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.eip.red.caritathelp.Models.Friends.Friend;
-import com.eip.red.caritathelp.Models.Organisation.Event;
 import com.eip.red.caritathelp.Presenters.SubMenu.Friends.FriendsPresenter;
 import com.eip.red.caritathelp.R;
 
@@ -21,12 +19,12 @@ import java.util.List;
  * Created by pierr on 23/04/2016.
  */
 
-public class MyFriendsRVAdpater extends RecyclerView.Adapter<MyFriendsRVAdpater.DataObjectHolder> {
+public class MyFriendsRVAdapter extends RecyclerView.Adapter<MyFriendsRVAdapter.DataObjectHolder> {
 
     private FriendsPresenter    presenter;
     private List<Friend>        friends;
 
-    public MyFriendsRVAdpater(FriendsPresenter presenter) {
+    public MyFriendsRVAdapter(FriendsPresenter presenter) {
         this.presenter = presenter;
         friends = new ArrayList<>();
     }
@@ -61,10 +59,10 @@ public class MyFriendsRVAdpater extends RecyclerView.Adapter<MyFriendsRVAdpater.
             if (friend != null) {
                 switch (v.getId()) {
                     case R.id.image:
-                        presenter.navigateToFriendView(friend.getId());
+                        presenter.navigateToFriendProfile(friend.getId());
                         break;
                     case R.id.name:
-                        presenter.navigateToFriendView(friend.getId());
+                        presenter.navigateToFriendProfile(friend.getId());
                         break;
                     case R.id.btn_block:
                         presenter.blockFriend(friend.getId());

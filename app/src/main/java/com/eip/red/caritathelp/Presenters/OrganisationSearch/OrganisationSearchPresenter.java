@@ -25,9 +25,9 @@ public class OrganisationSearchPresenter implements IOrganisationSearchPresenter
     private OrganisationSearchView          view;
     private OrganisationSearchInteractor    interactor;
 
-    public OrganisationSearchPresenter(OrganisationSearchView view, Network network) {
+    public OrganisationSearchPresenter(OrganisationSearchView view, String token) {
         this.view = view;
-        this.interactor = new OrganisationSearchInteractor(view.getActivity().getBaseContext(), network);
+        this.interactor = new OrganisationSearchInteractor(view.getContext(), token);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class OrganisationSearchPresenter implements IOrganisationSearchPresenter
     @Override
     public void goToOrganisationView(Organisation organisation) {
         if (organisation != null)
-            Tools.replaceView(view, OrganisationView.newInstance(organisation), Animation.FADE_IN_OUT, false);
+            Tools.replaceView(view, OrganisationView.newInstance(organisation.getId(), organisation.getName()), Animation.FADE_IN_OUT, false);
     }
 
 

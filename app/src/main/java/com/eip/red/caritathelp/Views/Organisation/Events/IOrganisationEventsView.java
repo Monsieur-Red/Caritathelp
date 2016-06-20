@@ -14,6 +14,4 @@ public interface IOrganisationEventsView {
     void hideProgress();
 
     void setDialog(String title, String msg);
-
-    void updateRecyclerView(List<Event> events);
 }
