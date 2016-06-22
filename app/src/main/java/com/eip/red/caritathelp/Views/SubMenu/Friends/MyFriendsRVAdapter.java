@@ -5,12 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eip.red.caritathelp.Models.Friends.Friend;
+import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Presenters.SubMenu.Friends.FriendsPresenter;
 import com.eip.red.caritathelp.R;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,9 @@ import java.util.List;
 
 public class MyFriendsRVAdapter extends RecyclerView.Adapter<MyFriendsRVAdapter.DataObjectHolder> {
 
+    private static final String MSG_COMMON_FRIEND = " ami en commun";
+    private static final String MSG_COMMON_FRIENDS = " amis en commun";
+
     private FriendsPresenter    presenter;
     private List<Friend>        friends;
 
@@ -30,23 +34,26 @@ public class MyFriendsRVAdapter extends RecyclerView.Adapter<MyFriendsRVAdapter.
     }
 
     public class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView   image;
-        TextView    name;
-        ImageButton block;
-        ImageButton remove;
+        CircularImageView   image;
+        TextView            name;
+        TextView            nb_common_friends;
+        ImageButton         block;
+        ImageButton         remove;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
 
             // Init UI Elements
-            image = (ImageView) itemView.findViewById(R.id.image);
+            image = (CircularImageView) itemView.findViewById(R.id.image);
             name = (TextView) itemView.findViewById(R.id.name);
+            nb_common_friends = (TextView) itemView.findViewById(R.id.nb_common_friends);
             block = (ImageButton) itemView.findViewById(R.id.btn_block);
             remove = (ImageButton) itemView.findViewById(R.id.btn_remove);
 
             // Init Listeners
             image.setOnClickListener(this);
             name.setOnClickListener(this);
+            nb_common_friends.setOnClickListener(this);
             block.setOnClickListener(this);
             remove.setOnClickListener(this);
             itemView.setOnClickListener(this);
@@ -62,6 +69,9 @@ public class MyFriendsRVAdapter extends RecyclerView.Adapter<MyFriendsRVAdapter.
                         presenter.navigateToFriendProfile(friend.getId());
                         break;
                     case R.id.name:
+                        presenter.navigateToFriendProfile(friend.getId());
+                        break;
+                    case R.id.nb_common_friends:
                         presenter.navigateToFriendProfile(friend.getId());
                         break;
                     case R.id.btn_block:
@@ -86,9 +96,25 @@ public class MyFriendsRVAdapter extends RecyclerView.Adapter<MyFriendsRVAdapter.
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
         Friend  friend = friends.get(position);
-        String name = friend.getFirstname() + " " + friend.getLastname();
+        String  thumb = friend.getThumb_path();
+        String  name = friend.getFirstname() + " " + friend.getLastname();
+        String  nb_commons_friends = friend.getNb_common_friends();
 
+        // Set Name
         holder.name.setText(name);
+
+        // Load image
+        if (thumb != null)
+            Network.loadImage(holder.image.getContext(), holder.image, Network.API_LOCATION_2 + thumb, R.drawable.profile_example);
+        else
+            holder.image.setImageResource(R.drawable.profile_example);
+
+        // Set Nb commons friends
+        if (Integer.valueOf(nb_commons_friends) <= 1)
+            nb_commons_friends += MSG_COMMON_FRIEND;
+        else
+            nb_commons_friends += MSG_COMMON_FRIENDS;
+        holder.nb_common_friends.setText(nb_commons_friends);
     }
 
     @Override

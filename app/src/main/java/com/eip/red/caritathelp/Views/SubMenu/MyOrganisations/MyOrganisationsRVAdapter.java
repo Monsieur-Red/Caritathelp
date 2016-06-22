@@ -7,11 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations.MyOrganisationsPresenter;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
-import com.pkmmte.view.CircularImageView;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,11 +70,17 @@ public class MyOrganisationsRVAdapter extends RecyclerView.Adapter<MyOrganisatio
 
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
-        String  name = visibleObjects.get(position).getName();
-        String  location = visibleObjects.get(position).getCity();
-        String  friends = visibleObjects.get(position).getNb_friends_members();
+        Organisation    organisation = visibleObjects.get(position);
+        String          thumb = organisation.getThumb_path();
+        String          name = organisation.getName();
+        String          location = organisation.getCity();
+        String          friends = organisation.getNb_friends_members();
 
-//        holder.logo.setImageDrawable();
+        // Set Logo
+        if (thumb != null)
+            Network.loadImage(holder.logo.getContext(), holder.logo, Network.API_LOCATION_2 + thumb, R.drawable.profile_example);
+        else
+            holder.logo.setImageResource(R.drawable.profile_example);
 
         // Set Name
         holder.name.setText(Tools.upperCaseFirstLetter(name));

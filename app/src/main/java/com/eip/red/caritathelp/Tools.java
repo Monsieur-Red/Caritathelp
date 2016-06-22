@@ -19,6 +19,7 @@ import android.widget.ListView;
 import com.eip.red.caritathelp.Models.Enum.Animation;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -27,6 +28,27 @@ import java.util.Date;
  */
 
 public class Tools {
+
+    static public File createImageFile() throws IOException {
+        // Create an image file name
+        String  timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date());
+        String  imageFileName = "IMG_" + timeStamp + "_";
+        File    storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Caritathelp");
+//        File    storageDir = Environment.getExternalStoragePublicDirectory("Caritathelp");
+
+//        System.out.println("PASSERRRRRRRRRRRRRRRRR11111111111111111111111");
+
+        if (!storageDir.exists()) {
+            System.out.println("PASSERRRRRRRRRRRRRRRRR22222222222222222222222");
+            if (!storageDir.mkdir()) {
+                System.out.println("PASSERRRRRRRRRRRRRRRRR");
+                Log.d("Pics Files directory", "failed to create directory");
+                return null;
+            }
+        }
+
+        return File.createTempFile(imageFileName, ".jpg", storageDir);
+    }
 
     static public Uri getOutputMediaFileUri(){
         return Uri.fromFile(getOutputMediaFile());

@@ -1,10 +1,8 @@
 package com.eip.red.caritathelp.Presenters.Organisation;
 
-import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.Home.News;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
 import com.eip.red.caritathelp.Views.Organisation.Events.OrganisationEventsView;
@@ -75,9 +73,15 @@ public class OrganisationPresenter implements IOrganisationPresenter, IOnOrganis
     }
 
     @Override
-    public void onOrganisationRequestSuccess(String right) {
+    public void onOrganisationRequestSuccess(String thumb, String right) {
         // Set Progress Bar Visibility
         view.hideProgress();
+
+        // Set Profle Picture
+        if (thumb != null)
+            Network.loadImage(view.getContext(), view.getLogo(), Network.API_LOCATION_2 + thumb, R.drawable.profile_example);
+        else
+            view.getLogo().setImageResource(R.drawable.profile_example);
 
         // Set Management Button Visibility
         view.initView(right);

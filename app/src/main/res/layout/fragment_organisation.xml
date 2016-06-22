@@ -21,18 +21,19 @@
                 android:background="@color/background">
 
                 <!-- Logo -->
-                <com.pkmmte.view.CircularImageView
+                <com.mikhaellopez.circularimageview.CircularImageView
                     android:id="@+id/logo"
                     android:layout_below="@+id/name"
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    app:border="true"
-                    app:border_color="#EEEEEE"
-                    app:border_width="4dp"
-                    app:shadow="true"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_margin="10dp"
+
                     android:layout_centerInParent="true"
                     android:src="@drawable/logo_caritathelp_2017_picture_only_normal"
-                    android:scaleType="centerInside" />
+                    app:civ_border_color="#EEEEEE"
+                    app:civ_border_width="2dp"
+                    app:civ_shadow="true"
+                    app:civ_shadow_radius="2" />
 
                 <!-- Join Bnt -->
                 <ImageButton

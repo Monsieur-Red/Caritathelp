@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.OrganisationJson;
+import com.eip.red.caritathelp.Models.Organisation.OrganisationJson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;

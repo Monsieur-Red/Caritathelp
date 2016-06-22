@@ -1,5 +1,6 @@
 package com.eip.red.caritathelp.Models.Organisation;
 
+import com.eip.red.caritathelp.Models.Profile.MainPicture;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -18,39 +19,40 @@ public class Organisation implements Serializable {
     private String  city;
     private String  latitude;
     private String  longitude;
+    private String  created_at;
+    private String  updated_at;
     private String  rights;
+    private String  thumb_path;
     private String  nb_friends_members;
-//    private String  created_at;
-//    private String  updated_at;
 
-    public Organisation() {}
+    private MainPicture picture = null;
 
-    public Organisation(JsonObject result) {
-        id = initInt(result, "id");
-        name = initStr(result, "name");
-        description = initStr(result, "description");
-        birthday = initStr(result, "birthday");
-        city = initStr(result, "city");
-        latitude = initStr(result, "latitude");
-        longitude = initStr(result, "longitude");
-        rights = initStr(result, "rights");
-    }
-
-    private int initInt(JsonObject jsonObject, String memberName) {
-        JsonElement jsonElement = jsonObject.get(memberName);
-
-        if (!jsonElement.isJsonNull())
-            return (jsonElement.getAsInt());
-        return (-1);
-    }
-
-    private String initStr(JsonObject jsonObject, String memberName) {
-        JsonElement jsonElement = jsonObject.get(memberName);
-
-        if (!jsonElement.isJsonNull())
-            return (jsonElement.getAsString());
-        return (null);
-    }
+//    public Organisation(JsonObject result) {
+//        id = initInt(result, "id");
+//        name = initStr(result, "name");
+//        description = initStr(result, "description");
+//        birthday = initStr(result, "birthday");
+//        city = initStr(result, "city");
+//        latitude = initStr(result, "latitude");
+//        longitude = initStr(result, "longitude");
+//        rights = initStr(result, "rights");
+//    }
+//
+//    private int initInt(JsonObject jsonObject, String memberName) {
+//        JsonElement jsonElement = jsonObject.get(memberName);
+//
+//        if (!jsonElement.isJsonNull())
+//            return (jsonElement.getAsInt());
+//        return (-1);
+//    }
+//
+//    private String initStr(JsonObject jsonObject, String memberName) {
+//        JsonElement jsonElement = jsonObject.get(memberName);
+//
+//        if (!jsonElement.isJsonNull())
+//            return (jsonElement.getAsString());
+//        return (null);
+//    }
 
 
     public int getId() {
@@ -81,11 +83,35 @@ public class Organisation implements Serializable {
         return longitude;
     }
 
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
     public String getRights() {
         return rights;
     }
 
+    public String getThumb_path() {
+        return thumb_path;
+    }
+
     public String getNb_friends_members() {
         return nb_friends_members;
+    }
+
+    public MainPicture getPicture() {
+        return picture;
+    }
+
+    public void setThumb_path(String thumb_path) {
+        this.thumb_path = thumb_path;
+    }
+
+    public void setPicture(MainPicture picture) {
+        this.picture = picture;
     }
 }

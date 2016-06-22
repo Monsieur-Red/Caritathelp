@@ -8,19 +8,18 @@
     android:layout_margin="10dp">
 
     <!-- Logo -->
-    <com.pkmmte.view.CircularImageView
+    <!-- Logo -->
+    <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/logo"
-        android:layout_width="@dimen/_80sdp"
-        android:layout_height="@dimen/_80sdp"
-        app:border="true"
-        app:border_color="#EEEEEE"
-        app:border_width="@dimen/_4sdp"
-        app:shadow="true"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
 
         android:layout_gravity="center"
         android:src="@drawable/logo_caritathelp_2017_picture_only_normal"
-        android:background="@android:color/transparent"
-        android:scaleType="centerInside" />
+        app:civ_border_color="#EEEEEE"
+        app:civ_border_width="2dp"
+        app:civ_shadow="true"
+        app:civ_shadow_radius="2" />
 
     <TextView
         android:id="@+id/name"

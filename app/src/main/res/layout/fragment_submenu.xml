@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,13 +18,18 @@
             android:orientation="horizontal"
             android:background="@color/icons">
 
-            <ImageView
-                android:id="@+id/profile_image"
+            <!-- Logo -->
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/image"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
 
+                android:layout_centerInParent="true"
                 android:src="@drawable/profile_example"
-                android:scaleType="centerInside" />
+                app:civ_border_color="#EEEEEE"
+                app:civ_border_width="1dp"
+                app:civ_shadow="true"
+                app:civ_shadow_radius="1" />
 
             <TextView
                 android:id="@+id/profile_name"

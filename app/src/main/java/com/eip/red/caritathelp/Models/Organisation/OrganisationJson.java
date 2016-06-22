@@ -1,4 +1,4 @@
-package com.eip.red.caritathelp.Models;
+package com.eip.red.caritathelp.Models.Organisation;
 
 import com.eip.red.caritathelp.Models.Organisation.Organisation;
 

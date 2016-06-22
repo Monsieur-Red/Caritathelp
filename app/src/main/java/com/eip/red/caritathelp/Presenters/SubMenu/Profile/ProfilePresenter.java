@@ -8,14 +8,14 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.Friends.Friend;
-import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.Profile.MainPicture;
 import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
@@ -23,10 +23,10 @@ import com.eip.red.caritathelp.Views.SubMenu.Friends.FriendsView;
 import com.eip.red.caritathelp.Views.SubMenu.MyEvents.MyEventsView;
 import com.eip.red.caritathelp.Views.SubMenu.MyOrganisations.MyOrganisationsView;
 import com.eip.red.caritathelp.Views.SubMenu.Profile.ProfileView;
-import com.pkmmte.view.CircularImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -41,7 +41,7 @@ public class ProfilePresenter implements IProfilePresenter, IOnProfileFinishedLi
     private ProfileView         view;
     private ProfileInteractor   interactor;
 
-    private AlertDialog     dialog;
+    private AlertDialog         dialog;
 
     public ProfilePresenter(final ProfileView view, User user, int id) {
         this.view = view;
@@ -58,6 +58,20 @@ public class ProfilePresenter implements IProfilePresenter, IOnProfileFinishedLi
                             // Create Intent to take a picture and return control to the calling application
                             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
+                            try {
+                                File    photoFile = Tools.createImageFile();
+//                                Uri     photoURI = FileProvider.getUriForFile(view.getContext(), "com.example.android.fileprovider", photoFile);
+//                                File    photoFile = new File(Environment.getExternalStorageDirectory(), "MyPhoto.jpg");
+                                Uri photoURI = Uri.fromFile(photoFile);
+
+                                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                                view.startActivityForResult(intent, RESULT_CAPTURE_IMAGE);
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+/*
                             // Get the Image
                             File imagesFolder = new File(Environment.getExternalStorageDirectory(), "Caritathelp");
                             imagesFolder.mkdirs();
@@ -65,14 +79,11 @@ public class ProfilePresenter implements IProfilePresenter, IOnProfileFinishedLi
                             Uri uriSavedImg = Uri.fromFile(image);
 
 
-//                            Uri file = Tools.getOutputMediaFileUri();
-
                             intent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImg);
-//                            intent.putExtra(MediaStore.EXTRA_OUTPUT, file);
-//                            intent.putExtra(MediaStore.EXTRA_OUTPUT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI.getPath());
 
                             // Start the image capture Intent
                             view.startActivityForResult(intent, RESULT_CAPTURE_IMAGE);
+*/
                         }
                         else {
                             // Create intent to Open Image applications like Gallery, Google Photos
@@ -86,12 +97,12 @@ public class ProfilePresenter implements IProfilePresenter, IOnProfileFinishedLi
     }
 
     @Override
-    public void initProfileImg(CircularImageView imageView) {
+    public void initProfileImg(ImageView imageView) {
         interactor.initProfileImg(imageView, this);
     }
 
     @Override
-    public void uploadProfileImg(CircularImageView imageView, Intent data) {
+    public void uploadProfileImg(ImageView imageView, Intent data) {
         view.showProgress();
 
         // Set the image

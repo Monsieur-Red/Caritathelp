@@ -12,11 +12,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
-import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.Presenters.SubMenu.Profile.ProfilePresenter;
 import com.eip.red.caritathelp.R;
-import com.pkmmte.view.CircularImageView;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 /**
  * Created by pierr on 11/05/2016.
@@ -102,14 +101,10 @@ public class ProfileView extends Fragment implements IProfileView, View.OnClickL
         super.onActivityResult(requestCode, resultCode, data);
 
         // When an Image is picked
-        if (requestCode == ProfilePresenter.RESULT_LOAD_IMAGE && resultCode == MainActivity.RESULT_OK && data != null) {
-            System.out.println("PASSER?");
+        if (requestCode == ProfilePresenter.RESULT_LOAD_IMAGE && resultCode == MainActivity.RESULT_OK && data != null)
             presenter.uploadProfileImg(profileImg, data);
-        }
-        else if (requestCode == ProfilePresenter.RESULT_CAPTURE_IMAGE && resultCode == MainActivity.RESULT_OK && data != null) {
-            System.out.println("PASSER?2");
+        else if (requestCode == ProfilePresenter.RESULT_CAPTURE_IMAGE && resultCode == MainActivity.RESULT_OK && data != null)
             presenter.uploadProfileImg(profileImg, data);
-        }
     }
 
     @Override

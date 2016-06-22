@@ -13,7 +13,7 @@ public interface IOnOrganisationFinishedListener {
 
     void onDialogError(String title, String msg);
 
-    void onOrganisationRequestSuccess(String right);
+    void onOrganisationRequestSuccess(String thumb, String right);
 
     void onNewsRequestSuccess(List<News> newsList);
 }

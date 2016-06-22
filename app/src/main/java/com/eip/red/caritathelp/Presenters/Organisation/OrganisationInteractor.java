@@ -3,9 +3,7 @@ package com.eip.red.caritathelp.Presenters.Organisation;
 import android.content.Context;
 
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.Organisation.Organisation;
-import com.eip.red.caritathelp.Models.Organisation.Organisations;
-import com.eip.red.caritathelp.Models.OrganisationJson;
+import com.eip.red.caritathelp.Models.Organisation.OrganisationJson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
@@ -44,7 +42,7 @@ public class OrganisationInteractor {
                             if (result.getStatus() == Network.API_STATUS_ERROR)
                                 listener.onDialogError("Statut 400", result.getMessage());
                             else
-                                listener.onOrganisationRequestSuccess(result.getResponse().getRights());
+                                listener.onOrganisationRequestSuccess(result.getResponse().getThumb_path(), result.getResponse().getRights());
                         }
                         else
                             listener.onDialogError("Problème de connection", "Vérifiez votre connexion Internet");

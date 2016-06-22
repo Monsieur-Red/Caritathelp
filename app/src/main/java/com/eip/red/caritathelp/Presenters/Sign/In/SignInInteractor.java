@@ -2,21 +2,16 @@ package com.eip.red.caritathelp.Presenters.Sign.In;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.widget.ImageView;
 
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Profile.MainPicture;
 import com.eip.red.caritathelp.Models.Profile.MainPictureJson;
 import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.Models.User.UserJson;
-import com.eip.red.caritathelp.Presenters.SubMenu.Profile.IOnProfileFinishedListener;
-import com.eip.red.caritathelp.R;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-import com.pkmmte.view.CircularImageView;
-import com.squareup.picasso.Picasso;
 
 /**
  * Created by pierr on 22/03/2016.

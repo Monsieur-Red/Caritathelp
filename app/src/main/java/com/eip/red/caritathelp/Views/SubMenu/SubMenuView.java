@@ -5,13 +5,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
-import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.Presenters.SubMenu.SubMenuPresenter;
 import com.eip.red.caritathelp.R;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 /**
  * Created by pierr on 19/01/2016.
@@ -68,7 +67,7 @@ public class SubMenuView extends Fragment implements View.OnClickListener {
         getActivity().setTitle(getArguments().getInt("page"));
 
         // Init Profile Image
-        presenter.initProfileImg((ImageView) view.findViewById(R.id.profile_image));
+        presenter.initProfileImg((CircularImageView) view.findViewById(R.id.image));
     }
 
     @Override

@@ -12,22 +12,14 @@ import com.eip.red.caritathelp.Models.Organisation.Event;
 import com.eip.red.caritathelp.Presenters.SubMenu.MyEvents.MyEventsPresenter;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
-import com.pkmmte.view.CircularImageView;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.w3c.dom.Text;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * Created by pierr on 18/03/2016.

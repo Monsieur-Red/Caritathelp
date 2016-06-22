@@ -21,6 +21,7 @@ import com.eip.red.caritathelp.Activities.Main.ViewPager.MyPagerAdapter;
 import com.eip.red.caritathelp.Activities.Sign.SignActivity;
 import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.ModelManager;
+import com.eip.red.caritathelp.Presenters.SubMenu.Profile.ProfilePresenter;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
 import com.eip.red.caritathelp.Views.Search.MySearchView;

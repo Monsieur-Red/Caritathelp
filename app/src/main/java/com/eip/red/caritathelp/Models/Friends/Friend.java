@@ -10,6 +10,8 @@ public class Friend {
     private String  mail;
     private String  firstname;
     private String  lastname;
+    private String  thumb_path;
+    private String  nb_common_friends;
 
     public int getId() {
         return id;
@@ -25,5 +27,13 @@ public class Friend {
 
     public String getLastname() {
         return lastname;
+    }
+
+    public String getThumb_path() {
+        return thumb_path;
+    }
+
+    public String getNb_common_friends() {
+        return nb_common_friends;
     }
 }

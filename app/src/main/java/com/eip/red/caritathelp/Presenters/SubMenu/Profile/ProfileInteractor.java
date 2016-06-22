@@ -1,6 +1,7 @@
 package com.eip.red.caritathelp.Presenters.SubMenu.Profile;
 
 import android.content.Context;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Models.Friends.Friends;
@@ -15,7 +16,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-import com.pkmmte.view.CircularImageView;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -36,7 +36,7 @@ public class ProfileInteractor {
 
     // First Get the URL of the image
     // Then Load the image
-    public void initProfileImg(final CircularImageView imageView, final IOnProfileFinishedListener listener) {
+    public void initProfileImg(final ImageView imageView, final IOnProfileFinishedListener listener) {
         JsonObject json = new JsonObject();
 
         json.addProperty("token", mainUser.getToken());
@@ -67,7 +67,7 @@ public class ProfileInteractor {
                 });
     }
 
-    private void loadImage(CircularImageView imageView, String url) {
+    private void loadImage(ImageView imageView, String url) {
         Picasso.with(context)
                 .load(Network.API_LOCATION_2 + url)
                 .noPlaceholder()
