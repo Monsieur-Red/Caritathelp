@@ -3,7 +3,7 @@ package com.eip.red.caritathelp.Presenters.SubMenu.Friends;
 import android.content.Context;
 import android.widget.ProgressBar;
 
-import com.eip.red.caritathelp.Models.Friends.Friends;
+import com.eip.red.caritathelp.Models.Friends.FriendsJson;
 import com.eip.red.caritathelp.Models.Friendship;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.User.User;
@@ -37,10 +37,10 @@ public class FriendsInteractor {
                 .load("GET", Network.API_LOCATION + Network.API_REQUEST_FRIENDSHIP_VOLUNTEER + userId + Network.API_REQUEST_FRIENDSHIP)
                 .progressBar(progressBar)
                 .setJsonObjectBody(json)
-                .as(new TypeToken<Friends>(){})
-                .setCallback(new FutureCallback<Friends>() {
+                .as(new TypeToken<FriendsJson>(){})
+                .setCallback(new FutureCallback<FriendsJson>() {
                     @Override
-                    public void onCompleted(Exception error, Friends result) {
+                    public void onCompleted(Exception error, FriendsJson result) {
                         if (error == null) {
                             // Status == 400 == error
                             if (result.getStatus() == Network.API_STATUS_ERROR)

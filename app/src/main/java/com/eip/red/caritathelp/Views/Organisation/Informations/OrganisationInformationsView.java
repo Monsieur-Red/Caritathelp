@@ -15,6 +15,7 @@ import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.Presenters.Organisation.Informations.OrganisationInformationsPresenter;
 import com.eip.red.caritathelp.R;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 /**
  * Created by pierr on 07/05/2016.
@@ -24,11 +25,12 @@ public class OrganisationInformationsView extends Fragment implements IOrganisat
 
     private OrganisationInformationsPresenter   presenter;
 
-    private TextView        name;
-    private TextView        location_members;
-    private TextView        description;
-    private ProgressBar     progressBar;
-    private AlertDialog     dialog;
+    private CircularImageView   image;
+    private TextView            name;
+    private TextView            location_members;
+    private TextView            description;
+    private ProgressBar         progressBar;
+    private AlertDialog         dialog;
 
     public static OrganisationInformationsView newInstance(int id) {
         OrganisationInformationsView    myFragment = new OrganisationInformationsView();
@@ -65,6 +67,7 @@ public class OrganisationInformationsView extends Fragment implements IOrganisat
         View view = inflater.inflate(R.layout.fragment_organisation_informations, container, false);
 
         // Init UI Element
+        image = (CircularImageView) view.findViewById(R.id.logo);
         name = (TextView) view.findViewById(R.id.name);
         location_members = (TextView) view.findViewById(R.id.location_and_members);
         description = (TextView) view.findViewById(R.id.description);
@@ -89,7 +92,7 @@ public class OrganisationInformationsView extends Fragment implements IOrganisat
         getActivity().setTitle(getArguments().getInt("page"));
 
         // Get Organisation Informations Model
-        presenter.getOrganisationInformations();
+        presenter.getOrganisationInformations(image);
     }
 
     @Override

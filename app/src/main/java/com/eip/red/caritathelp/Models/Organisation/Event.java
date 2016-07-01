@@ -14,6 +14,7 @@ public class Event {
     private String  end;
     private String  assoc_id;
     private String  rights;
+    private String  thumb_path;
 
     public int getId() {
         return id;
@@ -45,5 +46,9 @@ public class Event {
 
     public String getRights() {
         return rights;
+    }
+
+    public String getThumb_path() {
+        return thumb_path;
     }
 }

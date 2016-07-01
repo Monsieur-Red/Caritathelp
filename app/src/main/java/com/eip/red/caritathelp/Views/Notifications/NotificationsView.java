@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
@@ -21,15 +23,19 @@ import com.eip.red.caritathelp.R;
  * Created by pierr on 16/11/2015.
  */
 
-public class NotificationsView extends Fragment implements INotificationsView {
+public class NotificationsView extends Fragment implements INotificationsView, View.OnClickListener {
 
     private NotificationsPresenter  presenter;
 
     private RecyclerView            volunteerRV;
     private RecyclerView            ownerRV;
     private NotificationsRVAdapter  rvAdapter;
-    private ProgressBar             progressBar;
-    private AlertDialog             dialog;
+
+    private LinearLayout    tabs;
+    private TextView        volunteerTab;
+    private TextView        ownerTab;
+    private ProgressBar     progressBar;
+    private AlertDialog     dialog;
 
     public static Fragment newInstance() {
         NotificationsView       fragment = new NotificationsView();
@@ -63,10 +69,17 @@ public class NotificationsView extends Fragment implements INotificationsView {
         View view = inflater.inflate(R.layout.fragment_notifications, container, false);
 
         // Init UI Element
+        tabs = (LinearLayout) view.findViewById(R.id.tabs);
+        volunteerTab = (TextView) view.findViewById(R.id.tab_volunteer);
+        ownerTab = (TextView) view.findViewById(R.id.tab_owner);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
 
         // Init RecyclerView
         initRecyclerView(view);
+
+        // Init Listener
+        view.findViewById(R.id.tab_volunteer).setOnClickListener(this);
+        view.findViewById(R.id.tab_owner).setOnClickListener(this);
 
         return (view);
     }
@@ -79,7 +92,7 @@ public class NotificationsView extends Fragment implements INotificationsView {
         getActivity().setTitle(getArguments().getInt("page"));
 
         // Init Notifications Model
-//        presenter.getNotifications();
+        presenter.getNotifications();
     }
 
     private void initRecyclerView(View view) {
@@ -109,6 +122,11 @@ public class NotificationsView extends Fragment implements INotificationsView {
     }
 
     @Override
+    public void onClick(View v) {
+        presenter.onClick(v.getId());
+    }
+
+    @Override
     public void showProgress() {
         progressBar.setVisibility(View.VISIBLE);
     }
@@ -131,5 +149,13 @@ public class NotificationsView extends Fragment implements INotificationsView {
 
     public NotificationsRVAdapter getRvAdapter() {
         return rvAdapter;
+    }
+
+    public TextView getOwnerTab() {
+        return ownerTab;
+    }
+
+    public TextView getVolunteerTab() {
+        return volunteerTab;
     }
 }

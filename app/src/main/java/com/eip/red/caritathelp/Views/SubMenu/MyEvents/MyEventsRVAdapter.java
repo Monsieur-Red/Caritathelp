@@ -8,10 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Event;
 import com.eip.red.caritathelp.Presenters.SubMenu.MyEvents.MyEventsPresenter;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -49,14 +51,14 @@ public class MyEventsRVAdapter extends RecyclerView.Adapter<MyEventsRVAdapter.Da
     }
 
     public class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView   image;
-        TextView    title;
-        TextView    date;
-        TextView    location;
+        CircularImageView   image;
+        TextView            title;
+        TextView            date;
+        TextView            location;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
-            image = (ImageView) itemView.findViewById(R.id.image);
+            image = (CircularImageView) itemView.findViewById(R.id.image);
             title = (TextView) itemView.findViewById(R.id.title);
             date = (TextView) itemView.findViewById(R.id.date);
             location = (TextView) itemView.findViewById(R.id.location);
@@ -83,12 +85,13 @@ public class MyEventsRVAdapter extends RecyclerView.Adapter<MyEventsRVAdapter.Da
 
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
-        String  title = visibleObjects.get(position).getTitle();
-        String  date = visibleObjects.get(position).getBegin();
-        String  location = visibleObjects.get(position).getPlace();
+        Event   event = visibleObjects.get(position);
+        String  title = event.getTitle();
+        String  date = event.getBegin();
+        String  location = event.getPlace();
 
         // Set Image
-//        holder.image.setText();
+        Network.loadImage(holder.image.getContext(), holder.image, Network.API_LOCATION_2 + event.getThumb_path(), R.drawable.logo_caritathelp_2017_picture_only_normal);
 
         // Set Title
         holder.title.setText(Tools.upperCaseFirstLetter(title));

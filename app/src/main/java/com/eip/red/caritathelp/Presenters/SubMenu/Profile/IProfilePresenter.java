@@ -9,14 +9,12 @@ import android.widget.ImageView;
 
 public interface IProfilePresenter {
 
-    void initProfileImg(ImageView imageView);
-
-    void uploadProfileImg(ImageView imageView, Intent data);
-
     void onClick(int viewId);
 
-    void getProfile();
+    void getProfile(ImageView imageView);
 
     void getNews();
+
+    void uploadProfileImg(ImageView imageView, Intent data);
 
 }

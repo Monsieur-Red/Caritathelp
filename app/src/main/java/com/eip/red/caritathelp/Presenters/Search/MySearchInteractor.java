@@ -5,7 +5,8 @@ import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Models.Friendship;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.Search.Volunteers;
+import com.eip.red.caritathelp.Models.Search.Search;
+import com.eip.red.caritathelp.Models.Search.SearchJson;
 import com.eip.red.caritathelp.Models.User.User;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -26,30 +27,26 @@ public class MySearchInteractor {
         this.user = user;
     }
 
-    public void getQueryTextSubmit(String query) {
-
-    }
-
-    public void getQueryTextChange(String query, ProgressBar progressBar, final IOnMySearchFinishedListener listener) {
+    public void search(String query, ProgressBar progressBar, final IOnMySearchFinishedListener listener) {
         JsonObject json = new JsonObject();
 
         json.addProperty("token", user.getToken());
         json.addProperty("research", query);
 
         Ion.with(context)
-                .load("GET", Network.API_LOCATION + "/volunteers/search" )
+                .load("GET", Network.API_LOCATION + Network.API_REQUEST_SEARCH )
                 .progressBar(progressBar)
                 .setJsonObjectBody(json)
-                .as(new TypeToken<Volunteers>(){})
-                .setCallback(new FutureCallback<Volunteers>() {
+                .as(new TypeToken<SearchJson>(){})
+                .setCallback(new FutureCallback<SearchJson>() {
                     @Override
-                    public void onCompleted(Exception error, Volunteers result) {
+                    public void onCompleted(Exception error, SearchJson result) {
                         if (error == null) {
                             // Status == 400 == error
                             if (result.getStatus() == Network.API_STATUS_ERROR)
                                 listener.onDialog("Statut 400", result.getMessage());
                             else
-                                listener.onSuccessQueryTextChange(result.getResponse());
+                                listener.onSuccessSearch(result.getResponse());
                         }
                         else
                             listener.onDialog("Problème de connection", "Vérifiez votre connexion Internet");
@@ -57,15 +54,14 @@ public class MySearchInteractor {
                 });
     }
 
-    public void addFriend(int volunteerId, final String name, ProgressBar progressBar, final IOnMySearchFinishedListener listener) {
+    public void addFriend(final Search search, final IOnMySearchFinishedListener listener) {
         JsonObject json = new JsonObject();
 
         json.addProperty("token", user.getToken());
-        json.addProperty("volunteer_id", String.valueOf(volunteerId));
+        json.addProperty("volunteer_id", String.valueOf(search.getId()));
 
         Ion.with(context)
-                .load("POST", Network.API_LOCATION + Network.API_REQUEST_FRIENDSHIP_ADD )
-                .progressBar(progressBar)
+                .load("POST", Network.API_LOCATION + Network.API_REQUEST_FRIENDSHIP_ADD)
                 .setJsonObjectBody(json)
                 .as(new TypeToken<Friendship>(){})
                 .setCallback(new FutureCallback<Friendship>() {
@@ -75,7 +71,7 @@ public class MySearchInteractor {
                             if (result.getStatus() == Network.API_STATUS_ERROR)
                                 listener.onDialog("Statut 400", result.getMessage());
                             else
-                                listener.onSuccessAddFriend(name);
+                                listener.onSuccessAdd(search);
                         }
                         else
                             listener.onDialog("Problème de connection", "Vérifiez votre connexion Internet");

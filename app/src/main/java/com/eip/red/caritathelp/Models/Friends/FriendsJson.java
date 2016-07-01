@@ -6,7 +6,7 @@ import java.util.List;
  * Created by pierr on 23/04/2016.
  */
 
-public class Friends {
+public class FriendsJson {
 
     private int             status;
     private String          message;

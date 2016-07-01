@@ -20,7 +20,7 @@ import java.util.List;
  * Created by pierr on 23/04/2016.
  */
 
-public class MyFriendsRVAdapter extends RecyclerView.Adapter<MyFriendsRVAdapter.DataObjectHolder> {
+public class FriendsRVAdapter extends RecyclerView.Adapter<FriendsRVAdapter.DataObjectHolder> {
 
     private static final String MSG_COMMON_FRIEND = " ami en commun";
     private static final String MSG_COMMON_FRIENDS = " amis en commun";
@@ -28,7 +28,7 @@ public class MyFriendsRVAdapter extends RecyclerView.Adapter<MyFriendsRVAdapter.
     private FriendsPresenter    presenter;
     private List<Friend>        friends;
 
-    public MyFriendsRVAdapter(FriendsPresenter presenter) {
+    public FriendsRVAdapter(FriendsPresenter presenter) {
         this.presenter = presenter;
         friends = new ArrayList<>();
     }

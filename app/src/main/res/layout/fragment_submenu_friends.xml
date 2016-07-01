@@ -23,6 +23,96 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:padding="4dp"
+                        android:orientation="horizontal"
+                        android:background="@color/icons">
+
+                        <TextView
+                            android:id="@+id/my_friends"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="Mes amis"
+                            android:textSize="16sp"
+                            android:textColor="@color/primary_text"
+                            android:textStyle="bold"
+                            android:singleLine="true" />
+
+                        <!-- Divider -->
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_margin="2dp"
+                            android:layout_gravity="center"
+                            android:background="?android:attr/listDivider" />
+
+                        <TextView
+                            android:id="@+id/invitations"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="Invitations"
+                            android:textSize="16sp"
+                            android:textColor="@color/primary_text"
+                            android:singleLine="true" />
+
+                        <!-- Divider -->
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_margin="2dp"
+                            android:layout_gravity="center"
+                            android:background="?android:attr/listDivider" />
+
+                        <TextView
+                            android:id="@+id/sent"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="Envoyées"
+                            android:textSize="16sp"
+                            android:textColor="@color/primary_text"
+                            android:singleLine="true" />
+
+                        <!-- Divider -->
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_margin="2dp"
+                            android:layout_gravity="center"
+                            android:background="?android:attr/listDivider" />
+
+                        <ImageButton
+                            android:id="@+id/btn_addd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:src="@drawable/ic_person_add_black_36dp"
+                            android:background="@android:color/transparent" />
+
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_gravity="center"
+                        style="@style/Divider"/>
+
+<!--
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
@@ -43,7 +133,7 @@
                             android:spinnerDropDownItemStyle="@style/spinnerDropDownItemStyle"
                             android:popupElevation="2dp" />
 
-                        <!-- Divider -->
+                        &lt;!&ndash; Divider &ndash;&gt;
                         <View
                             android:id="@+id/divider_vertical"
                             android:layout_toStartOf="@+id/btn_add"
@@ -74,11 +164,12 @@
 
                     </RelativeLayout>
 
-                    <!-- Divider -->
+                    &lt;!&ndash; Divider &ndash;&gt;
                     <View
                         android:id="@+id/divider"
                         android:layout_gravity="center"
                         style="@style/Divider"/>
+-->
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycler_view_my_friends"

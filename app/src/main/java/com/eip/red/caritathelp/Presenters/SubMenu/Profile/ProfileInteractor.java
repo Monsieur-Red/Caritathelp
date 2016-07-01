@@ -4,10 +4,9 @@ import android.content.Context;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.eip.red.caritathelp.Models.Friends.Friends;
+import com.eip.red.caritathelp.Models.Friends.FriendsJson;
 import com.eip.red.caritathelp.Models.Friendship;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.Profile.MainPicture;
 import com.eip.red.caritathelp.Models.Profile.MainPictureJson;
 import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.Models.User.UserJson;
@@ -16,7 +15,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-import com.squareup.picasso.Picasso;
 
 /**
  * Created by pierr on 11/05/2016.
@@ -32,47 +30,6 @@ public class ProfileInteractor {
         this.context = context;
         this.mainUser = mainUser;
         this.userId = userId;
-    }
-
-    // First Get the URL of the image
-    // Then Load the image
-    public void initProfileImg(final ImageView imageView, final IOnProfileFinishedListener listener) {
-        JsonObject json = new JsonObject();
-
-        json.addProperty("token", mainUser.getToken());
-
-        Ion.with(context)
-                .load("GET", Network.API_LOCATION + Network.API_REQUEST_VOLUNTEERS + userId + Network.API_REQUEST_VOLUNTEERS_MAIN_PICTURE)
-                .setJsonObjectBody(json)
-                .as(new TypeToken<MainPictureJson>() {})
-                .setCallback(new FutureCallback<MainPictureJson>() {
-                    @Override
-                    public void onCompleted(Exception error, MainPictureJson result) {
-                        if (error == null) {
-                            if (result.getStatus() == Network.API_STATUS_ERROR)
-                                listener.onDialog("Statut 400", result.getMessage());
-                            else {
-                                MainPicture picture = result.getResponse();
-
-                                if (picture == null)
-                                    listener.onFailureInitProfileImg();
-                                else
-                                    loadImage(imageView, picture.getPicture_path().getUrl());
-
-                            }
-                        }
-                        else
-                            listener.onDialog("Problème de connection", "Vérifiez votre connexion Internet");
-                    }
-                });
-    }
-
-    private void loadImage(ImageView imageView, String url) {
-        Picasso.with(context)
-                .load(Network.API_LOCATION_2 + url)
-                .noPlaceholder()
-                .error(R.drawable.profile_example)
-                .into(imageView);
     }
 
     public void uploadProfileImg(String file, String filename, String originFilename, int assocId, int eventId, String isMain, final IOnProfileFinishedListener listener) {
@@ -102,6 +59,7 @@ public class ProfileInteractor {
                                 listener.onDialog("Statut 400", result.getMessage());
                             else {
                                 // Set User Model
+                                mainUser.setThumb_path(result.getResponse().getPicture_path().getThumb().getUrl());
                                 mainUser.setPicture(result.getResponse());
 
                                 listener.onSuccessUploadProfileImg();
@@ -113,7 +71,7 @@ public class ProfileInteractor {
                 });
     }
 
-    public void getProfile(final IOnProfileFinishedListener listener, final ProgressBar progressBar) {
+    public void getProfile(final IOnProfileFinishedListener listener, final ImageView imageView, final ProgressBar progressBar) {
         JsonObject json = new JsonObject();
 
         json.addProperty("token", mainUser.getToken());
@@ -131,6 +89,9 @@ public class ProfileInteractor {
                             if (result.getStatus() == Network.API_STATUS_ERROR)
                                 listener.onDialog("Statut 400", result.getMessage());
                             else {
+                                // Set User Profile Image
+                                Network.loadImage(context, imageView, Network.API_LOCATION_2 + result.getResponse().getThumb_path(), R.drawable.profile_example);
+
                                 // Check if it's MY profile
                                 if (userId == mainUser.getId())
                                     listener.onSuccessGetProfile(result.getResponse(), null);
@@ -154,10 +115,10 @@ public class ProfileInteractor {
                 .load("GET", Network.API_LOCATION + Network.API_REQUEST_FRIENDSHIP_VOLUNTEER + mainUser.getId() + Network.API_REQUEST_FRIENDSHIP)
                 .progressBar(progressBar)
                 .setJsonObjectBody(json)
-                .as(new TypeToken<Friends>(){})
-                .setCallback(new FutureCallback<Friends>() {
+                .as(new TypeToken<FriendsJson>(){})
+                .setCallback(new FutureCallback<FriendsJson>() {
                     @Override
-                    public void onCompleted(Exception error, Friends result) {
+                    public void onCompleted(Exception error, FriendsJson result) {
                         if (error == null) {
                             // Status == 400 == error
                             if (result.getStatus() == Network.API_STATUS_ERROR)
@@ -197,18 +158,10 @@ public class ProfileInteractor {
                 });
     }
 
-    public User getMainUser() {
-        return mainUser;
-    }
-
     public boolean isMainUser() {
         return (mainUser.getId() == userId);
     }
 
-    public int getMainUserId() {
-        return mainUser.getId();
-
-    }
     public int getUserId() {
         return userId;
     }

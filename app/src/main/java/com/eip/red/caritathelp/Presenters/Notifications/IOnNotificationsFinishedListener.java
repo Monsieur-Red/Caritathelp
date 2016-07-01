@@ -12,7 +12,7 @@ public interface IOnNotificationsFinishedListener {
 
     void onDialogError(String title, String msg);
 
-    void onSuccessGetNotification(List<Notification> notifications);
+    void onSuccessGetNotifications(List<Notification> notifications);
 
-    void onSuccessFriendshipReply(String name, String acceptance);
+    void onSuccessFriendshipReply(Notification notification, String acceptance);
 }

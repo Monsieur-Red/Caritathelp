@@ -22,6 +22,7 @@ public class User implements Serializable {
     private String  longitude;
     private boolean allowgps;
     private boolean allow_notifications;
+    private String  thumb_path;
 
     private MainPicture picture;
 
@@ -77,6 +78,10 @@ public class User implements Serializable {
         return allow_notifications;
     }
 
+    public String getThumb_path() {
+        return thumb_path;
+    }
+
     public MainPicture getPicture() {
         return picture;
     }
@@ -129,9 +134,14 @@ public class User implements Serializable {
         this.allow_notifications = allow_notifications;
     }
 
+    public void setThumb_path(String thumb_path) {
+        this.thumb_path = thumb_path;
+    }
+
     public void setPicture(MainPicture picture) {
         this.picture = picture;
     }
+
 
 
     public String getPassword() {

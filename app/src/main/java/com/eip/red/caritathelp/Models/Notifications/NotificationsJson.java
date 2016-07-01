@@ -6,11 +6,11 @@ import java.util.List;
  * Created by pierr on 21/04/2016.
  */
 
-public class JsonNotifications {
+public class NotificationsJson {
 
     private int                 status;
     private String              message;
-    private Notifications       response;
+    private List<Notification>  response;
 
     public int getStatus() {
         return status;
@@ -20,7 +20,7 @@ public class JsonNotifications {
         return message;
     }
 
-    public Notifications getResponse() {
+    public List<Notification> getResponse() {
         return response;
     }
 }

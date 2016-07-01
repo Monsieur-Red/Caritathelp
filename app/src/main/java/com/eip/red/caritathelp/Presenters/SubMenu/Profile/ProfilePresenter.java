@@ -6,9 +6,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.view.View;
@@ -97,8 +95,41 @@ public class ProfilePresenter implements IProfilePresenter, IOnProfileFinishedLi
     }
 
     @Override
-    public void initProfileImg(ImageView imageView) {
-        interactor.initProfileImg(imageView, this);
+    public void onClick(int viewId) {
+        switch (viewId) {
+            case R.id.image:
+                // Check if user == main user
+                // If true -> modify his profile img
+                if (interactor.isMainUser())
+                    dialog.show();
+                break;
+            case R.id.btn_add_friend:
+                view.showProgress();
+                interactor.addFriend(this, view.getProgressBar(), view.getName().toString());
+                break;
+            case R.id.btn_send_message:
+                break;
+            case R.id.btn_friends:
+                Tools.replaceView(view, FriendsView.newInstance(interactor.getUserId()), Animation.FADE_IN_OUT, false);
+                break;
+            case R.id.btn_organisations:
+                Tools.replaceView(view, MyOrganisationsView.newInstance(interactor.getUserId(), interactor.isMainUser()), Animation.FADE_IN_OUT, false);
+                break;
+            case R.id.btn_events:
+                Tools.replaceView(view, MyEventsView.newInstance(interactor.getUserId(), interactor.isMainUser()), Animation.FADE_IN_OUT, false);
+                break;
+        }
+    }
+
+    @Override
+    public void getProfile(ImageView imageView) {
+        view.showProgress();
+        interactor.getProfile(this, imageView, view.getProgressBar());
+    }
+
+    @Override
+    public void getNews() {
+        view.showProgress();
     }
 
     @Override
@@ -138,53 +169,9 @@ public class ProfilePresenter implements IProfilePresenter, IOnProfileFinishedLi
     }
 
     @Override
-    public void onClick(int viewId) {
-        switch (viewId) {
-            case R.id.image:
-                // Check if user == main user
-                // If true -> modify his profile img
-                if (interactor.isMainUser())
-                    dialog.show();
-                break;
-            case R.id.btn_add_friend:
-                view.showProgress();
-                interactor.addFriend(this, view.getProgressBar(), view.getName().toString());
-                break;
-            case R.id.btn_send_message:
-                break;
-            case R.id.btn_friends:
-                Tools.replaceView(view, FriendsView.newInstance(interactor.getUserId()), Animation.FADE_IN_OUT, false);
-                break;
-            case R.id.btn_organisations:
-                Tools.replaceView(view, MyOrganisationsView.newInstance(interactor.getUserId(), interactor.isMainUser()), Animation.FADE_IN_OUT, false);
-                break;
-            case R.id.btn_events:
-                Tools.replaceView(view, MyEventsView.newInstance(interactor.getUserId(), interactor.isMainUser()), Animation.FADE_IN_OUT, false);
-                break;
-        }
-    }
-
-    @Override
-    public void getProfile() {
-        view.showProgress();
-        interactor.getProfile(this, view.getProgressBar());
-    }
-
-    @Override
-    public void getNews() {
-        view.showProgress();
-    }
-
-    @Override
     public void onDialog(String title, String msg) {
         view.hideProgress();
         view.setDialog(title, msg);
-    }
-
-    @Override
-    public void onFailureInitProfileImg() {
-        // Set default profile img
-        view.getProfileImg().setImageResource(R.drawable.profile_example);
     }
 
     @Override

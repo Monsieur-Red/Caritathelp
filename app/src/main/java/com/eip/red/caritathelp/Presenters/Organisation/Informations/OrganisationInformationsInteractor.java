@@ -1,10 +1,12 @@
 package com.eip.red.caritathelp.Presenters.Organisation.Informations;
 
 import android.content.Context;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.OrganisationJson;
+import com.eip.red.caritathelp.R;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.future.FutureCallback;
@@ -26,7 +28,7 @@ public class OrganisationInformationsInteractor {
         this.id = id;
     }
 
-    public void getOrganisationInformations(final IOnOrganisationInformationsFinishedListener listener, ProgressBar progressBar) {
+    public void getOrganisationInformations(final IOnOrganisationInformationsFinishedListener listener, final ImageView imageView, ProgressBar progressBar) {
         JsonObject json = new JsonObject();
 
         json.addProperty("token", token);
@@ -43,8 +45,12 @@ public class OrganisationInformationsInteractor {
                             // Status == 400 == error
                             if (result.getStatus() == Network.API_STATUS_ERROR)
                                 listener.onDialogError("Statut 400", result.getMessage());
-                            else
+                            else {
+                                // Set Picture
+                                Network.loadImage(context, imageView, Network.API_LOCATION_2 + result.getResponse().getThumb_path(), R.drawable.logo_caritathelp_2017_picture_only_normal);
+
                                 listener.onSuccess(result.getResponse());
+                            }
                         }
                         else
                             listener.onDialogError("Problème de connection", "Vérifiez votre connexion Internet");

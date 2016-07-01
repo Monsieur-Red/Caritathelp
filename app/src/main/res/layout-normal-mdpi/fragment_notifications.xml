@@ -18,12 +18,12 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/my_tab"
+                    android:id="@+id/tabs"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:padding="4dp"
                     android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:background="@color/icons">
 
                     <TextView
                         android:id="@+id/tab_volunteer"
@@ -35,13 +35,14 @@
                         android:gravity="center"
                         android:text="Bénévole"
                         android:textColor="@color/primary_text"
-                        android:textSize="20sp"/>
+                        android:textStyle="bold"
+                        android:textSize="18sp"/>
 
                     <!-- Divider -->
                     <View
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="@dimen/_2sdp"
+                        android:layout_margin="2dp"
                         android:layout_gravity="center"
                         android:background="?android:attr/listDivider" />
 
@@ -55,7 +56,7 @@
                         android:gravity="center"
                         android:text="Propriétaire"
                         android:textColor="@color/primary_text"
-                        android:textSize="20sp"/>
+                        android:textSize="18sp"/>
 
                 </LinearLayout>
 
@@ -63,8 +64,7 @@
                 <View
                     android:id="@+id/divider"
                     android:layout_gravity="center"
-                    style="@style/Divider"
-                    android:visibility="gone" />
+                    style="@style/Divider" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view_volunteer"

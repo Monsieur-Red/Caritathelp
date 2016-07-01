@@ -5,7 +5,6 @@ import android.widget.ImageView;
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.User.User;
-import com.eip.red.caritathelp.Presenters.SubMenu.Profile.ISubMenuPresenter;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
 import com.eip.red.caritathelp.Views.SubMenu.AccountSettings.AccountSettingsView;
@@ -31,11 +30,7 @@ public class SubMenuPresenter implements ISubMenuPresenter {
 
     @Override
     public void initProfileImg(ImageView imageView) {
-        // Check User Picture
-        if (interactor.getUserPicture() != null)
-            interactor.loadProfileImg(imageView);
-        else
-            imageView.setImageResource(R.drawable.profile_example);
+        interactor.loadProfileImg(imageView);
     }
 
     @Override

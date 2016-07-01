@@ -23,7 +23,7 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 
 public class ProfileView extends Fragment implements IProfileView, View.OnClickListener {
 
-    private ProfilePresenter presenter;
+    private ProfilePresenter    presenter;
 
     private CircularImageView   profileImg;
     private TextView            name;
@@ -89,11 +89,8 @@ public class ProfileView extends Fragment implements IProfileView, View.OnClickL
         // Init ToolBar Title
         getActivity().setTitle(getArguments().getInt("page"));
 
-        // Init Profile Image
-        presenter.initProfileImg(profileImg);
-
         // Get profile Model
-        presenter.getProfile();
+        presenter.getProfile(profileImg);
     }
 
     @Override

@@ -2,15 +2,22 @@ package com.eip.red.caritathelp.Presenters.Notifications;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
+import android.view.View;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Activities.Main.MyNavigationBottomBar;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Notifications.Notification;
 import com.eip.red.caritathelp.Models.User.User;
+import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Views.Notifications.NotificationsRVAdapter;
 import com.eip.red.caritathelp.Views.Notifications.NotificationsView;
 
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +28,6 @@ public class NotificationsPresenter implements INotificationsPresenter, IOnNotif
 
     private NotificationsView       view;
     private NotificationsInteractor interactor;
-
 
     public NotificationsPresenter(NotificationsView view, User user) {
         this.view = view;
@@ -36,31 +42,89 @@ public class NotificationsPresenter implements INotificationsPresenter, IOnNotif
     }
 
     @Override
-    public void friendshipReply(final Notification notification) {
-        final IOnNotificationsFinishedListener    listener = this;
-        final String  name = notification.getFirstname() + " " + notification.getLastname();
+    public void onClick(int viewId) {
+        switch (viewId) {
+            case R.id.tab_volunteer:
+                // Set Tab TextView
+                view.getVolunteerTab().setTypeface(Typeface.DEFAULT_BOLD);
+                view.getOwnerTab().setTypeface(Typeface.DEFAULT);
 
-        // Display Dialog Box
-        new AlertDialog.Builder(view.getContext())
-                .setCancelable(true)
-                .setTitle("Demande d'amis")
-                .setMessage("Acceptez-vous la demande d'amis de " + name + " ?")
-                .setNegativeButton("Rejeter", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        view.showProgress();
-                        interactor.friendshipReply(notification.getNotif_id(), name, "false", view.getProgressBar(), listener);
-                    }
-                })
-                .setPositiveButton("Accepter", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        view.showProgress();
-                        interactor.friendshipReply(notification.getNotif_id(), name, "true", view.getProgressBar(), listener);
-                    }
-                })
-                .show();
+                // Set RV
+                view.getRvAdapter().setShowVolunteerNotifs(true);
+                break;
+            case R.id.tab_owner:
+                // Set Tab TextView
+                view.getVolunteerTab().setTypeface(Typeface.DEFAULT);
+                view.getOwnerTab().setTypeface(Typeface.DEFAULT_BOLD);
+
+                // Set RV
+                view.getRvAdapter().setShowVolunteerNotifs(false);
+                break;
+        }
     }
+
+    @Override
+    public void onClick(int viewId, Notification notification) {
+        switch (viewId) {
+            case R.id.btn_confirm:
+                switch (notification.getNotif_type()) {
+                    case Notification.NOTIF_TYPE_JOIN_ASSOC:
+                        break;
+                    case Notification.NOTIF_TYPE_JOIN_EVENT:
+                        break;
+                    case Notification.NOTIF_TYPE_INVITE_MEMBER:
+                        break;
+                    case Notification.NOTIF_TYPE_INVITE_GUEST:
+                        break;
+                    case Notification.NOTIF_TYPE_ADD_FRIEND:
+                        interactor.friendshipReply(notification, "true", this);
+                        break;
+                }
+                break;
+            case R.id.btn_delete:
+                switch (notification.getNotif_type()) {
+                    case Notification.NOTIF_TYPE_JOIN_ASSOC:
+                        break;
+                    case Notification.NOTIF_TYPE_JOIN_EVENT:
+                        break;
+                    case Notification.NOTIF_TYPE_INVITE_MEMBER:
+                        break;
+                    case Notification.NOTIF_TYPE_INVITE_GUEST:
+                        break;
+                    case Notification.NOTIF_TYPE_ADD_FRIEND:
+                        interactor.friendshipReply(notification, "false", this);
+                        break;
+                }
+                break;
+        }
+    }
+
+//    @Override
+//    public void friendshipReply(final Notification notification) {
+//        final IOnNotificationsFinishedListener    listener = this;
+//        final String  name = notification.getSender_name();
+//
+//        // Display Dialog Box
+//        new AlertDialog.Builder(view.getContext())
+//                .setCancelable(true)
+//                .setTitle("Demande d'amis")
+//                .setMessage("Acceptez-vous la demande d'amis de " + name + " ?")
+//                .setNegativeButton("Rejeter", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        view.showProgress();
+//                        interactor.friendshipReply(notification.getId(), name, "false", view.getProgressBar(), listener);
+//                    }
+//                })
+//                .setPositiveButton("Accepter", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        view.showProgress();
+//                        interactor.friendshipReply(notification.getId(), name, "true", view.getProgressBar(), listener);
+//                    }
+//                })
+//                .show();
+//    }
 
     @Override
     public void onDialogError(String title, String msg) {
@@ -69,10 +133,23 @@ public class NotificationsPresenter implements INotificationsPresenter, IOnNotif
     }
 
     @Override
-    public void onSuccessGetNotification(List<Notification> notifications) {
+    public void onSuccessGetNotifications(List<Notification> notifications) {
+        // Init Volunteer & Owner notifications lists
+        List<Notification>  volunteerNotifs = new ArrayList<>();
+        List<Notification>  ownerNotifs = new ArrayList<>();
+
+        for (Notification notification : notifications) {
+            String  notifType = notification.getNotif_type();
+
+            if (notifType.equals(Notification.NOTIF_TYPE_INVITE_GUEST) || notifType.equals(Notification.NOTIF_TYPE_INVITE_MEMBER) || notifType.equals(Notification.NOTIF_TYPE_ADD_FRIEND))
+                volunteerNotifs.add(notification);
+            else
+                ownerNotifs.add(notification);
+        }
+
         // Set RecyclerView
         NotificationsRVAdapter adpater = view.getRvAdapter();
-        adpater.update(notifications);
+        adpater.update(volunteerNotifs, ownerNotifs);
 
         // Set Notification Number Bottom Navigation Bar
         int number = adpater.getItemCount();
@@ -83,25 +160,45 @@ public class NotificationsPresenter implements INotificationsPresenter, IOnNotif
     }
 
     @Override
-    public void onSuccessFriendshipReply(String name, String acceptance) {
+    public void onSuccessFriendshipReply(Notification notification, String acceptance) {
         // Set ProgressBar Visibility
         view.hideProgress();
 
-        // Display Dialog Success Msg
-        String msg;
+        // Set Notification Result Msg
+        switch (acceptance) {
+            case "true":
+                switch (notification.getNotif_type()) {
+                    case Notification.NOTIF_TYPE_JOIN_ASSOC:
+                        break;
+                    case Notification.NOTIF_TYPE_JOIN_EVENT:
+                        break;
+                    case Notification.NOTIF_TYPE_INVITE_MEMBER:
+                        break;
+                    case Notification.NOTIF_TYPE_INVITE_GUEST:
+                        break;
+                    case Notification.NOTIF_TYPE_ADD_FRIEND:
+                        notification.setResult("Invitation acceptée");
+                        break;
+                }
+                break;
+            case "false":
+                switch (notification.getNotif_type()) {
+                    case Notification.NOTIF_TYPE_JOIN_ASSOC:
+                        break;
+                    case Notification.NOTIF_TYPE_JOIN_EVENT:
+                        break;
+                    case Notification.NOTIF_TYPE_INVITE_MEMBER:
+                        break;
+                    case Notification.NOTIF_TYPE_INVITE_GUEST:
+                        break;
+                    case Notification.NOTIF_TYPE_ADD_FRIEND:
+                        notification.setResult("Invitation rejetée");
+                        break;
+                }
+                break;
+        }
 
-        if (acceptance.equals("true"))
-            msg = name + " a été ajouté dans votre liste d'amis.";
-        else
-            msg = "La demande de " + name + " a été rejeté.";
-
-        new AlertDialog.Builder(view.getContext())
-                .setCancelable(true)
-                .setTitle("Demande d'amis")
-                .setMessage(msg)
-                .show();
-
-        // Update the notifications RV
-        getNotifications();
+        // Update RecyclerView
+        view.getRvAdapter().notifyDataSetChanged();
     }
 }

@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
-import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.MyWidgets.DividerItemDecoration;
 import com.eip.red.caritathelp.Presenters.SubMenu.Friends.FriendsPresenter;
@@ -26,8 +25,13 @@ public class FriendsView extends Fragment implements IFriendView, View.OnClickLi
 
     private FriendsPresenter    presenter;
 
-    private RecyclerView        recyclerView;
-    private MyFriendsRVAdapter  adapter;
+    private RecyclerView        friendsRV;
+    private RecyclerView        invitationsRV;
+    private RecyclerView        sentRV;
+
+    private FriendsRVAdapter        friendsRVA;
+    private InvitationsRVAdapter    invitationsRVA;
+    private SentRVAdapter           sentRVA;
 
     private SwipeRefreshLayout  swipeRefreshLayout;
     private ProgressBar         progressBar;
@@ -110,25 +114,39 @@ public class FriendsView extends Fragment implements IFriendView, View.OnClickLi
 
     private void initRecyclerView(View view) {
         // Init Recycler Views
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_my_friends);
+        friendsRV = (RecyclerView) view.findViewById(R.id.recycler_view_my_friends);
+        invitationsRV = (RecyclerView) view.findViewById(R.id.recycler_view_invitations);
+        sentRV = (RecyclerView) view.findViewById(R.id.recycler_view_sent);
 
-        // Init Adapter
-        adapter = new MyFriendsRVAdapter(presenter);
+        // Init Adapters
+        friendsRVA = new FriendsRVAdapter(presenter);
+        invitationsRVA = new InvitationsRVAdapter(presenter);
+        sentRVA = new SentRVAdapter(presenter);
 
-        // Set Adapter
-        recyclerView.setAdapter(adapter);
+        // Set Adapters
+        friendsRV.setAdapter(friendsRVA);
+        invitationsRV.setAdapter(invitationsRVA);
+        sentRV.setAdapter(sentRVA);
 
-        // Init LayoutManager
+        // Init LayoutManagers
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
+        friendsRV.setLayoutManager(layoutManager);
+        invitationsRV.setLayoutManager(layoutManager);
+        sentRV.setLayoutManager(layoutManager);
 
         // Set Options to enable toolbar display/hide
-        recyclerView.setNestedScrollingEnabled(false);
-        recyclerView.setHasFixedSize(false);
+        friendsRV.setNestedScrollingEnabled(false);
+        friendsRV.setHasFixedSize(false);
+        invitationsRV.setNestedScrollingEnabled(false);
+        invitationsRV.setHasFixedSize(false);
+        sentRV.setNestedScrollingEnabled(false);
+        sentRV.setHasFixedSize(false);
 
-        // Init Divider (between items)
+        // Init Dividers (between items)
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST);
-        recyclerView.addItemDecoration(itemDecoration);
+        friendsRV.addItemDecoration(itemDecoration);
+        invitationsRV.addItemDecoration(itemDecoration);
+        sentRV.addItemDecoration(itemDecoration);
     }
 
 
@@ -154,7 +172,7 @@ public class FriendsView extends Fragment implements IFriendView, View.OnClickLi
         dialog.show();
     }
 
-    public MyFriendsRVAdapter getAdapter() {
+    public FriendsRVAdapter getAdapter() {
         return adapter;
     }
 

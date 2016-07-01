@@ -1,5 +1,7 @@
 package com.eip.red.caritathelp.Presenters.Organisation.Informations;
 
+import android.widget.ImageView;
+
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Organisation;
 import com.eip.red.caritathelp.Views.Organisation.Informations.OrganisationInformationsView;
@@ -21,9 +23,9 @@ public class OrganisationInformationsPresenter implements IOrganisationInformati
     }
 
     @Override
-    public void getOrganisationInformations() {
+    public void getOrganisationInformations(ImageView imageView) {
         view.showProgress();
-        interactor.getOrganisationInformations(this, view.getProgressBar());
+        interactor.getOrganisationInformations(this, imageView, view.getProgressBar());
     }
 
 

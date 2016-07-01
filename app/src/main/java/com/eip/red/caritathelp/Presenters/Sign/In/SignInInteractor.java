@@ -68,8 +68,10 @@ public class SignInInteractor {
                                 else
                                     listener.onPasswordError("Mauvais mot de passe");
                             } else {
+                                listener.onSuccess(result.getResponse());
+
                                 // Get Profile Image
-                                getProfileImg(result.getResponse(), listener);
+//                                getProfileImg(result.getResponse(), listener);
                             }
                         }
                     }

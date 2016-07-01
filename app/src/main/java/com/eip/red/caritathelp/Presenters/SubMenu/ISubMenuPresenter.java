@@ -1,4 +1,4 @@
-package com.eip.red.caritathelp.Presenters.SubMenu.Profile;
+package com.eip.red.caritathelp.Presenters.SubMenu;
 
 import android.widget.ImageView;
 

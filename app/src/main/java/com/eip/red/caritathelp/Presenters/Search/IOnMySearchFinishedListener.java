@@ -1,8 +1,6 @@
 package com.eip.red.caritathelp.Presenters.Search;
 
-import com.eip.red.caritathelp.Models.Organisation.Organisation;
-import com.eip.red.caritathelp.Models.Search.Volunteer;
-
+import com.eip.red.caritathelp.Models.Search.Search;
 import java.util.List;
 
 /**
@@ -13,9 +11,7 @@ public interface IOnMySearchFinishedListener {
 
     void onDialog(String title, String msg);
 
-    void onSuccessQueryTextSubmit(List<Volunteer> volunteers);
+    void onSuccessSearch(List<Search> searches);
 
-    void onSuccessQueryTextChange(List<Volunteer> volunteers);
-
-    void onSuccessAddFriend(String name);
+    void onSuccessAdd(Search search);
 }

@@ -5,7 +5,8 @@ import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Models.Friendship;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.Notifications.JsonNotifications;
+import com.eip.red.caritathelp.Models.Notifications.Notification;
+import com.eip.red.caritathelp.Models.Notifications.NotificationsJson;
 import com.eip.red.caritathelp.Models.User.User;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -31,19 +32,19 @@ public class NotificationsInteractor {
         json.addProperty("token", user.getToken());
 
         Ion.with(context)
-                .load("GET", Network.API_LOCATION + "/volunteers/" +  user.getId() + "/notifications")
+                .load("GET", Network.API_LOCATION + Network.API_REQUEST_NOTIFICATIONS)
                 .progressBar(progressBar)
                 .setJsonObjectBody(json)
-                .as(new TypeToken<JsonNotifications>(){})
-                .setCallback(new FutureCallback<JsonNotifications>() {
+                .as(new TypeToken<NotificationsJson>(){})
+                .setCallback(new FutureCallback<NotificationsJson>() {
                     @Override
-                    public void onCompleted(Exception error, JsonNotifications result) {
+                    public void onCompleted(Exception error, NotificationsJson result) {
                         if (error == null) {
                             // Status == 400 == error
                             if (result.getStatus() == Network.API_STATUS_ERROR)
                                 listener.onDialogError("Statut 400", result.getMessage());
                             else
-                                listener.onSuccessGetNotification(result.getResponse().getAdd_friend());
+                                listener.onSuccessGetNotifications(result.getResponse());
                         }
                         else
                             listener.onDialogError("Problème de connection", "Vérifiez votre connexion Internet");
@@ -51,16 +52,15 @@ public class NotificationsInteractor {
                 });
     }
 
-    public void friendshipReply(int notifId, final String name, final String acceptance, ProgressBar progressBar, final IOnNotificationsFinishedListener listener) {
+    public void friendshipReply(final Notification notification, final String acceptance, final IOnNotificationsFinishedListener listener) {
         JsonObject json = new JsonObject();
 
         json.addProperty("token", user.getToken());
-        json.addProperty("notif_id", String.valueOf(notifId));
+        json.addProperty("notif_id", String.valueOf(notification.getId()));
         json.addProperty("acceptance", acceptance);
 
         Ion.with(context)
                 .load("POST", Network.API_LOCATION + Network.API_REQUEST_FRIENDSHIP_REPLY)
-                .progressBar(progressBar)
                 .setJsonObjectBody(json)
                 .as(new TypeToken<Friendship>(){})
                 .setCallback(new FutureCallback<Friendship>() {
@@ -71,7 +71,7 @@ public class NotificationsInteractor {
                             if (result.getStatus() == Network.API_STATUS_ERROR)
                                 listener.onDialogError("Statut 400", result.getMessage());
                             else
-                                listener.onSuccessFriendshipReply(name, acceptance);
+                                listener.onSuccessFriendshipReply(notification, acceptance);
                         }
                         else {
                             listener.onDialogError("Problème de connection", "Vérifiez votre connexion Internet");

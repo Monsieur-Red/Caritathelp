@@ -49,7 +49,7 @@ public class SubMenuInteractor {
     }
 
     public void loadProfileImg(ImageView imageView) {
-        Network.loadImage(context, imageView, Network.API_LOCATION_2 + user.getPicture().getPicture_path().getThumb().getUrl(), R.drawable.profile_example);
+        Network.loadImage(context, imageView, Network.API_LOCATION_2 + user.getThumb_path(), R.drawable.profile_example);
     }
 
     public int getUserId() {

@@ -1,14 +1,14 @@
 package com.eip.red.caritathelp.Presenters.Search;
 
-import android.app.AlertDialog;
 import android.content.Context;
 
 import com.eip.red.caritathelp.Models.Enum.Animation;
-import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.Search.Volunteer;
+import com.eip.red.caritathelp.Models.Search.Search;
 import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
+import com.eip.red.caritathelp.Views.Organisation.Events.Event.OrganisationEventView;
+import com.eip.red.caritathelp.Views.Organisation.OrganisationView;
 import com.eip.red.caritathelp.Views.Search.MySearchView;
 import com.eip.red.caritathelp.Views.SubMenu.Profile.ProfileView;
 
@@ -28,38 +28,66 @@ public class MySearchPresenter implements IMySearchPresenter, IOnMySearchFinishe
     }
 
     @Override
-    public void onClick(int viewId, Volunteer volunteer) {
+    public void onClick(int viewId, Search search) {
+        String  resultType = search.getResult_type();
+
         switch (viewId) {
             case R.id.image:
                 // Redirect Volunteer Profile Page
                 view.getActivity().onBackPressed();
-                Tools.replaceView(view.getActivity().getCurrentFragment(), ProfileView.newInstance(volunteer.getId()), Animation.FADE_IN_OUT, false);
+
+                // Go to the right page
+                switch (resultType) {
+                    case Search.RESULT_TYPE_VOLUNTEER:
+                        Tools.replaceView(view.getActivity().getCurrentFragment(), ProfileView.newInstance(search.getId()), Animation.FADE_IN_OUT, false);
+                        break;
+                    case Search.RESULT_TYPE_ASSOC:
+                        Tools.replaceView(view.getActivity().getCurrentFragment(), OrganisationView.newInstance(search.getId(), search.getName()), Animation.FADE_IN_OUT, false);
+                        break;
+                    case Search.RESULT_TYPE_EVENT:
+                        Tools.replaceView(view.getActivity().getCurrentFragment(), OrganisationEventView.newInstance(search.getId(), search.getName()), Animation.FADE_IN_OUT, false);
+                        break;
+                }
                 break;
             case R.id.name:
                 // Redirect Volunteer Profile Page
                 view.getActivity().onBackPressed();
-                Tools.replaceView(view.getActivity().getCurrentFragment(), ProfileView.newInstance(volunteer.getId()), Animation.FADE_IN_OUT, false);
-                break;
-            case R.id.btn_add_friend:
-                // Set ProgressBar Visibility
-                view.showProgress();
 
-                // Add Friend Request
-                String name = volunteer.getFirstname() + " " + volunteer.getLastname();
-                interactor.addFriend(volunteer.getId(), name, view.getProgressBar(), this);
+                // Go to the right page
+                switch (resultType) {
+                    case Search.RESULT_TYPE_VOLUNTEER:
+                        Tools.replaceView(view.getActivity().getCurrentFragment(), ProfileView.newInstance(search.getId()), Animation.FADE_IN_OUT, false);
+                        break;
+                    case Search.RESULT_TYPE_ASSOC:
+                        Tools.replaceView(view.getActivity().getCurrentFragment(), OrganisationView.newInstance(search.getId(), search.getName()), Animation.FADE_IN_OUT, false);
+                        break;
+                    case Search.RESULT_TYPE_EVENT:
+                        Tools.replaceView(view.getActivity().getCurrentFragment(), OrganisationEventView.newInstance(search.getId(), search.getName()), Animation.FADE_IN_OUT, false);
+                        break;
+                }
+                break;
+            case R.id.btn_add:
+                switch (resultType) {
+                    case Search.RESULT_TYPE_VOLUNTEER:
+                        // Set ProgressBar Visibility
+                        view.showProgress();
+
+                        // Add Friend Request
+                        interactor.addFriend(search, this);
+                        break;
+                    case Search.RESULT_TYPE_ASSOC:
+                        break;
+                    case Search.RESULT_TYPE_EVENT:
+                        break;
+                }
                 break;
         }
     }
 
     @Override
-    public void getQueryTextSubmit(String query) {
-//        view.showProgress();
-    }
-
-    @Override
-    public void getQueryTextChange(String query) {
+    public void search(String query) {
         view.showProgress();
-        interactor.getQueryTextChange(query, view.getProgressBar(), this);
+        interactor.search(query, view.getProgressBar(), this);
     }
 
     @Override
@@ -74,30 +102,23 @@ public class MySearchPresenter implements IMySearchPresenter, IOnMySearchFinishe
     }
 
     @Override
-    public void onSuccessQueryTextSubmit(List<Volunteer> volunteers) {
-        // Set ProgressBar Visibility
-        view.hideProgress();
-    }
-
-    @Override
-    public void onSuccessQueryTextChange(List<Volunteer> volunteers) {
+    public void onSuccessSearch(List<Search> searches) {
         // Set RecyclerView
-        view.getRvAdapter().update(volunteers);
+        view.getRvAdapter().update(searches);
 
         // Set ProgressBar Visibility
         view.hideProgress();
     }
 
     @Override
-    public void onSuccessAddFriend(String name) {
+    public void onSuccessAdd(Search search) {
+        // Set Result Research Msg
+        search.setResult("Invitation envoyée");
+
+        // Update Recycler View
+        view.getRvAdapter().notifyDataSetChanged();
+
         // Set ProgressBar Visibility
         view.hideProgress();
-
-        // Display Dialog Success Message
-        new AlertDialog.Builder(view.getActivity())
-                .setCancelable(true)
-                .setTitle("Invitation envoyée")
-                .setMessage("En attente de la réponse de " + name)
-                .show();
     }
 }

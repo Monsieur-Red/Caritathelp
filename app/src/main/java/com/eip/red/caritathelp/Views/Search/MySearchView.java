@@ -10,15 +10,13 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
-import com.eip.red.caritathelp.Models.Search.Volunteer;
 import com.eip.red.caritathelp.MyWidgets.DividerItemDecoration;
 import com.eip.red.caritathelp.Presenters.Search.MySearchPresenter;
 import com.eip.red.caritathelp.R;
-
-import java.util.List;
 
 /**
  * Created by pierr on 19/04/2016.
@@ -79,7 +77,7 @@ public class MySearchView implements IMySearchView {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (!TextUtils.isEmpty(newText))
-                    presenter.getQueryTextChange(newText);
+                    presenter.search(newText);
                 else
                     rvAdapter.update(null);
                 return false;
@@ -89,14 +87,26 @@ public class MySearchView implements IMySearchView {
         MenuItemCompat.setOnActionExpandListener(item, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
+                // Show RV
                 recyclerView.bringToFront();
                 recyclerView.setVisibility(View.VISIBLE);
+
+                // Hide NavigationBottomBar
+                activity.getMyNavigationBottomBar().getBar().setVisibility(View.GONE);
+
+                // Show Keyboard
+                ((InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+
                 return true; // Return true to expand action view
             }
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
+                // Hide RV
                 recyclerView.setVisibility(View.GONE);
+
+                // Show NavigationBottomBar
+                activity.getMyNavigationBottomBar().getBar().setVisibility(View.VISIBLE);
                 return true; // Return true to collapse action view
             }
         });

@@ -14,8 +14,6 @@ public interface IOnProfileFinishedListener {
 
     void onDialog(String title, String msg);
 
-    void onFailureInitProfileImg();
-
     void onSuccessUploadProfileImg();
 
     void onSuccessGetProfile(User user, List<Friend> friend);

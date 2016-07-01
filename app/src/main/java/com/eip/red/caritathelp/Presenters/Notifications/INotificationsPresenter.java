@@ -9,6 +9,8 @@ public interface INotificationsPresenter {
 
     void getNotifications();
 
-    void friendshipReply(Notification notification);
+    void onClick(int viewId);
+
+    void onClick(int viewId, Notification notification);
 
 }
