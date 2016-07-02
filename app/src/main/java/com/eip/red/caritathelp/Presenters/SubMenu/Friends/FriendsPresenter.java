@@ -2,11 +2,12 @@ package com.eip.red.caritathelp.Presenters.SubMenu.Friends;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
+import android.view.View;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.Friends.Friend;
-import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
@@ -31,8 +32,61 @@ public class FriendsPresenter implements IFriendsPresenter, IOnFriendsFinishedLi
 
     @Override
     public void onClick(int viewId) {
-        if (viewId == R.id.btn_add)
-            ((MainActivity) view.getActivity()).getMySearchView().show();
+        switch (viewId) {
+            case R.id.my_friends:
+                view.showProgress();
+
+                // Set RecyclerView Visibility
+                view.getFriendsRV().setVisibility(View.VISIBLE);
+                view.getInvitationsRV().setVisibility(View.GONE);
+                view.getSentRV().setVisibility(View.GONE);
+
+                // Set TextStyle Tabs
+                view.getFriends().setTypeface(Typeface.DEFAULT_BOLD);
+                view.getInvitations().setTypeface(Typeface.DEFAULT);
+                view.getSent().setTypeface(Typeface.DEFAULT);
+
+                // Update Data
+                interactor.getMyFriends(view.getProgressBar(), this);
+                break;
+            case R.id.invitations:
+//                view.showProgress();
+
+                // Set RecyclerView Visibility
+                view.getFriendsRV().setVisibility(View.GONE);
+                view.getInvitationsRV().setVisibility(View.VISIBLE);
+                view.getSentRV().setVisibility(View.GONE);
+
+                // Set TextStyle Tabs
+                view.getFriends().setTypeface(Typeface.DEFAULT);
+                view.getInvitations().setTypeface(Typeface.DEFAULT_BOLD);
+                view.getSent().setTypeface(Typeface.DEFAULT);
+
+                // Update Data
+//                interactor.getMyFriends(view.getProgressBar(), this);
+
+                break;
+            case R.id.sent:
+//                view.showProgress();
+
+                // Set RecyclerView Visibility
+                view.getFriendsRV().setVisibility(View.GONE);
+                view.getInvitationsRV().setVisibility(View.GONE);
+                view.getSentRV().setVisibility(View.VISIBLE);
+
+                // Set TextStyle Tabs
+                view.getFriends().setTypeface(Typeface.DEFAULT);
+                view.getInvitations().setTypeface(Typeface.DEFAULT);
+                view.getSent().setTypeface(Typeface.DEFAULT_BOLD);
+
+                // Update Data
+//                interactor.getMyFriends(view.getProgressBar(), this);
+                break;
+            case R.id.btn_add:
+                // Go to Search View in order to search new friends
+                ((MainActivity) view.getActivity()).getMySearchView().show();
+                break;
+        }
     }
 
     @Override
@@ -99,7 +153,7 @@ public class FriendsPresenter implements IFriendsPresenter, IOnFriendsFinishedLi
     @Override
     public void onSuccessGetMyFriends(List<Friend> friends) {
         // Set RecyclerView
-        view.getAdapter().update(friends);
+        view.getFriendsRVA().update(friends);
 
         // Set ProgressBar Visibility
         view.hideProgress();

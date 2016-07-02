@@ -41,9 +41,6 @@ public class ProfilePresenterTest {
 //
 //        ProfileView view = ProfileView.newInstance(user.getId());
 //
-//        if (view.getContext() == null)
-//            System.out.println("WHATF");
-
 //        profilePresenter = new ProfilePresenter(ourMock);// Mockito.mock(ProfilePresenter.class);
 //        user = Mockito.mock(User.class);
 

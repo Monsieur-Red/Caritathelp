@@ -95,7 +95,7 @@
                             android:background="?android:attr/listDivider" />
 
                         <ImageButton
-                            android:id="@+id/btn_addd"
+                            android:id="@+id/btn_add"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="4dp"

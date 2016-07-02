@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.User.User;
@@ -33,6 +34,9 @@ public class FriendsView extends Fragment implements IFriendView, View.OnClickLi
     private InvitationsRVAdapter    invitationsRVA;
     private SentRVAdapter           sentRVA;
 
+    private TextView            friends;
+    private TextView            invitations;
+    private TextView            sent;
     private SwipeRefreshLayout  swipeRefreshLayout;
     private ProgressBar         progressBar;
     private AlertDialog         dialog;
@@ -71,6 +75,9 @@ public class FriendsView extends Fragment implements IFriendView, View.OnClickLi
         View view = inflater.inflate(R.layout.fragment_submenu_friends, container, false);
 
         // Init UI Element
+        friends = (TextView) view.findViewById(R.id.my_friends);
+        invitations = (TextView) view.findViewById(R.id.invitations);
+        sent = (TextView) view.findViewById(R.id.sent);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
 
@@ -82,6 +89,9 @@ public class FriendsView extends Fragment implements IFriendView, View.OnClickLi
 
         // Init Listener
         view.findViewById(R.id.btn_add).setOnClickListener(this);
+        friends.setOnClickListener(this);
+        invitations.setOnClickListener(this);
+        sent.setOnClickListener(this);
 
         return (view);
     }
@@ -129,10 +139,9 @@ public class FriendsView extends Fragment implements IFriendView, View.OnClickLi
         sentRV.setAdapter(sentRVA);
 
         // Init LayoutManagers
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        friendsRV.setLayoutManager(layoutManager);
-        invitationsRV.setLayoutManager(layoutManager);
-        sentRV.setLayoutManager(layoutManager);
+        friendsRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        invitationsRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        sentRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         // Set Options to enable toolbar display/hide
         friendsRV.setNestedScrollingEnabled(false);
@@ -148,7 +157,6 @@ public class FriendsView extends Fragment implements IFriendView, View.OnClickLi
         invitationsRV.addItemDecoration(itemDecoration);
         sentRV.addItemDecoration(itemDecoration);
     }
-
 
     @Override
     public void onClick(View v) {
@@ -172,8 +180,40 @@ public class FriendsView extends Fragment implements IFriendView, View.OnClickLi
         dialog.show();
     }
 
-    public FriendsRVAdapter getAdapter() {
-        return adapter;
+    public RecyclerView getFriendsRV() {
+        return friendsRV;
+    }
+
+    public RecyclerView getInvitationsRV() {
+        return invitationsRV;
+    }
+
+    public RecyclerView getSentRV() {
+        return sentRV;
+    }
+
+    public FriendsRVAdapter getFriendsRVA() {
+        return friendsRVA;
+    }
+
+    public InvitationsRVAdapter getInvitationsRVA() {
+        return invitationsRVA;
+    }
+
+    public SentRVAdapter getSentRVA() {
+        return sentRVA;
+    }
+
+    public TextView getFriends() {
+        return friends;
+    }
+
+    public TextView getInvitations() {
+        return invitations;
+    }
+
+    public TextView getSent() {
+        return sent;
     }
 
     public ProgressBar getProgressBar() {
