@@ -1,6 +1,43 @@
 <resources>
     <string name="app_name">Caritathelp</string>
 
+    <!-- Views Names -->
+    <string name="view_name_home">@string/app_name</string>
+
+    <string name="view_name_mailbox">@string/app_name</string>
+
+    <string name="view_name_notifications">@string/app_name</string>
+
+    <string name="view_name_submenu">@string/app_name</string>
+    <string name="view_name_submenu_profile">Profil</string>
+    <string name="view_name_submenu_my_organisations">Mes associations</string>
+    <string name="view_name_submenu_my_organisations_creation">Créer une association</string>
+    <string name="view_name_submenu_my_events">Mes événements</string>
+    <string name="view_name_submenu_my_events_creation">Créer un événement</string>
+    <string name="view_name_submenu_account_management">Gestion de compte</string>
+    <string name="view_name_submenu_friends">Amis</string>
+    <string name="view_name_submenu_friends_add">Rechercher des amis</string>
+    <string name="view_name_submenu_invitations">Invitations</string>
+
+    <string name="view_name_organisation">Association</string>
+    <string name="view_name_organisation_post">Poster</string>
+    <string name="view_name_organisation_members">Membres</string>
+    <string name="view_name_organisation_events">Événement</string>
+    <string name="view_name_organisation_informations">Informations</string>
+    <string name="view_name_organisation_management">Gestion de l\'association</string>
+
+    <string name="view_name_organisation_event_guests">Participants</string>
+    <string name="view_name_organisation_event_management">Gestion de l\'événement</string>
+
+    <!-- Search Bar -->
+    <string name="search_bar_btn_search">Search</string>
+
+    <!-- Bottom Navigation Bar -->
+    <string name="bottom_navigation_bar_news">Actualités</string>
+    <string name="bottom_navigation_bar_mailbox">Messages</string>
+    <string name="bottom_navigation_bar_notifications">Notifications</string>
+    <string name="bottom_navigation_bar_profile">Mon profil</string>
+
     <!-- Connection View -->
     <string name="connectionview_title">Connexion</string>
     <string name="text_view_email">Email</string>
@@ -45,7 +82,6 @@
     <string name="subscribe">S\'inscrire</string>
 
     <!-- OrganisationSearch View -->
-    <string name="organisations_search_bar">Rechercher une association</string>
 
     <!-- MailBox View -->
     <string name="mailbox_toolbar_title">Messagerie</string>
@@ -54,31 +90,55 @@
     <string name="notifications_toolbar_title">Notifications</string>
 
     <!-- SubMenu View -->
-    <string name="submenu_my_events">Mes événements</string>
+    <string name="submenu_my_profile">Mon profil</string>
     <string name="submenu_my_organisations">Mes associations</string>
+    <string name="submenu_my_events">Mes événements</string>
     <string name="submenu_friends">Amis</string>
+    <string name="submenu_invitations">Invitations</string>
     <string name="submenu_account_settings">Gestion de compte</string>
     <string name="submenu_security">Confidentialités</string>
     <string name="submenu_help">Aide</string>
     <string name="submenu_logout">Déconnexion</string>
     <string name="submenu_delete_account">Supprimer mon compte</string>
 
+    <!-- Profile View -->
+    <string name="profile_friends">Amis</string>
+    <string name="profile_organisations">Associations</string>
+    <string name="profile_events">Événements</string>
+
     <!-- MyOrganisations View -->
     <string name="my_organisations_title">Mes associations</string>
+
+    <!-- MyEvents View -->
+    <!-- Spinner -->
+    <string-array name="my_events_spinner">
+        <item>En ce moment</item>
+        <item>A venir</item>
+        <item>Passé</item>
+        <item>Organisateur</item>
+    </string-array>
+
+    <!-- MyFriends View -->
+    <string name="friends_my_friends">Mes amis</string>
+    <string name="friends_invitations">Invitations</string>
+    <string name="friends_sent">Envoyées</string>
+
+    <!-- Invitations View -->
+    <string name="invitations_friends">Amis</string>
+    <string name="invitations_organisations">Associations</string>
+    <string name="invitations_events">Événement</string>
 
     <!-- OrganisationCreation View -->
     <string name="organisation_creation_bar_title">Créer une association</string>
 
     <!-- Organisation View -->
     <string name="organisation_members">Membres</string>
-    <string name="organisation_events">Evénements</string>
+    <string name="organisation_events">Événement</string>
     <string name="organisation_informations">Informations</string>
 
     <!-- Organisation Members View -->
-    <string name="organisation_members_search">Rechercher un membre</string>
 
     <!-- Organisation Events View -->
-    <string name="organisation_events_search">Rechercher un événement</string>
 
     <!-- Organisation Event View -->
     <string name="organisation_event_members">Participants</string>
@@ -92,6 +152,19 @@
     <string name="organisation_management_settings">Modifier les paramètres</string>
     <string name="organisation_management_emergency_system">Système d\'urgence</string>
     <string name="organisation_management_delete">Supprimer l\'association</string>
+
+    <!-- OrganisationManagement Event Creation View -->
+    <string name="organisation_management_event_title">Titre de l\'événement</string>
+    <string name="organisation_management_event_begin">Début de l\'événement</string>
+    <string name="organisation_management_event_end">Fin de l\'événement</string>
+    <string name="organisation_management_event_date">Date</string>
+    <string name="organisation_management_event_time">Heure</string>
+    <string name="organisation_management_event_location">Lieu</string>
+    <string name="organisation_management_event_description">Description</string>
+    <string name="organisation_management_event_create">Créer</string>
+
+    <!-- EventManagement Event Creation View -->
+    <string name="organisation_event_management_save">Sauvegarder les changements</string>
 
     <!-- Account Settings View -->
     <string name="account_settings_toolbar_title">Gestion de compte</string>

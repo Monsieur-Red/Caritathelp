@@ -3,6 +3,7 @@ package com.eip.red.caritathelp.Models;
 import android.content.Intent;
 
 import com.eip.red.caritathelp.Models.Home.NewsList;
+import com.eip.red.caritathelp.Models.User.User;
 
 import java.io.Serializable;
 
@@ -12,8 +13,7 @@ import java.io.Serializable;
 
 public class ModelManager implements Serializable {
 
-    private User        user;
-    private Network     network;
+    private User user;
     private NewsList    newsList;
 
     public ModelManager(Intent intent) {
@@ -23,16 +23,11 @@ public class ModelManager implements Serializable {
 
         // RIGHT METHOD
         this.user =  (User) intent.getSerializableExtra("user");
-        this.network = (Network) intent.getSerializableExtra("network");
         newsList = new NewsList();
     }
 
     public User getUser() {
         return (user);
-    }
-
-    public Network  getNetwork() {
-        return (network);
     }
 
     public NewsList getNewsList() {

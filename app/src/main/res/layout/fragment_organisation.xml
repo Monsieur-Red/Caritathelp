@@ -1,4 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_120sdp"
+                android:background="@color/background">
+
+                <!-- Logo -->
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/logo"
+                    android:layout_below="@+id/name"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_margin="10dp"
+
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/logo_caritathelp_2017_picture_only_normal"
+                    app:civ_border_color="#EEEEEE"
+                    app:civ_border_width="2dp"
+                    app:civ_shadow="true"
+                    app:civ_shadow_radius="2" />
+
+                <!-- Join Bnt -->
+                <ImageButton
+                    android:id="@+id/btn_join"
+                    android:layout_toLeftOf="@+id/logo"
+                    android:layout_above="@+id/menu_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+
+                    android:src="@drawable/join_orga_48dp"
+                    android:scaleType="centerInside"
+                    android:background="@android:color/transparent"/>
+
+                <!-- Follow Bnt -->
+                <ImageButton
+                    android:id="@+id/btn_follow"
+                    android:layout_toRightOf="@+id/logo"
+                    android:layout_above="@+id/menu_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+
+                    android:src="@drawable/follow_48dp"
+                    android:scaleType="centerInside"
+                    android:background="@android:color/transparent"/>
+
+                <!-- Menu Bar -->
+                <LinearLayout
+                    android:id="@+id/menu_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_alignParentBottom="true"
+                    android:elevation="4dp">
+
+                    <!-- DIVIDER -->
+                    <View style="@style/Divider"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:orientation="horizontal"
+                        android:background="@color/icons"
+                        android:weightSum="6">
+
+                        <ImageButton
+                            android:id="@+id/btn_post"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_create_light_green_400_36dp"
+                            android:scaleType="centerInside"
+                            android:background="@android:color/transparent" />
+
+                        <ImageButton
+                            android:id="@+id/btn_members"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_people_light_green_400_36dp"
+                            android:scaleType="centerInside"
+                            android:background="@android:color/transparent" />
+
+                        <ImageButton
+                            android:id="@+id/btn_management"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_settings_light_green_400_36dp"
+                            android:scaleType="centerInside"
+                            android:background="@android:color/transparent"
+                            android:visibility="invisible" />
+
+                        <ImageButton
+                            android:id="@+id/btn_events"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_event_light_green_400_36dp"
+                            android:scaleType="centerInside"
+                            android:background="@android:color/transparent" />
+
+                        <ImageButton
+                            android:id="@+id/btn_informations"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_info_outline_light_green_400_36dp"
+                            android:scaleType="centerInside"
+                            android:background="@android:color/transparent" />
+
+                    </LinearLayout>
+
+                    <!-- DIVIDER -->
+                    <View style="@style/Divider"/>
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+</RelativeLayout>
+
+
+<!--
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -15,7 +188,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- BAR 1 - Presentation orga -->
+            &lt;!&ndash; BAR 1 - Presentation orga &ndash;&gt;
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_160sdp">
@@ -54,35 +227,12 @@
                     android:textSize="@dimen/_40sdp"
                     android:textStyle="bold" />
 
-                <!--<TextView-->
-                    <!--android:id="@+id/organisation_name"-->
-                    <!--android:layout_above="@+id/organisation_members_number"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="@dimen/_20sdp"-->
-
-                    <!--android:text="Caritathelp"-->
-                    <!--android:textSize="@dimen/_30sdp"-->
-                    <!--android:textStyle="bold" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/organisation_members_number"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginBottom="@dimen/_10sdp"-->
-                    <!--android:layout_marginLeft="@dimen/_20sdp"-->
-
-                    <!--android:layout_alignParentBottom="true"-->
-                    <!--android:text="6 membres"-->
-                    <!--android:textSize="@dimen/_20sdp" />-->
-
-
             </RelativeLayout>
 
-            <!-- DIVIDER -->
+            &lt;!&ndash; DIVIDER &ndash;&gt;
             <View style="@style/Divider" />
 
-            <!-- BAR 2 - MENU -->
+            &lt;!&ndash; BAR 2 - MENU &ndash;&gt;
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
@@ -130,12 +280,6 @@
 
             </LinearLayout>
 
-            <!-- DIVIDER -->
-            <View style="@style/Divider" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_10sdp"
-                android:background="@color/divider" />
 
             <android.support.v7.widget.CardView
                 android:id="@+id/organisation_events_card_view"
@@ -176,15 +320,16 @@
 
             </android.support.v7.widget.CardView>
 
-            <!-- NEWS -->
+            &lt;!&ndash; NEWS &ndash;&gt;
             <ListView
                 android:id="@+id/organisation_list_view"
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent">
+                android:layout_width="match_parent"
+                android:divider="@null">
             </ListView>
 
         </LinearLayout>
 
     </ScrollView>
 
-</LinearLayout>
+</LinearLayout>-->

@@ -8,6 +8,7 @@ public interface IOrganisationPresenter {
 
     void onClick(int viewId);
 
-    String getOrganisationName();
+    void getOrganisation();
 
+    void getNews();
 }

@@ -15,18 +15,18 @@ import com.koushikdutta.ion.Ion;
 
 public class OrganisationSearchInteractor {
 
-    private Context         context;
-    private Network         network;
+    private Context     context;
+    private String      token;
 
-    public OrganisationSearchInteractor(Context context, Network network) {
+    public OrganisationSearchInteractor(Context context, String token) {
         this.context = context;
-        this.network = network;
+        this.token = token;
     }
 
     public void getAllOrganisations(final IOnOrganisationSearchFinishedListener listener) {
         JsonObject json = new JsonObject();
 
-        json.addProperty("token", network.getToken());
+        json.addProperty("token", token);
 
         Ion.with(context)
                 .load("GET", Network.API_LOCATION + Network.API_REQUEST_ORGANISATION)

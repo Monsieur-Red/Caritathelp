@@ -18,23 +18,42 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 repositories {
     mavenCentral()
-}
+    jcenter()
+    maven {
+        url "https://jitpack.io"
+    }}
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+
+    // Unit testing dependencies
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.+'
-    compile "com.android.support:support-v13:23.+"
+    testCompile "org.mockito:mockito-core:1.+"
+
+    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile "com.android.support:support-v13:23.3.0"
     compile 'com.android.support:cardview-v7:23.0.+'
-    compile 'com.android.support:recyclerview-v7:23.0.0'
-    compile 'com.android.support:design:23.+'
+    compile 'com.android.support:recyclerview-v7:23.1.0'
+    compile 'com.android.support:design:23.2.1'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.beardedhen:androidbootstrap:2.0.0'
+
+    // Network libs
     compile 'com.koushikdutta.ion:ion:2.+'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile "org.java-websocket:Java-WebSocket:1.3.0"
+
+    compile 'joda-time:joda-time:2.9.3'
+    compile 'com.mikhaellopez:circularimageview:3.0.2'
+    compile 'com.aurelhubert:ahbottomnavigation:1.0.3'
 
     compile 'com.nineoldandroids:library:2.4.0+'
     compile 'fr.avianey.com.viewpagerindicator:library:2.4.1@aar'

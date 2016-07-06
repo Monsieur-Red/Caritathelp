@@ -1,14 +1,15 @@
 package com.eip.red.caritathelp.Views.Organisation.Events.Event;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.graphics.LightingColorFilter;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Home.News;
 import com.eip.red.caritathelp.Models.Network;
+import com.eip.red.caritathelp.Models.User.User;
+import com.eip.red.caritathelp.MyWidgets.DividerItemDecoration;
 import com.eip.red.caritathelp.Presenters.Organisation.Events.Event.OrganisationEventPresenter;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
@@ -31,16 +34,18 @@ public class OrganisationEventView extends Fragment implements IOrganisationEven
     private OrganisationEventPresenter presenter;
 
     private RecyclerView    recyclerView;
+    private ImageButton     joinBtn;
+    private ImageButton     quitBtn;
+    private ImageButton     managementBtn;
     private ProgressBar     progressBar;
     private AlertDialog     dialog;
-
 
     public static OrganisationEventView newInstance(int eventId, String title) {
         OrganisationEventView    myFragment = new OrganisationEventView();
 
         Bundle args = new Bundle();
+        args.putString("page", title);
         args.putInt("event id", eventId);
-        args.putString("event title", title);
         myFragment.setArguments(args);
 
         return (myFragment);
@@ -51,14 +56,14 @@ public class OrganisationEventView extends Fragment implements IOrganisationEven
         super.onCreate(savedInstanceState);
 
         // Get Network Model & Id Organisation
-        Network network = ((MainActivity) getActivity()).getModelManager().getNetwork();
+        User    user = ((MainActivity) getActivity()).getModelManager().getUser();
         int     eventId = getArguments().getInt("event id");
 
         // Init Presenter
-        presenter = new OrganisationEventPresenter(this, network, eventId);
+        presenter = new OrganisationEventPresenter(this, user.getToken(), eventId);
 
         // Init Dialog
-        dialog = new AlertDialog.Builder(getActivity())
+        dialog = new AlertDialog.Builder(getContext())
                 .setCancelable(true)
                 .create();
     }
@@ -69,45 +74,58 @@ public class OrganisationEventView extends Fragment implements IOrganisationEven
         // Inflate the layout for this fragment
         View    view = inflater.inflate(R.layout.fragment_organisation_event, container, false);
 
-        // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Événement", true, false);
-
         // Init UI Element
+        joinBtn = (ImageButton) view.findViewById(R.id.btn_join);
+        quitBtn = (ImageButton) view.findViewById(R.id.btn_quit);
+        managementBtn = (ImageButton) view.findViewById(R.id.btn_management);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
-
-        // Get Event Title
-        String title = getArguments().getString("event title");
-
-        // Set Event Title
-        TextView    titleTV = (TextView) view.findViewById(R.id.title);
-        titleTV.setText(Tools.upperCaseFirstLetter(title));
 
         // Init Image Filter (Darken the image)
         ImageView imageView = (ImageView) view.findViewById(R.id.image);
         LightingColorFilter lcf = new LightingColorFilter(0xFF888888, 0x00222222);
         imageView.setColorFilter(lcf);
 
-        // Init RecyclerView & Listener & Adapter
+        // Init RecyclerView
+        initRecyclerView(view);
+
+        // Init Listener
+        joinBtn.setOnClickListener(this);
+        quitBtn.setOnClickListener(this);
+        view.findViewById(R.id.btn_guests).setOnClickListener(this);
+        view.findViewById(R.id.btn_informations).setOnClickListener(this);
+        managementBtn.setOnClickListener(this);
+
+        return (view);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Init Event Model
+        presenter.getEvent();
+
+        // Init News Model
+//        presenter.getNews();
+    }
+
+    private void initRecyclerView(View view) {
+        // Init RecyclerView
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         recyclerView.setAdapter(new OrganisationEventRVAdapter());
 
         // Init LayoutManager
-        LinearLayoutManager llayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        recyclerView.setLayoutManager(llayoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Init Listener
-        view.findViewById(R.id.btn_join).setOnClickListener(this);
-        view.findViewById(R.id.btn_members).setOnClickListener(this);
-        view.findViewById(R.id.btn_informations).setOnClickListener(this);
+        // Set Options to enable toolbar display/hide
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setHasFixedSize(false);
 
-        // Init Event
-
-        // Init News Model
-//        presenter.getNews();
-
-
-        return (view);
+        // Init Divider (between items)
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this.getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL);
+        recyclerView.addItemDecoration(itemDecoration);
     }
+
 
     @Override
     public void showProgress() {
@@ -134,5 +152,21 @@ public class OrganisationEventView extends Fragment implements IOrganisationEven
     @Override
     public void onClick(View v) {
         presenter.onClick(v.getId());
+    }
+
+    public ImageButton getJoinBtn() {
+        return joinBtn;
+    }
+
+    public ImageButton getQuitBtn() {
+        return quitBtn;
+    }
+
+    public ImageButton getManagementBtn() {
+        return managementBtn;
+    }
+
+    public ProgressBar getProgressBar() {
+        return progressBar;
     }
 }

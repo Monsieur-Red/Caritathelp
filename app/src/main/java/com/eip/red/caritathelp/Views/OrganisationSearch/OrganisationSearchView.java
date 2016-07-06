@@ -1,22 +1,19 @@
 package com.eip.red.caritathelp.Views.OrganisationSearch;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.Organisation.Organisation;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.Presenters.OrganisationSearch.OrganisationSearchPresenter;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
@@ -34,8 +31,6 @@ public class OrganisationSearchView extends Fragment implements IOrganisationSea
 
     private View            view;
     private ListView        listView;
-    private EditText        searchBar;
-    private Button          cancel;
     private ProgressBar     progressBar;
     private AlertDialog     dialog;
 
@@ -43,11 +38,11 @@ public class OrganisationSearchView extends Fragment implements IOrganisationSea
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get Model
-        Network network = ((MainActivity) getActivity()).getModelManager().getNetwork();
+        // Get User Model
+        User user = ((MainActivity) getActivity()).getModelManager().getUser();
 
         // Init Presenter
-        presenter = new OrganisationSearchPresenter(this, network);
+        presenter = new OrganisationSearchPresenter(this, user.getToken());
 
         // Init Dialog
         dialog = new AlertDialog.Builder(getActivity())
@@ -60,12 +55,10 @@ public class OrganisationSearchView extends Fragment implements IOrganisationSea
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_organisation_search, container, false);
 
-        // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Associations", false, false);
+        // Init SearchBar
+//        initSearchBar();
 
         // Init UI Element
-        searchBar = (EditText) view.findViewById(R.id.organisations_search_text);
-        cancel = (Button) view.findViewById(R.id.organisation_search_btn_cancel);
         progressBar = (ProgressBar) view.findViewById(R.id.organisation_search_progress_bar);
 
         // Init ListView & Listener & Adapter
@@ -74,16 +67,15 @@ public class OrganisationSearchView extends Fragment implements IOrganisationSea
         Tools.setListViewHeightBasedOnChildren(listView);
         initListViewListener();
 
-        // Init SearchBar EditText listener
-        initSearchBarListener();
+        return (view);
+    }
 
-        // Init TopBar listener
-        initTopBarListener();
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         // Get All Organisations
         presenter.getAllOrganisations();
-
-        return (view);
     }
 
     private void initListViewListener() {
@@ -93,17 +85,28 @@ public class OrganisationSearchView extends Fragment implements IOrganisationSea
                 // Go to organisation page
                 presenter.goToOrganisationView((Organisation) parent.getItemAtPosition(position));
 
-                // Init Text Search Bar
-                searchBar.invalidate();
-                searchBar.getText().clear();
-                searchBar.setHint(R.string.organisations_search_bar);
+//                // Init Text Search Bar
+//                searchBar.invalidate();
+//                searchBar.getText().clear();
+//                searchBar.setHint(R.string.organisations_search_bar);
             }
         });
     }
 
-    private void initSearchBarListener() {
-        // Init Filter
-        searchBar.addTextChangedListener(new TextWatcher() {
+/*
+    private void initSearchBar() {
+        MySearchBar         searchBar = ((MainActivity) getActivity()).getMySearchBar();
+        final EditText      searchText = searchBar.getSearchText();
+        final ImageButton   cancelBtn = searchBar.getCancelBtn();
+
+        // Show SearchBar
+        searchBar.setVisibility(View.VISIBLE);
+
+        // Show the SearchBar
+        searchBar.show(R.string.search_bar_organisation);
+
+        //Init SearchText listener & filter
+        searchText.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void afterTextChanged(Editable arg0) {
@@ -117,43 +120,25 @@ public class OrganisationSearchView extends Fragment implements IOrganisationSea
 
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                String  text = searchBar.getText().toString().toLowerCase(Locale.getDefault());
+                if (TextUtils.isEmpty(arg0)) {
+                    // Hide Cancel Btn
+                    cancelBtn.setVisibility(View.GONE);
 
-                ((OrganisationsSearchListViewAdapter) listView.getAdapter()).filter(text);
+                    // Flush Filter
+//                    ((MyEventsRVAdapter) recyclerView.getAdapter()).flushFilter();
+                }
+                else {
+                    // Show Cancel Btn
+                    cancelBtn.setVisibility(View.VISIBLE);
+
+                    // Filter text
+                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
+                    ((OrganisationsSearchListViewAdapter) listView.getAdapter()).filter(text);
+                }
             }
         });
     }
-
-    private void initTopBarListener() {
-        view.findViewById(R.id.organisations_search_bar).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Show Cancel Btn
-                cancel.setVisibility(View.VISIBLE);
-
-                // Search Bar EditText Request Focus
-                searchBar.requestFocus();
-
-                // Show Keyboard
-                Tools.showKeyboard(getActivity().getBaseContext(), searchBar);
-            }
-        });
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Hide Btn
-                cancel.setVisibility(View.GONE);
-
-                // Search Bar EditText Clear Focus
-                searchBar.clearFocus();
-
-                // Hide Keyboard
-                Tools.hideKeyboard(getActivity().getBaseContext(), view);
-            }
-        });
-    }
-
+*/
 
     @Override
     public void showProgress() {

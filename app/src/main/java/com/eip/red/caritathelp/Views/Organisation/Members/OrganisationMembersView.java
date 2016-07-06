@@ -1,26 +1,26 @@
 package com.eip.red.caritathelp.Views.Organisation.Members;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
+import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.Organisation.Member;
 import com.eip.red.caritathelp.Models.Network;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.Presenters.Organisation.Members.OrganisationMembersPresenter;
 import com.eip.red.caritathelp.R;
+import com.eip.red.caritathelp.Tools;
+import com.eip.red.caritathelp.Views.SubMenu.Profile.ProfileView;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by pierr on 25/02/2016.
@@ -30,8 +30,9 @@ public class OrganisationMembersView extends Fragment implements IOrganisationMe
 
     private OrganisationMembersPresenter    presenter;
 
+    private User        user;
+
     private ListView    listView;
-    private EditText    searchBar;
     private ProgressBar progressBar;
     private AlertDialog dialog;
 
@@ -39,6 +40,7 @@ public class OrganisationMembersView extends Fragment implements IOrganisationMe
         OrganisationMembersView    myFragment = new OrganisationMembersView();
 
         Bundle args = new Bundle();
+        args.putInt("page", R.string.view_name_organisation_members);
         args.putInt("organisation id", idOrganisation);
         myFragment.setArguments(args);
 
@@ -49,12 +51,14 @@ public class OrganisationMembersView extends Fragment implements IOrganisationMe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get Network Model & Id Organisation
-        Network network = ((MainActivity) getActivity()).getModelManager().getNetwork();
+        user = ((MainActivity) getActivity()).getModelManager().getUser();
+
+        // Get User Model & Id Organisation
+        User    user = ((MainActivity) getActivity()).getModelManager().getUser();
         int     organisationId = getArguments().getInt("organisation id");
 
         // Init Presenter
-        presenter = new OrganisationMembersPresenter(this, network, organisationId);
+        presenter = new OrganisationMembersPresenter(this, user.getToken(), organisationId);
 
         // Init Dialog
         dialog = new AlertDialog.Builder(getActivity())
@@ -69,10 +73,12 @@ public class OrganisationMembersView extends Fragment implements IOrganisationMe
         View    view = inflater.inflate(R.layout.fragment_organisation_members, container, false);
 
         // Set ToolBar
-        ((MainActivity) getActivity()).getToolBar().update("Membres", true, false);
+//        ((MainActivity) getActivity()).getToolBar().update("Membres", true);
+
+        // Init SearchBar
+//        initSearchBar();
 
         // Init UI Element
-        searchBar = (EditText) view.findViewById(R.id.organisation_members_search_text);
         progressBar = (ProgressBar) view.findViewById(R.id.organisation_members_progress_bar);
 
         // Init ListView & Listener & Adapter
@@ -80,34 +86,34 @@ public class OrganisationMembersView extends Fragment implements IOrganisationMe
         listView.setAdapter(new OrganisationMembersListViewAdapter(this));
         initListViewListener();
 
-        // Init Filter
-        initSearchBarListener();
-
-        // Init Members Model
-        presenter.getMembers();
-
         return (view);
     }
 
-    private void initListViewListener() {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-/*
-                // Go to organisation page
-                presenter.goToOrganisationView((Organisation) parent.getItemAtPosition(position));
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-                // Init Text Search Bar
-                searchBar.invalidate();
-                searchBar.getText().clear();
-                searchBar.setHint(R.string.organisations_search_bar);
-*/
-            }
-        });
+        // Init ToolBar Title
+        getActivity().setTitle(getArguments().getInt("page"));
+
+        // Init Members Model
+        presenter.getMembers();
     }
 
-    private void initSearchBarListener() {
-        searchBar.addTextChangedListener(new TextWatcher() {
+/*
+    private void initSearchBar() {
+        MySearchBar searchBar = ((MainActivity) getActivity()).getToolBar().getSearchBar();
+        final EditText    searchText = searchBar.getSearchText();
+        final ImageButton cancelBtn = searchBar.getCancelBtn();
+
+        // Show SearchBar
+        searchBar.setVisibility(View.VISIBLE);
+
+        // Show the SearchBar
+        searchBar.show(R.string.search_bar_member);
+
+        //Init SearchText listener & filter
+        searchText.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void afterTextChanged(Editable arg0) {
@@ -121,17 +127,47 @@ public class OrganisationMembersView extends Fragment implements IOrganisationMe
 
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                String  text = searchBar.getText().toString().toLowerCase(Locale.getDefault());
+                if (TextUtils.isEmpty(arg0)) {
+                    // Hide Cancel Btn
+                    cancelBtn.setVisibility(View.GONE);
 
-                ((OrganisationMembersListViewAdapter) listView.getAdapter()).filter(text);
+                    // Flush Filter
+//                    ((OrganisationEventsRVAdapter) recyclerView.getAdapter()).flushFilter();
+                }
+                else {
+                    // Show Cancel Btn
+                    cancelBtn.setVisibility(View.VISIBLE);
+
+                    // Filter text
+                    String text = searchText.getText().toString().toLowerCase(Locale.getDefault());
+                    ((OrganisationMembersListViewAdapter) listView.getAdapter()).filter(text);
+                }
             }
         });
     }
+*/
 
-//    @Override
-//    public void onClick(View v) {
-//        presenter.onClick(v.getId());
-//    }
+    private void initListViewListener() {
+
+        final OrganisationMembersView frag = this;
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+/*
+                // Go to organisation page
+                presenter.goToOrganisationView((Organisation) parent.getItemAtPosition(position));
+
+                // Init Text Search Bar
+                searchBar.invalidate();
+                searchBar.getText().clear();
+                searchBar.setHint(R.string.organisations_search_bar);
+*/
+                int userId =  ((Member) parent.getItemAtPosition(position)).getId();
+                Tools.replaceView(frag, ProfileView.newInstance(userId), Animation.FADE_IN_OUT, false);
+
+            }
+        });
+    }
 
     @Override
     public void showProgress() {

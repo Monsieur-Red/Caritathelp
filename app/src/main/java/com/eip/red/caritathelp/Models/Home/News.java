@@ -14,13 +14,13 @@ public class News implements Serializable {
     private int     logo;
     private String  title;
     private String  date;
-    private String  content;
+    private String  description;
 
-    public News(int logo, String title, String date, String content) {
+    public News(int logo, String title, String date, String description) {
         this.logo = logo;
         this.title = title;
         this.date = date;
-        this.content = content;
+        this.description = description;
     }
 
     public int getLogo() {
@@ -35,7 +35,7 @@ public class News implements Serializable {
         return date;
     }
 
-    public String getContent() {
-        return content;
+    public String getDescription() {
+        return description;
     }
 }

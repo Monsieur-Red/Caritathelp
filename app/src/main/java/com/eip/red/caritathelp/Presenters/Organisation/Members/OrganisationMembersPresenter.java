@@ -15,9 +15,9 @@ public class OrganisationMembersPresenter implements IOrganisationMembersPresent
     private OrganisationMembersView         view;
     private OrganisationMembersInteractor   interactor;
 
-    public OrganisationMembersPresenter(OrganisationMembersView view, Network network, int organisationId) {
+    public OrganisationMembersPresenter(OrganisationMembersView view, String token, int organisationId) {
         this.view = view;
-        interactor = new OrganisationMembersInteractor(view.getActivity().getApplicationContext(), network, organisationId);
+        interactor = new OrganisationMembersInteractor(view.getActivity().getApplicationContext(), token, organisationId);
     }
 
 

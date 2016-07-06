@@ -1,8 +1,9 @@
 package com.eip.red.caritathelp.Views.SubMenu.MyOrganisations.OrganisationCreation;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,11 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
-import com.eip.red.caritathelp.Models.Network;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.Presenters.SubMenu.MyOrganisations.OrganisationCreation.OrganisationCreationPresenter;
+import com.eip.red.caritathelp.Presenters.SubMenu.Profile.ProfilePresenter;
 import com.eip.red.caritathelp.R;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 /**
  * Created by pierr on 23/02/2016.
@@ -22,23 +25,39 @@ public class OrganisationCreationView extends Fragment implements IOrganisationC
 
     private OrganisationCreationPresenter presenter;
 
-    private EditText    name;
-    private EditText    theme;
-    private EditText    city;
-    private EditText    description;
-    private ProgressBar progressBar;
+    private CircularImageView   image;
+    private EditText            name;
+    private EditText            theme;
+    private EditText            city;
+    private EditText            description;
 
-    private AlertDialog dialog;
+    private AlertDialog     dialog;
+    private ProgressBar     progressBar;
+
+    public static Fragment newInstance() {
+        OrganisationCreationView    fragment = new OrganisationCreationView();
+        Bundle                      args = new Bundle();
+
+        args.putInt("page", R.string.view_name_submenu_my_organisations_creation);
+        fragment.setArguments(args);
+
+        return (fragment);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get Network Model
-        Network network = ((MainActivity) getActivity()).getModelManager().getNetwork();
+        // Get User Model
+        User user = ((MainActivity) getActivity()).getModelManager().getUser();
 
         // Init Presenter
-        presenter = new OrganisationCreationPresenter(this, network);
+        presenter = new OrganisationCreationPresenter(this, user.getToken());
+
+        // Init Dialog
+        dialog = new AlertDialog.Builder(getActivity())
+                .setCancelable(true)
+                .create();
     }
 
 
@@ -47,23 +66,41 @@ public class OrganisationCreationView extends Fragment implements IOrganisationC
         // Inflate the layout for this fragment
         View    view = inflater.inflate(R.layout.fragment_organisation_creation, container, false);
 
+//        // Init SearchBar
+//        ((MainActivity) getActivity()).getToolBar().getSearchBar().setVisibility(View.GONE);
+
         // Init UI Element
-        name = (EditText) view.findViewById(R.id.organisation_creation_name);
-        theme = (EditText) view.findViewById(R.id.organisation_creation_theme);
-        city = (EditText) view.findViewById(R.id.organisation_creation_city);
-        description = (EditText) view.findViewById(R.id.organisation_creation_description);
-        progressBar = (ProgressBar) view.findViewById(R.id.organisation_creation_progress_bar);
+        image = (CircularImageView) view.findViewById(R.id.image);
+        name = (EditText) view.findViewById(R.id.name);
+        theme = (EditText) view.findViewById(R.id.theme);
+        city = (EditText) view.findViewById(R.id.location);
+        description = (EditText) view.findViewById(R.id.description);
+        progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
 
         // Init Button Listener
-        view.findViewById(R.id.top_bar_organisation_creation_return).setOnClickListener(this);
-        view.findViewById(R.id.organisation_creation_btn_create).setOnClickListener(this);
-
-        // Init Dialog
-        dialog = new AlertDialog.Builder(getActivity())
-                .setCancelable(true)
-                .create();
+        view.findViewById(R.id.btn_photo).setOnClickListener(this);
+        view.findViewById(R.id.btn_create).setOnClickListener(this);
 
         return (view);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Init ToolBar Title
+        getActivity().setTitle(getArguments().getInt("page"));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // When an Image is picked
+        if (requestCode == ProfilePresenter.RESULT_LOAD_IMAGE && resultCode == MainActivity.RESULT_OK && data != null)
+            presenter.uploadProfileImg(image, data);
+        else if (requestCode == ProfilePresenter.RESULT_CAPTURE_IMAGE && resultCode == MainActivity.RESULT_OK && data != null)
+            presenter.uploadProfileImg(image, data);
     }
 
     @Override

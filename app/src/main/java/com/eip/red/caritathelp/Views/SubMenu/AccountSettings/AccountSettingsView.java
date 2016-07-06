@@ -1,8 +1,8 @@
 package com.eip.red.caritathelp.Views.SubMenu.AccountSettings;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +11,7 @@ import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Models.User;
+import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.Presenters.SubMenu.AccountSettings.AccountSettingsPresenter;
 import com.eip.red.caritathelp.R;
 
@@ -38,16 +38,25 @@ public class AccountSettingsView extends Fragment implements IAccountSettingsVie
 
     private ProgressBar progressBar;
 
+    public static Fragment newInstance() {
+        AccountSettingsView fragment = new AccountSettingsView();
+        Bundle              args = new Bundle();
+
+        args.putInt("page", R.string.view_name_submenu_account_management);
+        fragment.setArguments(args);
+
+        return (fragment);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get User & Network Model
-        Network network = ((MainActivity) getActivity()).getModelManager().getNetwork();
+        // Get User  Model
         user = ((MainActivity) getActivity()).getModelManager().getUser();
 
         // Init Presenter
-        presenter = new AccountSettingsPresenter(this, user, network);
+        presenter = new AccountSettingsPresenter(this, user);
     }
 
     @Override
@@ -55,13 +64,16 @@ public class AccountSettingsView extends Fragment implements IAccountSettingsVie
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_submenu_account_settings, container, false);
 
-        // Init Edit Text
-        EditText firsname = (EditText) view.findViewById(R.id.submenu_account_settings_firstname);
-        EditText lastname = (EditText) view.findViewById(R.id.submenu_account_settings_lastname);
-        EditText mail = (EditText) view.findViewById(R.id.submenu_account_settings_mail);
+//        // Init SearchBar
+//        ((MainActivity) getActivity()).getToolBar().getSearchBar().setVisibility(View.GONE);
 
-        firsname.setHint("Prénom : " +  user.getFirstName());
-        lastname.setHint("Nom : " + user.getLastName());
+        // Init Edit Text
+        EditText firsname = (EditText) view.findViewById(R.id.firstname);
+        EditText lastname = (EditText) view.findViewById(R.id.lastname);
+        EditText mail = (EditText) view.findViewById(R.id.mail);
+
+        firsname.setHint("Prénom : " +  user.getFirstname());
+        lastname.setHint("Nom : " + user.getLastname());
         mail.setHint("E-mail : " + user.getMail());
 
         // Init HashMap Texts
@@ -69,13 +81,12 @@ public class AccountSettingsView extends Fragment implements IAccountSettingsVie
         editTexts.put(FIRSTNAME, firsname);
         editTexts.put(LASTNAME, lastname);
         editTexts.put(MAIL, mail);
-        editTexts.put(PASSWORD_CURRENT, (EditText) view.findViewById(R.id.submenu_account_settings_current_password));
-        editTexts.put(PASSWORD_NEW, (EditText) view.findViewById(R.id.submenu_account_settings_new_password));
-        editTexts.put(PASSWORD_NEW_CHECKING, (EditText) view.findViewById(R.id.submenu_account_settings_checking_new_password));
+        editTexts.put(PASSWORD_CURRENT, (EditText) view.findViewById(R.id.current_password));
+        editTexts.put(PASSWORD_NEW, (EditText) view.findViewById(R.id.new_password));
+        editTexts.put(PASSWORD_NEW_CHECKING, (EditText) view.findViewById(R.id.new_password_verification));
 
         // Init Listener
-        view.findViewById(R.id.top_bar_account_settings_return).setOnClickListener(this);
-        view.findViewById(R.id.submenu_account_settings_btn_save).setOnClickListener(this);
+        view.findViewById(R.id.btn_save).setOnClickListener(this);
 
         // Init Progress Bar
         progressBar = (ProgressBar) view.findViewById(R.id.account_settings_progress_bar);
@@ -84,15 +95,18 @@ public class AccountSettingsView extends Fragment implements IAccountSettingsVie
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Init ToolBar Title
+        getActivity().setTitle(getArguments().getInt("page"));
+    }
+
+
+    @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.submenu_account_settings_btn_save:
-                presenter.saveModification(editTexts);
-                break;
-            case R.id.top_bar_account_settings_return:
-                ((MainActivity)getActivity()).goToPreviousPage();
-                break;
-        }
+        if (v.getId() == R.id.btn_save)
+            presenter.saveModification(editTexts);
     }
 
     @Override
@@ -136,12 +150,12 @@ public class AccountSettingsView extends Fragment implements IAccountSettingsVie
     }
 
     private void refreshEditText(View view) {
-        EditText    firsname = (EditText) view.findViewById(R.id.submenu_account_settings_firstname);
-        EditText    lastname = (EditText) view.findViewById(R.id.submenu_account_settings_lastname);
-        EditText    mail = (EditText) view.findViewById(R.id.submenu_account_settings_mail);
-        EditText    currentP = (EditText) view.findViewById(R.id.submenu_account_settings_current_password);
-        EditText    newP = (EditText) view.findViewById(R.id.submenu_account_settings_new_password);
-        EditText    newCP = (EditText) view.findViewById(R.id.submenu_account_settings_checking_new_password);
+        EditText    firsname = (EditText) view.findViewById(R.id.firstname);
+        EditText    lastname = (EditText) view.findViewById(R.id.lastname);
+        EditText    mail = (EditText) view.findViewById(R.id.mail);
+        EditText    currentP = (EditText) view.findViewById(R.id.current_password);
+        EditText    newP = (EditText) view.findViewById(R.id.new_password);
+        EditText    newCP = (EditText) view.findViewById(R.id.new_password_verification);
 
         firsname.invalidate();
         lastname.invalidate();
@@ -157,8 +171,8 @@ public class AccountSettingsView extends Fragment implements IAccountSettingsVie
         newP.getText().clear();
         newCP.getText().clear();
 
-        firsname.setHint("Prénom : " + user.getFirstName());
-        lastname.setHint("Nom : " + user.getLastName());
+        firsname.setHint("Prénom : " + user.getFirstname());
+        lastname.setHint("Nom : " + user.getLastname());
         mail.setHint("E-mail : " + user.getMail());
         currentP.setHint("Mot de passe actuel");
         newP.setHint("Nouveau mot de passe");
