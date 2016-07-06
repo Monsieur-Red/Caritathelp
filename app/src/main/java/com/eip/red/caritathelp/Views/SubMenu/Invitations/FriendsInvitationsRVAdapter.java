@@ -1,4 +1,4 @@
-package com.eip.red.caritathelp.Views.SubMenu.Friends;
+package com.eip.red.caritathelp.Views.SubMenu.Invitations;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.eip.red.caritathelp.Models.Friends.FriendInvitation;
 import com.eip.red.caritathelp.Models.Network;
-import com.eip.red.caritathelp.Presenters.SubMenu.Friends.FriendsPresenter;
+import com.eip.red.caritathelp.Presenters.SubMenu.Invitations.InvitationsPresenter;
 import com.eip.red.caritathelp.R;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
@@ -18,15 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by pierr on 01/07/2016.
+ * Created by pierr on 04/07/2016.
  */
 
-public class InvitationsRVAdapter extends RecyclerView.Adapter<InvitationsRVAdapter.DataObjectHolder> {
+public class FriendsInvitationsRVAdapter extends RecyclerView.Adapter<FriendsInvitationsRVAdapter.DataObjectHolder> {
 
-    private FriendsPresenter    presenter;
+    private InvitationsPresenter    presenter;
     private List<FriendInvitation> friendInvitations;
 
-    public InvitationsRVAdapter(FriendsPresenter presenter) {
+    public FriendsInvitationsRVAdapter(InvitationsPresenter presenter) {
         this.presenter = presenter;
         friendInvitations = new ArrayList<>();
     }

@@ -73,9 +73,8 @@ public class NotificationsInteractor {
                             else
                                 listener.onSuccessFriendshipReply(notification, acceptance);
                         }
-                        else {
+                        else
                             listener.onDialogError("Problème de connection", "Vérifiez votre connexion Internet");
-                        }
                     }
                 });
 

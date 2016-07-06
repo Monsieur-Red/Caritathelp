@@ -38,10 +38,10 @@ public class MyPagerAdapter extends FragmentStatePagerAdapter {
         return (NUM_PAGES);
     }
 
-    /*@Override
-    public int getItemPosition(Object object) {
-        return POSITION_NONE;
-    }*/
+//    @Override
+//    public int getItemPosition(Object object) {
+//        return POSITION_NONE;
+//    }
 
     public Fragment getFragment(int id) {
         return (fragments.get(id));

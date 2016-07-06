@@ -19,12 +19,13 @@ import com.eip.red.caritathelp.Views.Notifications.NotificationsView;
 
 public class MyThirdPage extends Fragment {
 
+    private NotificationsView   notificationsView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get News List
-//        newsList = ((MainActivity) getActivity()).getModelManager().getNewsList();
+        notificationsView = (NotificationsView) NotificationsView.newInstance();
     }
 
     @Override
@@ -47,7 +48,10 @@ public class MyThirdPage extends Fragment {
         if (fragment != null)
             Tools.replaceView(this, fragment, Animation.FADE_IN_OUT, true);
         else
-            Tools.replaceView(this, NotificationsView.newInstance(), Animation.FADE_IN_OUT, true);
+            Tools.replaceView(this, notificationsView, Animation.FADE_IN_OUT, true);
     }
 
+    public NotificationsView getNotificationsView() {
+        return notificationsView;
+    }
 }

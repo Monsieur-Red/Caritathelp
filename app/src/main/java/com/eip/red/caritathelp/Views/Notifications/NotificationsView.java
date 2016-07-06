@@ -158,4 +158,8 @@ public class NotificationsView extends Fragment implements INotificationsView, V
     public TextView getVolunteerTab() {
         return volunteerTab;
     }
+
+    public NotificationsPresenter getPresenter() {
+        return presenter;
+    }
 }

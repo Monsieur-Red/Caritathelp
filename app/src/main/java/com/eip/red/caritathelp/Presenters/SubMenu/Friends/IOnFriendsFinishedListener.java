@@ -1,6 +1,7 @@
 package com.eip.red.caritathelp.Presenters.SubMenu.Friends;
 
 import com.eip.red.caritathelp.Models.Friends.Friend;
+import com.eip.red.caritathelp.Models.Friends.FriendInvitation;
 
 import java.util.List;
 
@@ -14,11 +15,11 @@ public interface IOnFriendsFinishedListener {
 
     void onSuccessGetMyFriends(List<Friend> friends);
 
-    void onSuccessGetInvitations();
-
-    void onSuccessGetSent();
+    void onSuccessGetInvitations(List<FriendInvitation> friendInvitations, String sent);
 
     void onSuccessBlockFriend();
 
     void onSuccessRemoveFriend();
+
+    void onSuccessInvitationReply(FriendInvitation friendInvitation, String acceptance);
 }

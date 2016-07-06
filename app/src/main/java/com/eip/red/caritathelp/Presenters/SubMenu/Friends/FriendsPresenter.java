@@ -2,12 +2,12 @@ package com.eip.red.caritathelp.Presenters.SubMenu.Friends;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Typeface;
 import android.view.View;
 
 import com.eip.red.caritathelp.Activities.Main.MainActivity;
 import com.eip.red.caritathelp.Models.Enum.Animation;
 import com.eip.red.caritathelp.Models.Friends.Friend;
+import com.eip.red.caritathelp.Models.Friends.FriendInvitation;
 import com.eip.red.caritathelp.Models.User.User;
 import com.eip.red.caritathelp.R;
 import com.eip.red.caritathelp.Tools;
@@ -42,15 +42,13 @@ public class FriendsPresenter implements IFriendsPresenter, IOnFriendsFinishedLi
                 view.getSentRV().setVisibility(View.GONE);
 
                 // Set TextStyle Tabs
-                view.getFriends().setTypeface(Typeface.DEFAULT_BOLD);
-                view.getInvitations().setTypeface(Typeface.DEFAULT);
-                view.getSent().setTypeface(Typeface.DEFAULT);
+                view.setTabsTypeface(FriendsView.TAB_FRIEND);
 
                 // Update Data
-                interactor.getMyFriends(view.getProgressBar(), this);
+                interactor.getMyFriends(this);
                 break;
             case R.id.invitations:
-//                view.showProgress();
+                view.showProgress();
 
                 // Set RecyclerView Visibility
                 view.getFriendsRV().setVisibility(View.GONE);
@@ -58,16 +56,13 @@ public class FriendsPresenter implements IFriendsPresenter, IOnFriendsFinishedLi
                 view.getSentRV().setVisibility(View.GONE);
 
                 // Set TextStyle Tabs
-                view.getFriends().setTypeface(Typeface.DEFAULT);
-                view.getInvitations().setTypeface(Typeface.DEFAULT_BOLD);
-                view.getSent().setTypeface(Typeface.DEFAULT);
+                view.setTabsTypeface(FriendsView.TAB_INVITATIONS);
 
                 // Update Data
-//                interactor.getMyFriends(view.getProgressBar(), this);
-
+                interactor.getInvitations("default", this);
                 break;
             case R.id.sent:
-//                view.showProgress();
+                view.showProgress();
 
                 // Set RecyclerView Visibility
                 view.getFriendsRV().setVisibility(View.GONE);
@@ -75,12 +70,10 @@ public class FriendsPresenter implements IFriendsPresenter, IOnFriendsFinishedLi
                 view.getSentRV().setVisibility(View.VISIBLE);
 
                 // Set TextStyle Tabs
-                view.getFriends().setTypeface(Typeface.DEFAULT);
-                view.getInvitations().setTypeface(Typeface.DEFAULT);
-                view.getSent().setTypeface(Typeface.DEFAULT_BOLD);
+                view.setTabsTypeface(FriendsView.TAB_SENT);
 
                 // Update Data
-//                interactor.getMyFriends(view.getProgressBar(), this);
+                interactor.getInvitations("true", this);
                 break;
             case R.id.btn_add:
                 // Go to Search View in order to search new friends
@@ -90,21 +83,88 @@ public class FriendsPresenter implements IFriendsPresenter, IOnFriendsFinishedLi
     }
 
     @Override
+    public void onClick(int viewId, final Friend friend) {
+        switch (viewId) {
+            case R.id.image:
+                // Go To User Profile
+                Tools.replaceView(view, ProfileView.newInstance(friend.getId()), Animation.FADE_IN_OUT, false);
+                break;
+            case R.id.name:
+                // Go To User Profile
+                Tools.replaceView(view, ProfileView.newInstance(friend.getId()), Animation.FADE_IN_OUT, false);
+                break;
+            case R.id.nb_common_friends:
+                // Go To User Profile
+                Tools.replaceView(view, ProfileView.newInstance(friend.getId()), Animation.FADE_IN_OUT, false);
+                break;
+            case R.id.btn_block:
+                break;
+            case R.id.btn_remove:
+                final IOnFriendsFinishedListener  listener = this;
+                String  name = friend.getFirstname() + " " + friend.getLastname();
+
+                // Display RemoveFriendDialog
+                new AlertDialog.Builder(view.getContext())
+                        .setCancelable(true)
+                        .setTitle("Supprimer un ami")
+                        .setMessage("Êtes-vous sûr de vouloir supprimer " + name + " de votre liste d'amis ?")
+                        .setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                dialog.cancel();
+                            }
+                        })
+                        .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                view.showProgress();
+                                interactor.removeFriend(friend.getId(), view.getProgressBar(), listener);
+                            }
+                        })
+                        .show();
+                break;
+        }
+    }
+
+    @Override
+    public void onClick(int viewId, FriendInvitation friendInvitation) {
+        switch (viewId) {
+            case R.id.image:
+                // Go To User Profile
+                Tools.replaceView(view, ProfileView.newInstance(friendInvitation.getId()), Animation.FADE_IN_OUT, false);
+                break;
+            case R.id.name:
+                // Go To User Profile
+                Tools.replaceView(view, ProfileView.newInstance(friendInvitation.getId()), Animation.FADE_IN_OUT, false);
+                break;
+            case R.id.btn_confirm:
+                view.showProgress();
+                interactor.invitationReply(friendInvitation, "true", this);
+                break;
+            case R.id.btn_delete:
+                view.showProgress();
+                interactor.invitationReply(friendInvitation, "false", this);
+                break;
+        }
+    }
+
+    @Override
     public void getMyFriends(boolean isSwipeRefresh) {
         if (!isSwipeRefresh)
             view.showProgress();
 
-        interactor.getMyFriends(view.getProgressBar(), this);
+        interactor.getMyFriends(this);
     }
 
     @Override
     public void getInvitations() {
-
+        interactor.getInvitations("default", this);
     }
 
     @Override
     public void getSent() {
-
+        interactor.getInvitations("true", this);
     }
 
     @Override
@@ -113,46 +173,15 @@ public class FriendsPresenter implements IFriendsPresenter, IOnFriendsFinishedLi
     }
 
     @Override
-    public void blockFriend(int friendId) {
-
-    }
-
-    @Override
-    public void removeFriend(final Friend friend) {
-        final IOnFriendsFinishedListener  listener = this;
-        String  name = friend.getFirstname() + " " + friend.getLastname();
-
-        // Display RemoveFriendDialog
-        new AlertDialog.Builder(view.getContext())
-                .setCancelable(true)
-                .setTitle("Supprimer un ami")
-                .setMessage("Êtes-vous sûr de vouloir supprimer " + name + " de votre liste d'amis ?")
-                .setNegativeButton("Non", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        dialog.cancel();
-                    }
-                })
-                .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        view.showProgress();
-                        interactor.removeFriend(friend.getId(), view.getProgressBar(), listener);
-                    }
-                })
-                .show();
-    }
-
-    @Override
     public void onDialog(String title, String msg) {
         view.hideProgress();
+        view.getSwipeRefreshLayout().setRefreshing(false);
         view.setDialog(title, msg);
     }
 
     @Override
     public void onSuccessGetMyFriends(List<Friend> friends) {
-        // Set RecyclerView
+        // Set RecyclerView Data
         view.getFriendsRVA().update(friends);
 
         // Set ProgressBar Visibility
@@ -162,15 +191,19 @@ public class FriendsPresenter implements IFriendsPresenter, IOnFriendsFinishedLi
         view.getSwipeRefreshLayout().setRefreshing(false);
     }
 
-
     @Override
-    public void onSuccessGetInvitations() {
+    public void onSuccessGetInvitations(List<FriendInvitation> friendInvitations, String sent) {
+        // Set RecyclerView Data
+        if (sent.equals("default"))
+            view.getInvitationsRVA().update(friendInvitations);
+        else
+            view.getSentRVA().update(friendInvitations);
 
-    }
+        // Set ProgressBar Visibility
+        view.hideProgress();
 
-    @Override
-    public void onSuccessGetSent() {
-
+        // Set SwipeRefreshLayout Refreshing
+        view.getSwipeRefreshLayout().setRefreshing(false);
     }
 
     @Override
@@ -184,6 +217,21 @@ public class FriendsPresenter implements IFriendsPresenter, IOnFriendsFinishedLi
         getMyFriends(false);
 
         // Set ProgressBar Visibility
+        view.hideProgress();
+    }
+
+    @Override
+    public void onSuccessInvitationReply(FriendInvitation friendInvitation, String acceptance) {
+        // Set Result Invitation Msg
+        if (acceptance.equals("true"))
+            friendInvitation.setResult("Invitation acceptée");
+        else
+            friendInvitation.setResult("Invitation rejetée");
+
+        // Update RecyclerView
+        view.getInvitationsRVA().notifyDataSetChanged();
+
+        // Set Progress Bar Visibility
         view.hideProgress();
     }
 }

@@ -1,10 +1,10 @@
-package com.eip.red.caritathelp.Views.SubMenu.Friends;
+package com.eip.red.caritathelp.Views.SubMenu.Invitations;
 
 /**
- * Created by pierr on 23/04/2016.
+ * Created by pierr on 04/07/2016.
  */
 
-public interface IFriendView {
+public interface IInvitationView {
 
     void setTabsTypeface(int tab);
 

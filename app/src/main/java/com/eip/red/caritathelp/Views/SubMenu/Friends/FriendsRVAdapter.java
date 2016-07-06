@@ -61,27 +61,7 @@ public class FriendsRVAdapter extends RecyclerView.Adapter<FriendsRVAdapter.Data
 
         @Override
         public void onClick(View v) {
-            Friend  friend = friends.get(getAdapterPosition());
-
-            if (friend != null) {
-                switch (v.getId()) {
-                    case R.id.image:
-                        presenter.navigateToFriendProfile(friend.getId());
-                        break;
-                    case R.id.name:
-                        presenter.navigateToFriendProfile(friend.getId());
-                        break;
-                    case R.id.nb_common_friends:
-                        presenter.navigateToFriendProfile(friend.getId());
-                        break;
-                    case R.id.btn_block:
-                        presenter.blockFriend(friend.getId());
-                        break;
-                    case R.id.btn_remove:
-                        presenter.removeFriend(friend);
-                        break;
-                }
-            }
+            presenter.onClick(v.getId(), friends.get(getAdapterPosition()));
         }
     }
 
@@ -90,13 +70,12 @@ public class FriendsRVAdapter extends RecyclerView.Adapter<FriendsRVAdapter.Data
         View                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_submenu_friends_my_friends_rv_row, parent, false);
         DataObjectHolder    holder = new DataObjectHolder(view);
 
-        return (holder);
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
         Friend  friend = friends.get(position);
-        String  thumb = friend.getThumb_path();
         String  name = friend.getFirstname() + " " + friend.getLastname();
         String  nb_commons_friends = friend.getNb_common_friends();
 
@@ -104,10 +83,7 @@ public class FriendsRVAdapter extends RecyclerView.Adapter<FriendsRVAdapter.Data
         holder.name.setText(name);
 
         // Load image
-        if (thumb != null)
-            Network.loadImage(holder.image.getContext(), holder.image, Network.API_LOCATION_2 + thumb, R.drawable.profile_example);
-        else
-            holder.image.setImageResource(R.drawable.profile_example);
+        Network.loadImage(holder.image.getContext(), holder.image, Network.API_LOCATION_2 + friend.getThumb_path(), R.drawable.profile_example);
 
         // Set Nb commons friends
         if (Integer.valueOf(nb_commons_friends) <= 1)

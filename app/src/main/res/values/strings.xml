@@ -17,6 +17,7 @@
     <string name="view_name_submenu_account_management">Gestion de compte</string>
     <string name="view_name_submenu_friends">Amis</string>
     <string name="view_name_submenu_friends_add">Rechercher des amis</string>
+    <string name="view_name_submenu_invitations">Invitations</string>
 
     <string name="view_name_organisation">Association</string>
     <string name="view_name_organisation_post">Poster</string>
@@ -93,6 +94,7 @@
     <string name="submenu_my_organisations">Mes associations</string>
     <string name="submenu_my_events">Mes événements</string>
     <string name="submenu_friends">Amis</string>
+    <string name="submenu_invitations">Invitations</string>
     <string name="submenu_account_settings">Gestion de compte</string>
     <string name="submenu_security">Confidentialités</string>
     <string name="submenu_help">Aide</string>
@@ -117,20 +119,21 @@
     </string-array>
 
     <!-- MyFriends View -->
-    <string name="submenu_friends_btn_add">Ajouter</string>
-    <!-- Spinner -->
-    <string-array name="my_friends_spinner">
-        <item>Mes Amis</item>
-        <item>Invitations</item>
-        <item>Envoyées</item>
-    </string-array>
+    <string name="friends_my_friends">Mes amis</string>
+    <string name="friends_invitations">Invitations</string>
+    <string name="friends_sent">Envoyées</string>
+
+    <!-- Invitations View -->
+    <string name="invitations_friends">Amis</string>
+    <string name="invitations_organisations">Associations</string>
+    <string name="invitations_events">Événement</string>
 
     <!-- OrganisationCreation View -->
     <string name="organisation_creation_bar_title">Créer une association</string>
 
     <!-- Organisation View -->
     <string name="organisation_members">Membres</string>
-    <string name="organisation_events">Evénements</string>
+    <string name="organisation_events">Événement</string>
     <string name="organisation_informations">Informations</string>
 
     <!-- Organisation Members View -->

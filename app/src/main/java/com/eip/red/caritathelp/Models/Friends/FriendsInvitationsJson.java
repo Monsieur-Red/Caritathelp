@@ -6,11 +6,11 @@ import java.util.List;
  * Created by pierr on 01/07/2016.
  */
 
-public class InvitationsJson {
+public class FriendsInvitationsJson {
 
     private int                 status;
     private String              message;
-    private List<Invitation>    response;
+    private List<FriendInvitation>    response;
 
     public int getStatus() {
         return status;
@@ -20,7 +20,7 @@ public class InvitationsJson {
         return message;
     }
 
-    public List<Invitation> getResponse() {
+    public List<FriendInvitation> getResponse() {
         return response;
     }
 }

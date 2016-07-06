@@ -99,32 +99,11 @@ public class NotificationsPresenter implements INotificationsPresenter, IOnNotif
         }
     }
 
-//    @Override
-//    public void friendshipReply(final Notification notification) {
-//        final IOnNotificationsFinishedListener    listener = this;
-//        final String  name = notification.getSender_name();
-//
-//        // Display Dialog Box
-//        new AlertDialog.Builder(view.getContext())
-//                .setCancelable(true)
-//                .setTitle("Demande d'amis")
-//                .setMessage("Acceptez-vous la demande d'amis de " + name + " ?")
-//                .setNegativeButton("Rejeter", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        view.showProgress();
-//                        interactor.friendshipReply(notification.getId(), name, "false", view.getProgressBar(), listener);
-//                    }
-//                })
-//                .setPositiveButton("Accepter", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        view.showProgress();
-//                        interactor.friendshipReply(notification.getId(), name, "true", view.getProgressBar(), listener);
-//                    }
-//                })
-//                .show();
-//    }
+    /* Websocket msg */
+    @Override
+    public void onMessage() {
+        interactor.getNotifications(view.getProgressBar(), this);
+    }
 
     @Override
     public void onDialogError(String title, String msg) {

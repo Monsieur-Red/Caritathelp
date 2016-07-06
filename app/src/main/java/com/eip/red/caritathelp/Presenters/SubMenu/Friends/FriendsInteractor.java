@@ -4,6 +4,8 @@ import android.content.Context;
 import android.widget.ProgressBar;
 
 import com.eip.red.caritathelp.Models.Friends.FriendsJson;
+import com.eip.red.caritathelp.Models.Friends.FriendInvitation;
+import com.eip.red.caritathelp.Models.Friends.FriendsInvitationsJson;
 import com.eip.red.caritathelp.Models.Friendship;
 import com.eip.red.caritathelp.Models.Network;
 import com.eip.red.caritathelp.Models.User.User;
@@ -28,14 +30,13 @@ public class FriendsInteractor {
         this.userId = userId;
     }
 
-    public void getMyFriends(ProgressBar progressBar, final IOnFriendsFinishedListener listener) {
+    public void getMyFriends(final IOnFriendsFinishedListener listener) {
         JsonObject json = new JsonObject();
 
         json.addProperty("token", mainUser.getToken());
 
         Ion.with(context)
                 .load("GET", Network.API_LOCATION + Network.API_REQUEST_FRIENDSHIP_VOLUNTEER + userId + Network.API_REQUEST_FRIENDSHIP)
-                .progressBar(progressBar)
                 .setJsonObjectBody(json)
                 .as(new TypeToken<FriendsJson>(){})
                 .setCallback(new FutureCallback<FriendsJson>() {
@@ -54,12 +55,30 @@ public class FriendsInteractor {
                 });
     }
 
-    public void getInvitations() {
+    public void getInvitations(final String sent, final IOnFriendsFinishedListener listener) {
+        JsonObject json = new JsonObject();
 
-    }
+        json.addProperty("token", mainUser.getToken());
+        json.addProperty("sent", sent);
 
-    public void getSent() {
-
+        Ion.with(context)
+                .load("GET", Network.API_LOCATION + Network.API_REQUEST_FRIEND_REQUESTS)
+                .setJsonObjectBody(json)
+                .as(new TypeToken<FriendsInvitationsJson>(){})
+                .setCallback(new FutureCallback<FriendsInvitationsJson>() {
+                    @Override
+                    public void onCompleted(Exception error, FriendsInvitationsJson result) {
+                        if (error == null) {
+                            // Status == 400 == error
+                            if (result.getStatus() == Network.API_STATUS_ERROR)
+                                listener.onDialog("Statut 400", result.getMessage());
+                            else
+                                listener.onSuccessGetInvitations(result.getResponse(), sent);
+                        }
+                        else
+                            listener.onDialog("Problème de connection", "Vérifiez votre connexion Internet");
+                    }
+                });
     }
 
     public void blockFriend() {
@@ -91,6 +110,34 @@ public class FriendsInteractor {
                             listener.onDialog("Problème de connection", "Vérifiez votre connexion Internet");
                     }
                 });
+    }
+
+    public void invitationReply(final FriendInvitation friendInvitation, final String acceptance, final IOnFriendsFinishedListener listener) {
+        JsonObject json = new JsonObject();
+
+        json.addProperty("token", mainUser.getToken());
+        json.addProperty("notif_id", String.valueOf(friendInvitation.getNotif_id()));
+        json.addProperty("acceptance", acceptance);
+
+        Ion.with(context)
+                .load("POST", Network.API_LOCATION + Network.API_REQUEST_FRIENDSHIP_REPLY)
+                .setJsonObjectBody(json)
+                .as(new TypeToken<Friendship>(){})
+                .setCallback(new FutureCallback<Friendship>() {
+                    @Override
+                    public void onCompleted(Exception error, Friendship result) {
+                        if (error == null) {
+                            // Status == 400 == error
+                            if (result.getStatus() == Network.API_STATUS_ERROR)
+                                listener.onDialog("Statut 400", result.getMessage());
+                            else
+                                listener.onSuccessInvitationReply(friendInvitation, acceptance);
+                        }
+                        else
+                            listener.onDialog("Problème de connection", "Vérifiez votre connexion Internet");
+                    }
+                });
+
     }
 
     public int getMainUserId() {

@@ -1,6 +1,7 @@
 package com.eip.red.caritathelp.Views.SubMenu.Friends;
 
 import android.app.AlertDialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,6 +19,9 @@ import com.eip.red.caritathelp.MyWidgets.DividerItemDecoration;
 import com.eip.red.caritathelp.Presenters.SubMenu.Friends.FriendsPresenter;
 import com.eip.red.caritathelp.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by pierr on 19/04/2016.
  */
@@ -34,9 +38,12 @@ public class FriendsView extends Fragment implements IFriendView, View.OnClickLi
     private InvitationsRVAdapter    invitationsRVA;
     private SentRVAdapter           sentRVA;
 
-    private TextView            friends;
-    private TextView            invitations;
-    private TextView            sent;
+    private List<TextView>  tabs;
+    private int             tabSelected = TAB_FRIEND;
+    public static final int TAB_FRIEND = 0;
+    public static final int TAB_INVITATIONS = 1;
+    public static final int TAB_SENT = 2;
+
     private SwipeRefreshLayout  swipeRefreshLayout;
     private ProgressBar         progressBar;
     private AlertDialog         dialog;
@@ -75,9 +82,10 @@ public class FriendsView extends Fragment implements IFriendView, View.OnClickLi
         View view = inflater.inflate(R.layout.fragment_submenu_friends, container, false);
 
         // Init UI Element
-        friends = (TextView) view.findViewById(R.id.my_friends);
-        invitations = (TextView) view.findViewById(R.id.invitations);
-        sent = (TextView) view.findViewById(R.id.sent);
+        tabs = new ArrayList<>();
+        tabs.add((TextView) view.findViewById(R.id.my_friends));
+        tabs.add((TextView) view.findViewById(R.id.invitations));
+        tabs.add((TextView) view.findViewById(R.id.sent));
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
 
@@ -89,9 +97,9 @@ public class FriendsView extends Fragment implements IFriendView, View.OnClickLi
 
         // Init Listener
         view.findViewById(R.id.btn_add).setOnClickListener(this);
-        friends.setOnClickListener(this);
-        invitations.setOnClickListener(this);
-        sent.setOnClickListener(this);
+        for (TextView textView : tabs) {
+            textView.setOnClickListener(this);
+        }
 
         return (view);
     }
@@ -116,8 +124,17 @@ public class FriendsView extends Fragment implements IFriendView, View.OnClickLi
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // Set Friends Model
-                presenter.getMyFriends(true);
+                switch (tabSelected) {
+                    case TAB_FRIEND :
+                        presenter.getMyFriends(true);
+                        break;
+                    case TAB_INVITATIONS:
+                        presenter.getInvitations();
+                        break;
+                    case TAB_SENT:
+                        presenter.getSent();
+                        break;
+                }
             }
         });
     }
@@ -164,6 +181,17 @@ public class FriendsView extends Fragment implements IFriendView, View.OnClickLi
     }
 
     @Override
+    public void setTabsTypeface(int tab) {
+        tabSelected = tab;
+        for (int i = 0; i < tabs.size(); i++) {
+            if (tab == i)
+                tabs.get(i).setTypeface(Typeface.DEFAULT_BOLD);
+            else
+                tabs.get(i).setTypeface(Typeface.DEFAULT);
+        }
+    }
+
+    @Override
     public void showProgress() {
         progressBar.setVisibility(View.VISIBLE);
     }
@@ -202,18 +230,6 @@ public class FriendsView extends Fragment implements IFriendView, View.OnClickLi
 
     public SentRVAdapter getSentRVA() {
         return sentRVA;
-    }
-
-    public TextView getFriends() {
-        return friends;
-    }
-
-    public TextView getInvitations() {
-        return invitations;
-    }
-
-    public TextView getSent() {
-        return sent;
     }
 
     public ProgressBar getProgressBar() {

@@ -52,7 +52,19 @@ public class Network implements Serializable {
     static final public  String     API_REQUEST_FRIENDSHIP_ADD = "/friendship/add";
     static final public  String     API_REQUEST_FRIENDSHIP_REMOVE = "/friendship/remove";
     static final public  String     API_REQUEST_FRIENDSHIP_REPLY = "/friendship/reply";
+
+    /* MEMBERSHIP */
+    static final public  String     API_REQUEST_MEMBERSHIP_REPLY_INVITE = "/membership/reply_invite";
+
+    /* GUESTS */
+    static final public  String     API_REQUEST_GUESTS_REPLY_INVITE = "/guests/reply_invite";
+
+    /* INVITATIONS Friend-Organisation-Event */
     static final public  String     API_REQUEST_FRIEND_REQUESTS = "/friend_requests";
+    static final public  String     API_REQUEST_ORGANISATIONS_INVITED = "/associations/invited";
+    static final public  String     API_REQUEST_EVENTS_INVITED = "/events/invited";
+
+
 
     /* PICTURE */
     static final public  String     API_REQUEST_PICTURES = "/pictures";

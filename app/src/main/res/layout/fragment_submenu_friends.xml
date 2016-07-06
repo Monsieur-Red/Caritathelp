@@ -38,7 +38,7 @@
 
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:text="Mes amis"
+                            android:text="@string/friends_my_friends"
                             android:textSize="16sp"
                             android:textColor="@color/primary_text"
                             android:textStyle="bold"
@@ -60,7 +60,7 @@
 
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:text="Invitations"
+                            android:text="@string/friends_invitations"
                             android:textSize="16sp"
                             android:textColor="@color/primary_text"
                             android:singleLine="true" />
@@ -81,7 +81,7 @@
 
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:text="Envoyées"
+                            android:text="@string/friends_sent"
                             android:textSize="16sp"
                             android:textColor="@color/primary_text"
                             android:singleLine="true" />
